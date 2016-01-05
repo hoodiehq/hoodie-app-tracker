@@ -11,7 +11,7 @@ var $trackerClearButton = document.querySelector('.js-tracker-clear')
 $passwordResetButton.addEventListener('click', function (event) {
   event.preventDefault()
 
-  var username = prompt('Username', $loginForm.querySelector('[name=username]').value)
+  var username = prompt('Username', $signinForm.querySelector('[name=username]').value)
 
   if (!username) {
     return
