@@ -2,9 +2,9 @@
 
 > Default Hoodie app
 
-[![Build Status](https://travis-ci.org/hoodiehq/hoodie-app-something-tracker.svg?branch=next)](https://travis-ci.org/hoodiehq/hoodie-app-something-tracker)
-[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-app-something-tracker/next.svg)](https://david-dm.org/hoodiehq/hoodie-app-something-tracker/next)
-[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-app-something-tracker/next/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-app-something-tracker/next#info=dependencies)
+[![Build Status](https://travis-ci.org/hoodiehq/hoodie-app-something-tracker.svg?branch=master)](https://travis-ci.org/hoodiehq/hoodie-app-something-tracker)
+[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-app-something-tracker.svg)](https://david-dm.org/hoodiehq/hoodie-app-something-tracker)
+[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-app-something-tracker/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-app-something-tracker#info=devDependencies)
 
 Something Tracker is a simple Hoodie app, meant to be a good starting point to
 play and build with Hoodie.
