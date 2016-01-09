@@ -1,0 +1,46 @@
+{
+  "name": "hoodie-app-something-tracker",
+  "description": "Default Hoodie app",
+  "author": "The Hoodie Community",
+  "bugs": {
+    "url": "https://github.com/hoodiehq/hoodie-app-something-tracker/issues"
+  },
+  "engines": {
+    "node": ">=4",
+    "npm": ">=3"
+  },
+  "homepage": "https://github.com/hoodiehq/hoodie-app-something-tracker",
+  "keywords": [
+    "hoodie",
+    "app"
+  ],
+  "license": "Apache-2.0",
+  "main": "www/index.html",
+  "publishConfig": {
+    "tag": "next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoodiehq/hoodie-app-something-tracker.git"
+  },
+  "scripts": {
+    "test": "frontend-test-background mocha test/*.js",
+    "start": "hoodie",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "dependencies": {
+    "hoodie": "git://github.com/hoodiehq/hoodie#tent"
+  },
+  "devDependencies": {
+    "@gr2m/frontend-test-setup": "^1.1.3",
+    "mocha": "^2.3.4",
+    "semantic-release": "^6.0.3"
+  },
+  "frontend-test-setup": {
+    "server": {
+      "cmd": "hoodie --dbUrl=http://admin:secret@localhost:5984 --loglevel=silly",
+      "host": "127.0.0.1",
+      "port": 8080
+    }
+  }
+}
