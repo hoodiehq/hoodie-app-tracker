@@ -18,8 +18,8 @@ node_js:
   - 4
 before_install:
   - npm install --global npm@3
-before_script:
   - npm prune
+before_script:
   # tell us what CouchDB version we have
   - curl http://localhost:5984
   # create secret (works around CouchDB racing issue)
