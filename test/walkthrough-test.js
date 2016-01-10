@@ -77,7 +77,7 @@ describe('hoodie', function () {
 
         .then(done, done)
       }).then(toValue)
-      // .should.eventually.have.property('username', username)
+      .should.eventually.have.property('username', username)
 
       // .executeAsync(function storeFindAll(done) {
       //   return hoodie.store.findAll()
