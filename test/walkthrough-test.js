@@ -23,7 +23,7 @@ function logError (error) {
   throw error
 }
 
-describe('my demo page', function () {
+describe('hoodie', function () {
   this.timeout(90000)
 
   it('loads successfully', function () {
@@ -87,5 +87,8 @@ describe('my demo page', function () {
       // .should.eventually.be.empty
 
       .catch(logError)
+
+      // cleanup
+      .localStorage('DELETE')
   })
 })
