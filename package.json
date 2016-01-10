@@ -24,6 +24,7 @@
     "url": "https://github.com/hoodiehq/hoodie-app-something-tracker.git"
   },
   "scripts": {
+    "pretest": "standard test/**/*.js",
     "test": "frontend-test-background mocha test/*.js",
     "start": "hoodie",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
@@ -34,7 +35,8 @@
   "devDependencies": {
     "@gr2m/frontend-test-setup": "^1.1.3",
     "mocha": "^2.3.4",
-    "semantic-release": "^6.0.3"
+    "semantic-release": "^6.0.3",
+    "standard": "^5.4.1"
   },
   "frontend-test-setup": {
     "server": {
