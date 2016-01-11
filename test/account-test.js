@@ -33,17 +33,35 @@ describe('hoodie', function () {
     var password = 'secret'
     var newUsername = username // username + 'new'
     var newPassword = 'secret' // 'secret2'
+    var accountId
 
     return this.client.url('/')
 
     // sanity check
-    .execute(function () {
+    .execute(function isSignedIn () {
       return hoodie.account.isSignedIn()
     }).then(toValue)
     .should.eventually.equal(false)
 
+    // hoodie.account.id persists
+    .execute(function getId () {
+      return hoodie.account.id
+    }).then(toValue)
+    .then(function (id) {
+      accountId = id
+    })
+
+    .url('/')
+
+    .execute(function getId () {
+      return hoodie.account.id
+    }).then(toValue)
+    .then(function (id) {
+      expect(id).to.equal(accountId)
+    })
+
     // preparations for events testing
-    .execute(function () {
+    .execute(function setEvents () {
       window.accountEvents = []
 
       ;[
@@ -99,6 +117,14 @@ describe('hoodie', function () {
     }, username, password).then(toValue)
     .should.eventually.have.property('username', username)
 
+    // hoodie.account.id does not change after sign up
+    .execute(function getId () {
+      return hoodie.account.id
+    }).then(toValue)
+    .then(function (id) {
+      expect(id).to.equal(accountId)
+    })
+
     // sets username
     .execute(function username () {
       return hoodie.account.username
@@ -145,21 +171,47 @@ describe('hoodie', function () {
     }, newUsername).then(toValue)
     .should.eventually.have.property('username', newUsername)
 
-    // destory resolves with account properties
-    .executeAsync(function signInAndDestroy (username, password, done) {
+    // hoodie.account.id changes after sign out
+    .execute(function getId () {
+      return hoodie.account.id
+    }).then(toValue)
+    .then(function (id) {
+      expect(id).to.not.equal(accountId)
+    })
+
+    // hoodie.account.id gets set after sign in
+    .executeAsync(function signIn (username, password, done) {
       hoodie.account.signIn({
         username: username,
         password: password
       })
 
-      // depends on https://github.com/hoodiehq/hoodie-client-account/issues/53
-      // .then(function () {
-      //   return hoodie.account.destroy()
-      // })
+      .then(function () {
+        return hoodie.account.id
+      })
 
       .then(done, done)
     }, newUsername, newPassword).then(toValue)
-    .should.eventually.have.property('username', username)
+    .then(function (id) {
+      expect(id).to.equal(accountId)
+    })
+
+    // destory resolves with account properties
+    // depends on https://github.com/hoodiehq/hoodie-client-account/issues/53
+    // .executeAsync(function signInAndDestroy (username, password, done) {
+    //   return hoodie.account.destroy()
+    //
+    //   .then(done, done)
+    // }, newUsername, newPassword).then(toValue)
+    // .should.eventually.have.property('username', username)
+
+    // hoodie.account.id changes after destroy
+    // .execute(function getId () {
+    //   return hoodie.account.id
+    // }).then(toValue)
+    // .then(function (id) {
+    //   expect(id).to.not.equal(accountId)
+    // })
 
     // check events
     .execute(function getEvents () {
@@ -224,7 +276,7 @@ describe('hoodie', function () {
       // expect(error.mesagge).to.equal('Invalid session')
     })
 
-    .execute(function () {
+    .execute(function getEvents () {
       return window.accountEvents
     })
     .then(function (events) {
@@ -237,13 +289,13 @@ describe('hoodie', function () {
     .url('/')
 
     // https://github.com/hoodiehq/hoodie-client-account/issues/56
-    // .execute(function () {
+    // .execute(function getIsUnauthenticated () {
     //   return hoodie.account.isUnauthenticated()
     // }).then(toValue)
     // .should.eventually.equal(true)
 
     // signin emits reauthenticate event
-    .execute(function () {
+    .execute(function setEvents () {
       window.accountEvents = []
 
       ;[
@@ -272,7 +324,7 @@ describe('hoodie', function () {
       .then(done, done)
     }, newUsername, newPassword)
 
-    .execute(function () {
+    .execute(function getEvents () {
       return window.accountEvents
     }).then(toValue)
 
