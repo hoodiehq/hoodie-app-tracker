@@ -1,4 +1,4 @@
-/* global describe, it, hoodie */
+/* global describe, beforeEach, it, hoodie */
 require('@gr2m/frontend-test-setup')
 
 var expect = require('chai').expect
@@ -19,12 +19,6 @@ function isError (value) {
   return value && value.name && /error/i.test(value.name)
 }
 
-function logError (error) {
-  console.log(error)
-
-  throw error
-}
-
 function patchXHRToFail () {
   (function (open) {
     window.XMLHttpRequest.prototype.origOpen = open
@@ -34,26 +28,29 @@ function patchXHRToFail () {
   })(window.XMLHttpRequest.prototype.open)
 }
 
-function unpatchXHR () {
-  window.XMLHttpRequest.prototype.open = window.XMLHttpRequest.prototype.origOpen
-}
-
-describe('hoodie', function () {
+describe('hoodie.connectionStatus', function () {
   this.timeout(90000)
 
-  it('connectionStatus', function () {
+  beforeEach(function () {
     return this.client.url('/')
 
-    // preparations for events testing
-    .execute(function () {
+    // keep track of events for tests
+    .execute(function setEvents () {
       window.events = []
-      hoodie.connectionStatus.on('disconnect', function () {
-        window.events.push('disconnect')
-      })
-      hoodie.connectionStatus.on('reconnect', function () {
-        window.events.push('reconnect')
+
+      ;[
+        'disconnect',
+        'reconnect'
+      ].forEach(function (eventName) {
+        hoodie.connectionStatus.on(eventName, function () {
+          window.events.push(eventName)
+        })
       })
     })
+  })
+
+  it('.check() when request succeeds', function () {
+    return this.client
 
     // hoodie.checkConnection to resolve
     .executeAsync(function checkConnection (done) {
@@ -62,13 +59,20 @@ describe('hoodie', function () {
       .then(done, done)
     }).then(toValue)
     .should.eventually.equal(null)
+  })
+
+  it('.ok returns true', function () {
+    return this.client
 
     .execute(function getConnectionStatus () {
       return hoodie.connectionStatus.ok
     }).then(toValue)
     .should.eventually.equal(true)
+  })
 
-    // when connectionStatus.check() fails, `disconnect` event should get triggered
+  it('.check() when request errors', function () {
+    return this.client
+
     .execute(patchXHRToFail)
     .executeAsync(function checkConnection (done) {
       return hoodie.connectionStatus.check()
@@ -85,33 +89,43 @@ describe('hoodie', function () {
       expect(events.length).to.equal(1)
       expect(events[0]).to.equal('disconnect')
     })
+  })
+
+  it('.ok after .check() failed', function () {
+    return this.client
 
     .execute(function getConnectionStatus () {
       return hoodie.connectionStatus.ok
     }).then(toValue)
     .should.eventually.equal(false)
+  })
 
-    // when Hoodie Server can be reached again
-    // - hoodie.connectionStatus.check() resolves
-    // - 'reconnect' event to be triggered
-    .execute(unpatchXHR)
+  it('.check() when request succeeds after it failed before', function () {
+    return this.client
+
     .executeAsync(function checkConnection (done) {
       return hoodie.connectionStatus.check()
 
       .then(function () {
         done(window.events)
       })
+
+      .catch(function () {
+        done(new Error('.check() should resolve'))
+      })
     }).then(toValue)
     .then(function (events) {
-      expect(events.length).to.equal(2)
-      expect(events[1]).to.equal('reconnect')
+      expect(events.length).to.equal(1)
+      expect(events[0]).to.equal('reconnect')
     })
+  })
+
+  it('.ok after reconnect', function () {
+    return this.client
 
     .execute(function getConnectionStatus () {
       return hoodie.connectionStatus.ok
     }).then(toValue)
     .should.eventually.equal(true)
-
-    .catch(logError)
   })
 })

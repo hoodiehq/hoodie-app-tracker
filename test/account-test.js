@@ -1,4 +1,4 @@
-/* global describe, it, hoodie */
+/* global describe, beforeEach, it, hoodie */
 require('@gr2m/frontend-test-setup')
 
 var expect = require('chai').expect
@@ -19,29 +19,52 @@ function isError (value) {
   return value && value.name && /error/i.test(value.name)
 }
 
-function logError (error) {
-  console.log(error)
-
-  throw error
-}
-
-describe('hoodie', function () {
+describe('hoodie.account', function () {
   this.timeout(90000)
 
-  it('account', function () {
-    var username = 'user' + Math.random().toString(16).substr(2)
-    var password = 'secret'
-    var newUsername = username // username + 'new'
-    var newPassword = 'secret' // 'secret2'
-    var accountId
+  var username = 'user' + Math.random().toString(16).substr(2)
+  var password = 'secret'
+  var newUsername = username // username + 'new'
+  var newPassword = 'secret' // 'secret2'
+  var accountId
 
+  beforeEach(function () {
     return this.client.url('/')
+
+    // keep track of events for tests
+    .execute(function setEvents () {
+      window.accountEvents = []
+
+      ;[
+        'signin',
+        'signup',
+        'signout',
+        'changeusername',
+        'changepassword',
+        'passwordreset',
+        'destroy',
+        'unauthenticate',
+        'reauthenticate'
+      ].forEach(function (eventName) {
+        hoodie.account.on(eventName, function () {
+          window.accountEvents.push(eventName)
+        })
+      })
+    })
+  })
+
+  it('.isSignedIn returns false', function () {
+    return this.client
 
     // sanity check
     .execute(function isSignedIn () {
       return hoodie.account.isSignedIn()
     }).then(toValue)
     .should.eventually.equal(false)
+  })
+
+  it('.id persist page reload', function () {
+    return this.client
 
     // hoodie.account.id persists
     .execute(function getId () {
@@ -59,29 +82,11 @@ describe('hoodie', function () {
     .then(function (id) {
       expect(id).to.equal(accountId)
     })
+  })
 
-    // preparations for events testing
-    .execute(function setEvents () {
-      window.accountEvents = []
+  it.skip('.signIn(options) with invalid credentials\n      hoodiehq/hoodie-server-account#52', function () {
+    return this.client
 
-      ;[
-        'signin',
-        'signup',
-        'signout',
-        'changeusername',
-        'changepassword',
-        'passwordreset',
-        'destroy',
-        'unauthenticate',
-        'reauthenticate'
-      ].forEach(function (eventName) {
-        hoodie.account.on(eventName, function () {
-          window.accountEvents.push(eventName)
-        })
-      })
-    })
-
-    // signin to fail with invalid username
     .executeAsync(function signInWithInvalidCredentials (done) {
       return hoodie.account.signIn({
         username: 'foo',
@@ -90,12 +95,15 @@ describe('hoodie', function () {
 
       .then(done, done)
     }).then(toValue)
-    .catch(function (/* error */) {
-      // expect(error.name).to.equal('UnauthorizedError')
-      // expect(error.mesagge).to.equal('Invalid credentials')
+    .catch(function (error) {
+      expect(error.name).to.equal('UnauthorizedError')
+      expect(error.mesagge).to.equal('Invalid credentials')
     })
+  })
 
-    // signup resolves with account properties
+  it('signUp(options)', function () {
+    return this.client
+
     .executeAsync(function signUp (username, password, done) {
       hoodie.account.signUp({
         username: username,
@@ -106,7 +114,18 @@ describe('hoodie', function () {
     }, username, password).then(toValue)
     .should.eventually.have.property('username', username)
 
-    // signin resolves with account properties
+    .execute(function getEvents () {
+      return window.accountEvents
+    }).then(toValue)
+    .then(function (events) {
+      expect(events.length).to.equal(1)
+      expect(events[0]).to.equal('signup')
+    })
+  })
+
+  it('signIn(options)', function () {
+    return this.client
+
     .executeAsync(function signIn (username, password, done) {
       hoodie.account.signIn({
         username: username,
@@ -117,59 +136,100 @@ describe('hoodie', function () {
     }, username, password).then(toValue)
     .should.eventually.have.property('username', username)
 
-    // hoodie.account.id does not change after sign up
+    .execute(function getEvents () {
+      return window.accountEvents
+    }).then(toValue)
+    .then(function (events) {
+      expect(events.length).to.equal(1)
+      expect(events[0]).to.equal('signin')
+    })
+  })
+
+  it('.id does not change after signUp & signIn', function () {
+    return this.client
+
     .execute(function getId () {
       return hoodie.account.id
     }).then(toValue)
     .then(function (id) {
       expect(id).to.equal(accountId)
     })
+  })
+
+  it('.username set after signIn', function () {
+    return this.client
 
     // sets username
     .execute(function username () {
       return hoodie.account.username
     }).then(toValue)
     .should.eventually.equal(username)
+  })
+
+  it('.isSignedIn() returns true after signIn', function () {
+    return this.client
 
     // sets isSignedIn
     .execute(function isSignedIn () {
       return hoodie.account.isSignedIn()
     }).then(toValue)
     .should.eventually.equal(true)
+  })
 
-    // // change password resolves with account poperties
-    // .executeAsync(function changePassword (password, done) {
-    //   hoodie.account.update({
-    //     password: password
-    //   })
-    //
-    //   .then(done, done)
-    // }, newPassword).then(toValue)
-    // .should.eventually.have.property('username', username)
-    //
-    // // change username resolves with account poperties
-    // .executeAsync(function changeUsername (username, done) {
-    //   hoodie.account.update({
-    //     username: username
-    //   })
-    //
-    //   .then(done, done)
-    // }, newUsername).then(toValue)
-    // .should.eventually.have.property('username', newUsername)
-    //
-    // // hoodie.account.username changed
-    // .execute(function username () {
-    //   return hoodie.account.username
-    // }).then(toValue)
-    // .should.eventually.equal(newUsername)
+  it.skip('.update({password: newPassword}) resolves with account properties\n      hoodiehq/hoodie-client-account#52', function () {
+    return this.client
 
-    // signout resolves with account properties
+    .executeAsync(function changePassword (newPassword, done) {
+      hoodie.account.update({
+        password: newPassword
+      })
+      .then(done, done)
+    }, newPassword).then(toValue)
+    .should.eventually.have.property('username', username)
+
+    .execute(function getEvents () {
+      return window.accountEvents
+    }).then(toValue)
+    .then(function (events) {
+      expect(events.length).to.equal(1)
+      expect(events[0]).to.equal('update')
+    })
+  })
+
+  it.skip('.update({username: newUsername}) resolves with account properties\n      hoodiehq/hoodie-client-account#52', function () {
+    return this.client
+
+    .executeAsync(function changePassword (newUsername, done) {
+      hoodie.account.update({
+        username: newUsername
+      })
+      .then(done, done)
+    }, newUsername).then(toValue)
+    .should.eventually.have.property('username', username)
+  })
+
+  it('.signOut() resolves with account properties', function () {
+    return this.client
+
+    // sets isSignedIn
     .executeAsync(function signOut (username, done) {
       hoodie.account.signOut()
 
       .then(done, done)
     }, newUsername).then(toValue)
     .should.eventually.have.property('username', newUsername)
+
+    .execute(function getEvents () {
+      return window.accountEvents
+    }).then(toValue)
+    .then(function (events) {
+      expect(events.length).to.equal(1)
+      expect(events[0]).to.equal('signout')
+    })
+  })
+
+  it('.id changes after .signOut()', function () {
+    return this.client
 
     // hoodie.account.id changes after sign out
     .execute(function getId () {
@@ -178,8 +238,11 @@ describe('hoodie', function () {
     .then(function (id) {
       expect(id).to.not.equal(accountId)
     })
+  })
 
-    // hoodie.account.id gets set after sign in
+  it('.id gets set after signIn', function () {
+    return this.client
+
     .executeAsync(function signIn (username, password, done) {
       hoodie.account.signIn({
         username: username,
@@ -195,125 +258,82 @@ describe('hoodie', function () {
     .then(function (id) {
       expect(id).to.equal(accountId)
     })
+  })
 
-    // destory resolves with account properties
-    // depends on https://github.com/hoodiehq/hoodie-client-account/issues/53
-    // .executeAsync(function signInAndDestroy (username, password, done) {
-    //   return hoodie.account.destroy()
-    //
-    //   .then(done, done)
-    // }, newUsername, newPassword).then(toValue)
-    // .should.eventually.have.property('username', username)
+  it.skip('.destroy() resolves with account properties\n      hoodiehq/hoodie-client-account#53', function () {
+    return this.client
 
-    // hoodie.account.id changes after destroy
-    // .execute(function getId () {
-    //   return hoodie.account.id
-    // }).then(toValue)
-    // .then(function (id) {
-    //   expect(id).to.not.equal(accountId)
-    // })
+    // sets isSignedIn
+    .executeAsync(function signInAndDestroy (username, password, done) {
+      return hoodie.account.destroy()
 
-    // check events
+      .then(done, done)
+    }, newUsername, newPassword).then(toValue)
+    .should.eventually.have.property('username', username)
+
     .execute(function getEvents () {
       return window.accountEvents
     }).then(toValue)
     .then(function (events) {
-      expect(events.length).to.equal(4)
-      expect(events[0]).to.equal('signup')
-      expect(events[1]).to.equal('signin')
-      expect(events[2]).to.equal('signout')
-      expect(events[3]).to.equal('signin')
-
-      // expect(events.length).to.equal(8)
-      // expect(events[0]).to.equal('signup')
-      // expect(events[1]).to.equal('signin')
-      // expect(events[2]).to.equal('changepassword')
-      // expect(events[3]).to.equal('changeusername')
-      // expect(events[4]).to.equal('signout')
-      // expect(events[5]).to.equal('signin')
-      // expect(events[6]).to.equal('signout')
-      // expect(events[7]).to.equal('destroy')
+      expect(events.length).to.equal(1)
+      expect(events[0]).to.equal('destroy')
     })
+  })
 
-    // simulate unauthenticated state
-    .execute(function setInvalidSessionId () {
-      var account = JSON.parse(window.localStorage.getItem('account'))
-      account.session.id = 'invalidsession123'
-      window.localStorage.setItem('account', JSON.stringify(account))
+  // depends on test above
+  it.skip('.id changes after .destroy()\n      hoodiehq/hoodie-client-account#53', function () {
+    return this.client
+
+    .execute(function getId () {
+      return hoodie.account.id
+    }).then(toValue)
+    .then(function (id) {
+      expect(id).to.not.equal(accountId)
     })
+  })
 
-    .url('/')
+  it.skip('.fetch with UnauthenticatedError\n      hoodiehq/hoodie-client-account#54', function () {
+    return this.client
 
-    .execute(function events () {
-      window.accountEvents = []
-
-      ;[
-        'signin',
-        'signup',
-        'signout',
-        'changeusername',
-        'changepassword',
-        'passwordreset',
-        'destroy',
-        'unauthenticate',
-        'reauthenticate'
-      ].forEach(function (eventName) {
-        hoodie.account.on(eventName, function () {
-          window.accountEvents.push(eventName)
-        })
+    .executeAsync(function signIn (username, password, done) {
+      hoodie.account.signIn({
+        username: username,
+        password: password
       })
-    })
 
-    // fetch triggeres unauthenticate event
+      .then(done, done)
+    }, newUsername, newPassword).then(toValue)
+
     .executeAsync(function fetch (done) {
       return hoodie.account.fetch()
 
       .then(done, done)
     }).then(toValue)
-    .catch(function (/* error */) {
-      // https://github.com/hoodiehq/hoodie-client-account/issues/54
-      // expect(error.name).to.equal('UnauthenticatedError')
-      // expect(error.mesagge).to.equal('Invalid session')
+    .catch(function (error) {
+      expect(error.name).to.equal('UnauthenticatedError')
+      expect(error.mesagge).to.equal('Invalid session')
     })
 
     .execute(function getEvents () {
       return window.accountEvents
     })
     .then(function (events) {
-      // https://github.com/hoodiehq/hoodie-client-account/issues/54
-      // expect(events.length).to.equal(1)
-      // expect(events[1]).to.equal('unauthenticate')
+      expect(events.length).to.equal(1)
+      expect(events[0]).to.equal('unauthenticate')
     })
+  })
 
-    // persists unauthenticated state
-    .url('/')
+  it.skip('.isUnauthenticated()\n      hoodiehq/hoodie-client-account#56', function () {
+    return this.client
 
-    // https://github.com/hoodiehq/hoodie-client-account/issues/56
-    // .execute(function getIsUnauthenticated () {
-    //   return hoodie.account.isUnauthenticated()
-    // }).then(toValue)
-    // .should.eventually.equal(true)
+    .execute(function getIsUnauthenticated () {
+      return hoodie.account.isUnauthenticated()
+    }).then(toValue)
+    .should.eventually.equal(true)
+  })
 
-    // signin emits reauthenticate event
-    .execute(function setEvents () {
-      window.accountEvents = []
-
-      ;[
-        'signin',
-        'signup',
-        'signout',
-        'changeusername',
-        'changepassword',
-        'passwordreset',
-        'destroy',
-        'unauthenticate',
-        'reauthenticate'
-      ].forEach(function (eventName) {
-        hoodie.account.on(eventName, function () {
-          window.accountEvents.push(eventName)
-        })
-      })
-    })
+  it.skip('.signIn() when unauthenticated\n      hoodiehq/hoodie-client-account#57', function () {
+    return this.client
 
     .executeAsync(function (username, password, done) {
       hoodie.account.signIn({
@@ -330,13 +350,7 @@ describe('hoodie', function () {
 
     .then(function (events) {
       expect(events.length).to.equal(1)
-      // https://github.com/hoodiehq/hoodie-client-account/issues/57
-      // expect(events[1]).to.equal('reauthenticate')
+      expect(events[1]).to.equal('reauthenticate')
     })
-
-    .catch(logError)
-
-    // cleanup
-    .localStorage('DELETE')
   })
 })
