@@ -14,7 +14,6 @@ play and build with Hoodie.
 ```
 git clone git@github.com:hoodiehq/hoodie-app-something-tracker.git
 cd hoodie-app-something-tracker
-git checkout something-tracker
 npm install --no-optional --production
 cp .hoodierc-example .hoodierc
 ```
