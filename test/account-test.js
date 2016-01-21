@@ -263,8 +263,7 @@ describe('hoodie.account', function () {
   it.skip('.destroy() resolves with account properties\n      hoodiehq/hoodie-client-account#53', function () {
     return this.client
 
-    // sets isSignedIn
-    .executeAsync(function signInAndDestroy (username, password, done) {
+    .executeAsync(function destroy (username, password, done) {
       return hoodie.account.destroy()
 
       .then(done, done)
