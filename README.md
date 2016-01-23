@@ -12,7 +12,7 @@ play and build with Hoodie.
 ## Setup
 
 ```
-git clone git@github.com:hoodiehq/hoodie-app-something-tracker.git
+git clone https://github.com/hoodiehq/hoodie-app-something-tracker.git
 cd hoodie-app-something-tracker
 npm install --no-optional --production
 cp .hoodierc-example .hoodierc
