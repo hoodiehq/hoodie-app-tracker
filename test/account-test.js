@@ -97,7 +97,7 @@ describe('hoodie.account', function () {
     }).then(toValue)
     .catch(function (error) {
       expect(error.name).to.equal('UnauthorizedError')
-      expect(error.mesagge).to.equal('Invalid credentials')
+      expect(error.message).to.equal('Invalid credentials')
     })
   })
 
@@ -310,7 +310,7 @@ describe('hoodie.account', function () {
     }).then(toValue)
     .catch(function (error) {
       expect(error.name).to.equal('UnauthenticatedError')
-      expect(error.mesagge).to.equal('Invalid session')
+      expect(error.message).to.equal('Invalid session')
     })
 
     .execute(function getEvents () {
