@@ -72,4 +72,4 @@ It’s best to join our [chat](http://hood.ie/chat/).
 
 ## License
 
-Apache 2.0
+[Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)
