@@ -84,7 +84,7 @@ describe('hoodie.account', function () {
     })
   })
 
-  it.skip('.signIn(options) with invalid credentials\n      hoodiehq/hoodie-server-account#52', function () {
+  it('.signIn(options) with invalid credentials', function () {
     return this.client
 
     .executeAsync(function signInWithInvalidCredentials (done) {
@@ -93,7 +93,14 @@ describe('hoodie.account', function () {
         password: 'bar'
       })
 
-      .then(done, done)
+      // done(error) does not pass .message for whatever reason,
+      // so passing it manually
+      .catch(function (error) {
+        done({
+          name: error.name,
+          message: error.message
+        })
+      })
     }).then(toValue)
     .catch(function (error) {
       expect(error.name).to.equal('UnauthorizedError')
