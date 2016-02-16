@@ -7,80 +7,126 @@
     <link rel="stylesheet" href="assets/normalize.css" />
     <link rel="stylesheet" href="assets/app.css" />
   </head>
-  <body>
+  <body data-account-state="">
     <div class="container">
-      <form class="js-signin-form form form-inline">
-        <label
-          class="form-label form-label-small"
-          for="username"
-        >Username</label>
-        <input
-          class="form-input form-input-small"
-          name="username"
-          id="username"
-          width="200"
-          required
-        >
-        <label
-          class="form-label form-label-small"
-          for="password"
-        >
-          Password
-          (<a
-            role="button"
-            href="#"
-            class="js-reset-password"
-          >reset</a>)
-        </label>
-        <input
-          class="form-input form-input-small"
-          id="password"
-          name="password"
-          type="password"
-          width="200"
-          required
-        >
-        <div class="text-right pull-right">
-          <button
-            class="btn btn-small"
-            name="sign-in"
-            type="submit"
-          >Sign in</button>
-          <button
-            class="js-signup-btn btn btn-small"
-            name="sign-up"
-            type="submit"
-          >Sign up</button>
+      <header class="main-header mbl">
+        <div data-show="signin" class="js-account-forms account-forms">
+          <form class="js-signup-form form form-inline form-signup mbm">
+            <h2 class="mtbs">Sign up</h2>
+            <label
+              class="form-label form-label-small"
+              for="username"
+            >Username</label>
+            <input
+              class="form-input form-input-small mbm"
+              name="username"
+              id="username"
+              width="200"
+              required
+            >
+            <label
+              class="form-label form-label-small"
+              for="password"
+            >
+              Password
+            </label>
+            <input
+              class="form-input form-input-small mbm"
+              id="password"
+              name="password"
+              type="password"
+              width="200"
+              required
+            >
+            <button
+              class="js-signup-btn btn btn-small btn-signup"
+              name="sign-up"
+              type="submit"
+            >Sign up</button>
+            <a
+              href="#"
+              class="js-signin-toggle signin-toggle prls"
+            >Log in?</a>
+          </form>
+          <form class="js-signin-form form form-inline form-signin mbm">
+            <div
+              class="signup-btn js-signup-toggle signup-toggle prls pbm mbl"
+              >
+              <h2
+                class="mtbs dib"
+                >New account?</h2>
+              <a
+                href="#"
+                class="btn"
+              >click here to sign up!</a>
+            </div>
+            <h2 class="mtbs">Log in</h2>
+            <label
+              class="form-label form-label-small"
+              for="username"
+            >Username</label>
+            <input
+              class="form-input form-input-small mbm"
+              name="username"
+              id="username"
+              width="200"
+              required
+            >
+            <label
+              class="form-label form-label-small"
+              for="password"
+            >
+              Password
+              (<a
+                role="button"
+                href="#"
+                class="js-reset-password"
+              >reset</a>)
+            </label>
+            <input
+              class="form-input form-input-small mbm"
+              id="password"
+              name="password"
+              type="password"
+              width="200"
+              required
+            >
+            <button
+              class="btn btn-small btn-login"
+              name="sign-in"
+              type="submit"
+            >Log in</button>
+          </form>
         </div>
-      </form>
-      <div class="js-signedin-message hide text-right">
-        <p>
-          Hello there, <span class="js-username"></span>!
-          <button
-            class="js-signout-btn btn btn-small"
-          >Sign out</button>
-        </p>
-      </div>
-      <h1>Something Tracker</h1>
+        <div class="js-signedin-message hide signedin-message text-right mbm">
+          <p>
+            Hello there, <span class="js-username"></span>!
+            <button
+              class="js-signout-btn btn btn-small"
+            >Sign out</button>
+          </p>
+        </div>
+        <h1 class="main-title pm">Something Tracker</h1>
+      </header>
       <div class="grid">
         <div class="grid-col">
-          <form class="js-tracker-input">
-            <label class="form-label" for="amount">Amount</label>
+          <form class="js-tracker-input mbm">
+            <label class="form-label pbs" for="note">What would you like to track?</label>
+            <textarea
+              class="form-input mbm"
+              name="note"
+              id="note"
+              required
+            ></textarea>
+            <label class="form-label pbs" for="amount">Amount</label>
             <input
-              class="form-input"
+              class="form-input mbm"
               type="number"
               name="amount"
               id="amount"
               required
               value="1"
             >
-            <label class="form-label" for="note">Note</label>
-            <textarea
-              class="form-input"
-              name="note"
-              id="note"
-              required
-            ></textarea>
             <div class="text-right">
               <button
                 class="btn full-width-small"
@@ -90,12 +136,12 @@
           <form>
         </div>
         <div class="grid-col">
-          <h4>Tracked Items</h4>
-          <table class="table">
+          <h4 class="pbs">Tracked Items</h4>
+          <table class="table mbm">
             <thead>
               <tr>
                 <th>Amount</th>
-                <th>Note</th>
+                <th>Item</th>
               </tr>
             </thead>
             <tbody class="js-tracker-output text-center">

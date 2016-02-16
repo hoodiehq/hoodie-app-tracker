@@ -17,11 +17,10 @@ body {
 
 h1, h4 {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 h1 {
-  border-bottom: 2px solid #222;
   line-height: 1.5;
 }
 
@@ -51,11 +50,15 @@ textarea {
 }
 
 /* Clearfix */
+
+.grid:after,
 .grid > .grid-col:before,
 .grid > .grid-col:after {
   content: " ";
   display: table;
 }
+
+.grid:after,
 .grid > .grid-col:after {
   clear: both;
 }
@@ -69,6 +72,27 @@ textarea {
 
 /* Components */
 
+.account-forms,
+.signedin-message {
+  display: none;
+}
+
+[data-account-state='signed-out'] .account-forms {
+  display: block;
+}
+
+[data-account-state='signed-in'] .signedin-message {
+  display: block;
+}
+
+.main-title {
+  margin: 0;
+  background-color: #333;
+  color: #fff;
+  font-size: 3em;
+  line-height: 1em;
+}
+
 .form-input {
   padding: 1rem;
 }
@@ -78,10 +102,43 @@ textarea {
   font-weight: bold;
 }
 
+[data-show] form {
+  display: none;
+}
+
+[data-show='signin'] .form-signin,
+[data-show='signup'] .form-signup {
+  display: block;
+}
+
+.signedin-message p {
+  margin: 0;
+}
+
+.signup-toggle,
+.signin-toggle {
+  font-size: .8em;
+}
+
+.signup-toggle {
+  text-align: center;
+}
+
+.signup-toggle a {
+  text-decoration: none;
+  color: #659D32;
+  background-color: transparent;
+  font-weight: bold;
+  border: 2px solid #659D32;
+}
+
+.signup-btn {
+  border-bottom: 1px solid #333;
+}
+
 .btn {
   display: inline-block;
   padding: 1rem;
-  margin-bottom: 1rem;
   border-radius: 5px;
   background: #CCC;
   border: none;
@@ -107,7 +164,6 @@ textarea {
 .textarea,
 .table {
   width: 100%;
-  margin-bottom: 1rem;
 }
 
 .form-input,
@@ -126,6 +182,12 @@ textarea {
   box-shadow: 0 0 0 2px #222;
 }
 
+.btn-signup,
+.btn-login {
+  font-weight: bold;
+  padding: 10px 25px;
+}
+
 /* Clearfix */
 .form:before,
 .form:after {
@@ -135,7 +197,6 @@ textarea {
 .form:after {
   clear: both;
 }
-
 
 @media (min-width: 768px) {
   .form-inline .form-label,
@@ -168,7 +229,6 @@ textarea {
 .table th:first-child,
 .table td:first-child {
   padding: 1rem;
-  text-align: right;
 }
 
 .table td {
@@ -191,6 +251,50 @@ textarea {
 
 .pull-right {
   float: right;
+}
+
+.dib {
+  display: inline-block;
+}
+
+.mbm {
+  margin-bottom: 1rem;
+}
+
+.mbl {
+  margin-bottom: 2rem;
+}
+
+.mtbs {
+  margin: .5rem 0;
+}
+
+.pm {
+  padding: 1rem;
+}
+
+.prls {
+  padding: 0 .5rem;
+}
+
+.pts {
+  padding-top: .5rem;
+}
+
+.pbs {
+  padding-bottom: .5rem;
+}
+
+.pbm {
+  padding-bottom: 1rem;
+}
+
+.ptbs {
+  padding: .5rem 0;
+}
+
+.prlm {
+  padding: 0 1rem;
 }
 
 @media (max-width: 768px) {

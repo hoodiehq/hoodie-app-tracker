@@ -1,8 +1,12 @@
 var $passwordResetButton = document.querySelector('.js-reset-password')
 var $signinForm = document.querySelector('.js-signin-form')
+var $signupForm = document.querySelector('.js-signup-form')
+var $accountForms = document.querySelector('.js-account-forms')
 var $signedinMessage = document.querySelector('.js-signedin-message')
 var $signupButton = document.querySelector('.js-signup-btn')
 var $signoutButton = document.querySelector('.js-signout-btn')
+var $signinToggle = document.querySelector('.js-signin-toggle')
+var $signupToggle = document.querySelector('.js-signup-toggle')
 
 var $trackerForm = document.querySelector('.js-tracker-input')
 var $trackerOutput = document.querySelector('.js-tracker-output')
@@ -34,6 +38,8 @@ $passwordResetButton.addEventListener('click', function (event) {
 $signinForm.addEventListener('submit', function (event) {
   event.preventDefault()
 
+  $signinForm.classList.toggle('show')
+
   var username = $signinForm.querySelector('[name=username]').value
   var password = $signinForm.querySelector('[name=password]').value
 
@@ -47,11 +53,23 @@ $signinForm.addEventListener('submit', function (event) {
   })
 })
 
+$signinToggle.addEventListener('click', function (event) {
+  event.preventDefault()
+
+  $accountForms.setAttribute('data-show','signin')
+})
+
+$signupToggle.addEventListener('click', function (event) {
+  event.preventDefault()
+
+  $accountForms.setAttribute('data-show','signup')
+})
+
 $signupButton.addEventListener('click', function (event) {
   event.preventDefault()
 
-  var username = $signinForm.querySelector('[name=username]').value
-  var password = $signinForm.querySelector('[name=password]').value
+  var username = $signupForm.querySelector('[name=username]').value
+  var password = $signupForm.querySelector('[name=password]').value
 
   hoodie.account.signUp({
     username: username,
@@ -147,19 +165,18 @@ function addNote (note) {
 
 function showSignedIn (username) {
   document.querySelector('.js-username').textContent = username
-  $signedinMessage.classList.remove('hide');
-  $signinForm.classList.add('hide');
+  document.body.setAttribute('data-account-state', 'signed-in')
 }
 
 function hideSignedIn () {
-  $signedinMessage.classList.add('hide');
-  $signinForm.classList.remove('hide');
+  document.body.setAttribute('data-account-state', 'signed-out')
 }
 
 hoodie.account.on('signin', function (account) {
   $signinForm.reset()
   showSignedIn(account.username)
 })
+
 hoodie.account.on('signout', hideSignedIn)
 if (hoodie.account.isSignedIn()) {
   showSignedIn(hoodie.account.username)
