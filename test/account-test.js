@@ -25,32 +25,31 @@ describe('hoodie.account', function () {
   var username = 'user' + Math.random().toString(16).substr(2)
   var password = 'secret'
   var newUsername = username // username + 'new'
-  var newPassword = 'secret' // 'secret2'
+  var newPassword = 'secret2' // 'secret2'
   var accountId
+  var accountEventNames = [
+    'signin',
+    'signup',
+    'signout',
+    'update',
+    'destroy',
+    'unauthenticate',
+    'reauthenticate'
+  ]
 
   beforeEach(function () {
     return this.client.url('/')
 
     // keep track of events for tests
-    .execute(function setEvents () {
+    .execute(function setEvents (accountEventNames) {
       window.accountEvents = []
 
-      ;[
-        'signin',
-        'signup',
-        'signout',
-        'changeusername',
-        'changepassword',
-        'passwordreset',
-        'destroy',
-        'unauthenticate',
-        'reauthenticate'
-      ].forEach(function (eventName) {
+      accountEventNames.forEach(function (eventName) {
         hoodie.account.on(eventName, function () {
           window.accountEvents.push(eventName)
         })
       })
-    })
+    }, accountEventNames)
   })
 
   it('.isSignedIn returns false', function () {
@@ -183,15 +182,16 @@ describe('hoodie.account', function () {
     .should.eventually.equal(true)
   })
 
-  it.skip('.update({password: newPassword}) resolves with account properties\n      hoodiehq/hoodie-client-account#52', function () {
+  it('.update({password: newPassword}) resolves with account properties', function () {
     return this.client
 
-    .executeAsync(function changePassword (newPassword, done) {
+    .executeAsync(function changePassword (username, newPassword, done) {
       hoodie.account.update({
+        username: username, // username should not be required: hoodiehq/hoodie-client-account#75
         password: newPassword
       })
       .then(done, done)
-    }, newPassword).then(toValue)
+    }, username, newPassword).then(toValue)
     .should.eventually.have.property('username', username)
 
     .execute(function getEvents () {
@@ -203,7 +203,7 @@ describe('hoodie.account', function () {
     })
   })
 
-  it.skip('.update({username: newUsername}) resolves with account properties\n      hoodiehq/hoodie-client-account#52', function () {
+  it.skip('.update({username: newUsername}) resolves with account properties\n      hoodiehq/hoodie-server-account#79', function () {
     return this.client
 
     .executeAsync(function changePassword (newUsername, done) {
@@ -267,7 +267,7 @@ describe('hoodie.account', function () {
     })
   })
 
-  it.skip('.destroy() resolves with account properties\n      hoodiehq/hoodie-client-account#53', function () {
+  it('.destroy() resolves with account properties', function () {
     return this.client
 
     .executeAsync(function destroy (username, password, done) {
@@ -281,13 +281,14 @@ describe('hoodie.account', function () {
       return window.accountEvents
     }).then(toValue)
     .then(function (events) {
-      expect(events.length).to.equal(1)
-      expect(events[0]).to.equal('destroy')
+      expect(events.length).to.equal(2)
+      expect(events[0]).to.equal('signout')
+      expect(events[1]).to.equal('destroy')
     })
   })
 
   // depends on test above
-  it.skip('.id changes after .destroy()\n      hoodiehq/hoodie-client-account#53', function () {
+  it('.id changes after .destroy()', function () {
     return this.client
 
     .execute(function getId () {
@@ -298,38 +299,64 @@ describe('hoodie.account', function () {
     })
   })
 
-  it.skip('.fetch with UnauthenticatedError\n      hoodiehq/hoodie-client-account#54', function () {
+  it.skip('.fetch with UnauthorizedError\n      hoodiehq/hoodie-server-account#81', function () {
     return this.client
 
     .executeAsync(function signIn (username, password, done) {
-      hoodie.account.signIn({
+      hoodie.account.signUp({
         username: username,
         password: password
       })
 
+      .then(function () {
+        hoodie.account.signIn({
+          username: username,
+          password: password
+        })
+      })
+
       .then(done, done)
-    }, newUsername, newPassword).then(toValue)
+    }, username, password)
+
+    // simulate an invalid session by changing the session id in localStorage
+    // and reloading the page
+    .execute(function simulateUnauthenticatedState () {
+      var account = JSON.parse(window.localStorage.getItem('account'))
+      account.session.id = 'invalidsessionid'
+      window.localStorage.setItem('account', JSON.stringify(account))
+    })
+    .url('/')
+    .execute(function (accountEventNames) {
+      window.accountEvents = []
+
+      accountEventNames.forEach(function (eventName) {
+        hoodie.account.on(eventName, function () {
+          window.accountEvents.push(eventName)
+        })
+      })
+    }, accountEventNames)
 
     .executeAsync(function fetch (done) {
       return hoodie.account.fetch()
 
       .then(done, done)
     }).then(toValue)
+
     .catch(function (error) {
-      expect(error.name).to.equal('UnauthenticatedError')
-      expect(error.message).to.equal('Invalid session')
+      expect(error.name).to.equal('UnauthorizedError')
+      expect(error.message).to.equal('Invalid credentials')
     })
 
     .execute(function getEvents () {
       return window.accountEvents
-    })
+    }).then(toValue)
     .then(function (events) {
       expect(events.length).to.equal(1)
       expect(events[0]).to.equal('unauthenticate')
     })
   })
 
-  it.skip('.isUnauthenticated()\n      hoodiehq/hoodie-client-account#56', function () {
+  it.skip('.isUnauthenticated()\n      hoodiehq/hoodie-server-account#81', function () {
     return this.client
 
     .execute(function getIsUnauthenticated () {
@@ -338,7 +365,7 @@ describe('hoodie.account', function () {
     .should.eventually.equal(true)
   })
 
-  it.skip('.signIn() when unauthenticated\n      hoodiehq/hoodie-client-account#57', function () {
+  it.skip('.signIn() when unauthenticated\n      hoodiehq/hoodie-server-account#81', function () {
     return this.client
 
     .executeAsync(function (username, password, done) {
