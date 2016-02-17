@@ -31,6 +31,10 @@ textarea {
 
 /* Layout */
 
+.table td input {
+  width: 100%;
+}
+
 .container {
   margin-left: auto;
   margin-right: auto;
@@ -64,9 +68,14 @@ textarea {
 }
 
 @media (min-width: 768px) {
-  .grid > .grid-col {
+  .grid > .grid-col:first-child {
     float: left;
-    width: calc(50% - 2rem);
+    width: calc(40% - 2rem);
+  }
+
+  .grid > .grid-col:last-child {
+    float: left;
+    width: calc(60% - 2rem);
   }
 }
 
@@ -236,6 +245,10 @@ textarea {
 }
 
 /* Utils */
+
+.fs {
+  font-size: .8em;
+}
 
 .hide {
   display: none;

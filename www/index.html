@@ -15,12 +15,12 @@
             <h2 class="mtbs">Sign up</h2>
             <label
               class="form-label form-label-small"
-              for="username"
-            >Username</label>
+              for="Email"
+            >Email</label>
             <input
               class="form-input form-input-small mbm"
-              name="username"
-              id="username"
+              name="email"
+              type="email"
               width="200"
               required
             >
@@ -63,12 +63,12 @@
             <h2 class="mtbs">Log in</h2>
             <label
               class="form-label form-label-small"
-              for="username"
-            >Username</label>
+              for="email"
+            >Email</label>
             <input
               class="form-input form-input-small mbm"
-              name="username"
-              id="username"
+              name="email"
+              type="email"
               width="200"
               required
             >
@@ -77,11 +77,6 @@
               for="password"
             >
               Password
-              (<a
-                role="button"
-                href="#"
-                class="js-reset-password"
-              >reset</a>)
             </label>
             <input
               class="form-input form-input-small mbm"
@@ -96,6 +91,11 @@
               name="sign-in"
               type="submit"
             >Log in</button>
+            <a
+              role="button"
+              href="#"
+              class="js-reset-password fs prls"
+            >Forgot password?</a>
           </form>
         </div>
         <div class="js-signedin-message hide signedin-message text-right mbm">
@@ -142,11 +142,13 @@
               <tr>
                 <th>Amount</th>
                 <th>Item</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
-            <tbody class="js-tracker-output text-center">
+            <tbody class="js-tracker-output js-edit-delete text-center">
               <tr class="table-placeholder">
-                <td colspan="2">
+                <td colspan="4">
                   Nothing tracked yet, add something!
                 </td>
               </tr>

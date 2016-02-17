@@ -12,18 +12,20 @@ var $trackerForm = document.querySelector('.js-tracker-input')
 var $trackerOutput = document.querySelector('.js-tracker-output')
 var $trackerClearButton = document.querySelector('.js-tracker-clear')
 
+var $editDeleteItem = document.querySelector('.js-edit-delete')
+
 $passwordResetButton.addEventListener('click', function (event) {
   event.preventDefault()
 
-  var username = prompt('Username', $signinForm.querySelector('[name=username]').value)
+  var email = prompt('Email', $signinForm.querySelector('[name=email]').value)
 
-  if (!username) {
+  if (!email) {
     return
   }
 
   hoodie.account.request({
     type: 'passwordreset',
-    username: username
+    username: email
   })
 
   .then(function () {
@@ -40,11 +42,11 @@ $signinForm.addEventListener('submit', function (event) {
 
   $signinForm.classList.toggle('show')
 
-  var username = $signinForm.querySelector('[name=username]').value
+  var email = $signinForm.querySelector('[name=email]').value
   var password = $signinForm.querySelector('[name=password]').value
 
   hoodie.account.signIn({
-    username: username,
+    username: email,
     password: password
   })
 
@@ -68,17 +70,17 @@ $signupToggle.addEventListener('click', function (event) {
 $signupButton.addEventListener('click', function (event) {
   event.preventDefault()
 
-  var username = $signupForm.querySelector('[name=username]').value
+  var email = $signupForm.querySelector('[name=email]').value
   var password = $signupForm.querySelector('[name=password]').value
 
   hoodie.account.signUp({
-    username: username,
+    username: email,
     password: password
   })
 
   .then(function () {
     return hoodie.account.signIn({
-      username: username,
+      username: email,
       password: password
     })
   })
@@ -127,12 +129,16 @@ $trackerClearButton.addEventListener('click', function (event) {
   })
 })
 
+function orderByCreatedAt (item1, item2) {
+  return item1.createdAt > item2.createdAt ? 1 : -1
+}
+
 /**
  * With hoodie we're storing our data locally and it will stick around next time you reload.
  * This means each time the page loads we need to find any previous notes that we have stored.
  */
 hoodie.store.findAll().then(function (notes) {
-  notes.forEach(addNote)
+  notes.sort(orderByCreatedAt).forEach(addNote)
 })
 
 /**
@@ -153,15 +159,59 @@ function addNote (note) {
   var row = document.createElement('tr')
   var amountTd = document.createElement('td')
   var noteTd = document.createElement('td')
+  var editTd = document.createElement('td')
+  var deleteTd = document.createElement('td')
 
   amountTd.textContent = note.amount
   noteTd.textContent = note.note
+  editTd.innerHTML = '<a href="#" class="edit-item">Edit</a>'
+  deleteTd.innerHTML = '<a href="#" class="delete-item">Delete</a>'
 
+  row.setAttribute('id', 'item-' + note.id)
   row.appendChild(amountTd)
   row.appendChild(noteTd)
+  row.appendChild(editTd)
+  row.appendChild(deleteTd)
 
   $trackerOutput.appendChild(row)
 }
+
+$editDeleteItem.addEventListener('click', function (event) {
+  event.preventDefault()
+
+  var row = event.target.parentNode.parentNode
+  var id = row.id.substr('item-'.length)
+  var amount = row.firstChild.textContent
+  var note = row.firstChild.nextSibling.textContent
+
+  if (event.target.textContent == 'Delete') {
+    row.remove();
+
+    hoodie.store.remove({
+      id: id
+    })
+  }
+
+  if (event.target.textContent == 'Edit') {
+    row.innerHTML = '<td><input type="number" name="amount" value="'+ amount +'" data-reset-value="'+ amount +'"></td><td><input type="text" name="note" value="'+ note +'" data-reset-value="'+ note +'"></td><td><a href="#" class="save-edit">Save</a></td><td><a href="#" class="cancel-edit">Cancel</a></td>'
+  }
+
+  if (event.target.textContent == 'Cancel') {
+    amount = row.querySelector('input[name=amount]').dataset.resetValue
+    note = row.querySelector('input[name=note]').dataset.resetValue
+    row.innerHTML = '<td>' + amount + '</td><td>' + note + '</td><td><a href="#" class="edit-item">Edit</a></td><td><a href="#" class="delete-item">Delete</a></td>'
+  }
+
+  if (event.target.textContent == 'Save') {
+    amount = row.querySelector('input[name=amount]').value
+    note = row.querySelector('input[name=note]').value
+    hoodie.store.update(id, {
+      amount: amount,
+      note: note
+    })
+    row.innerHTML = '<td>' + amount + '</td><td>' + note + '</td><td><a href="#" class="edit-item">Edit</a></td><td><a href="#" class="delete-item">Delete</a></td>'
+  }
+})
 
 function showSignedIn (username) {
   document.querySelector('.js-username').textContent = username
