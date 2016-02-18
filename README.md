@@ -61,7 +61,7 @@ npm test
   (hackable) as possible, we want to keep the HTML / CSS / JS code to a minimum
   and not use 3rd party libraries at all if possible.
 - on Hoodie itself, we prepared great starter issues: [starter issues](http://go.hood.ie/hoodie-starter-issues).
-- We have harder ones, too, if you feel adventurous :) Remote the "starter" label
+- We have harder ones, too, if you feel adventurous :) Remove the "starter" label
   from the filter
 - Next up we want to make CouchDB optional, to make it even simpler to get started
   with the new Hoodie
