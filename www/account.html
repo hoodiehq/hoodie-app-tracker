@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tracker</title>
+    <link rel="stylesheet" href="assets/normalize.css" />
+    <link rel="stylesheet" href="assets/app.css" />
+  </head>
+  <body data-account-state="">
+    <div class="container">
+      <header class="main-header mbl">
+        <h1 class="main-title"><a href="/">Tracker</a></h1>
+        <nav class="main-nav">
+          <ul class="main-nav-links">
+            <li><a class="login-signup-link active" href="account.html">login/sign up</a><a class="js-signedin-message hide active signedin-message" href="account.html"><span class="js-username"></span></a></li>
+            <li><a href="about.html">about</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div data-show="signin" class="js-account-forms account-forms">
+        <div class="js-account-login">
+          <form class="js-signup-form form form-inline form-signup">
+            <h2 class="mtbs">Sign up</h2>
+            <label
+              class="form-label form-label-small"
+              for="Email"
+            >Email</label>
+            <input
+              class="form-input form-input-small"
+              name="email"
+              type="email"
+              width="200"
+              required
+            >
+            <label
+              class="form-label form-label-small"
+              for="password"
+            >
+              Password
+            </label>
+            <input
+              class="form-input form-input-small"
+              id="password"
+              name="password"
+              type="password"
+              width="200"
+              required
+            >
+            <button
+              class="js-signup-btn btn btn-signup"
+              name="sign-up"
+              type="submit"
+            >Sign up</button>
+            <a
+              href="#"
+              class="js-signin-toggle signin-toggle prls"
+            >Log in?</a>
+          </form>
+          <form class="js-signin-form form form-inline form-signin">
+            <div
+              class="signup-link"
+              >
+              <h3>New account?</h3>
+              <a
+                href="#"
+                class="signup-btn js-signup-toggle btn signup-toggle"
+              >click here to sign up!</a>
+            </div>
+            <h2 class="mtbs">Log in</h2>
+            <label
+              class="form-label form-label-small"
+              for="email"
+            >Email</label>
+            <input
+              class="form-input form-input-small"
+              name="email"
+              type="email"
+              width="200"
+              required
+            >
+            <label
+              class="form-label form-label-small"
+              for="password"
+            >
+              Password
+            </label>
+            <input
+              class="form-input form-input-small"
+              id="password"
+              name="password"
+              type="password"
+              width="200"
+              required
+            >
+            <button
+              class="btn btn-login"
+              name="sign-in"
+              type="submit"
+            >Log in</button>
+            <small>
+              <a
+                role="button"
+                href="#"
+                class="js-reset-toggle prls"
+              >Forgot password?</a>
+            </small>
+          </form>
+        </div>
+        <div class="js-password-reset hide">
+          <h2>Password reset</h2>
+          <form class="js-reset-password form form-inline form-password-reset">
+            <label
+              class="form-label form-label-small"
+              for="email-reset"
+            >Enter your account's email</label>
+            <input
+              class="form-input form-input-small"
+              name="email-reset"
+              type="email"
+              id="email-reset"
+              width="200"
+              required
+            >
+            <button
+              class="btn btn-save"
+              name="save"
+              type="submit"
+            >Send</button>
+            <a
+              href="account.html"
+              class="btn"
+              name="cancel"
+              type="submit"
+            >Cancel</a>
+        </div>
+      </div>
+      <div class="js-account-settings account-settings account-forms">
+        <a href="/">← Return to the tracker</a>
+        <h2>Account settings</h2>
+        <div class="js-settings-options account-settings-options">
+          <button
+            class="js-username-toggle btn choice"
+          >Email</button>
+          <button
+            class="js-password-toggle btn choice"
+          >Password</button>
+          <button
+            class="js-delete-toggle btn choice"
+          >Delete Account</button>
+        </div>
+        <form class="js-username-form form form-inline form-email hide">
+          <label
+            class="form-label form-label-small"
+            for="email"
+          >Change email</label>
+          <input
+            class="form-input form-input-small"
+            name="email"
+            type="email"
+            id="email"
+            width="200"
+            required
+          >
+          <button
+            class="btn btn-save"
+            name="save"
+            type="submit"
+          >Save</button>
+          <a
+            href="account.html"
+            class="btn"
+            name="cancel"
+            type="submit"
+          >Cancel</a>
+        </form>
+        <form class="js-password-form form form-inline form-password hide">
+          <label
+            class="form-label form-label-small"
+            for="password"
+          >
+            Change password
+          </label>
+          <input
+            class="form-input form-input-small"
+            id="password"
+            name="password"
+            type="password"
+            width="200"
+            required
+            value="***********"
+          >
+          <button
+            class="btn btn-save"
+            name="save"
+            type="submit"
+          >Save</button>
+          <a
+            href="account.html"
+            class="btn"
+            name="cancel"
+            type="submit"
+          >Cancel</a>
+        </form>
+        <div class="js-delete-account hide">
+          <p>Are you sure you want to delete your account?</p>
+          <button class="btn">Delete account</button>
+          <a
+            href="account.html"
+            class="btn"
+            >Cancel</a>
+        </div>
+        <div class="signout-container">
+          <button
+            class="js-signout-btn btn btn-small"
+          >Sign out</button>
+        </div>
+      </div>
+    </div>
+    <script src="hoodie/bundle.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/account.js"></script>
+  </body>
+</html>

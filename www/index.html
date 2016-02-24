@@ -3,121 +3,29 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Something Tracker</title>
+    <title>Tracker</title>
     <link rel="stylesheet" href="assets/normalize.css" />
     <link rel="stylesheet" href="assets/app.css" />
   </head>
   <body data-account-state="">
     <div class="container">
       <header class="main-header mbl">
-        <div data-show="signin" class="js-account-forms account-forms">
-          <form class="js-signup-form form form-inline form-signup mbm">
-            <h2 class="mtbs">Sign up</h2>
-            <label
-              class="form-label form-label-small"
-              for="Email"
-            >Email</label>
-            <input
-              class="form-input form-input-small mbm"
-              name="email"
-              type="email"
-              width="200"
-              required
-            >
-            <label
-              class="form-label form-label-small"
-              for="password"
-            >
-              Password
-            </label>
-            <input
-              class="form-input form-input-small mbm"
-              id="password"
-              name="password"
-              type="password"
-              width="200"
-              required
-            >
-            <button
-              class="js-signup-btn btn btn-small btn-signup"
-              name="sign-up"
-              type="submit"
-            >Sign up</button>
-            <a
-              href="#"
-              class="js-signin-toggle signin-toggle prls"
-            >Log in?</a>
-          </form>
-          <form class="js-signin-form form form-inline form-signin mbm">
-            <div
-              class="signup-btn js-signup-toggle signup-toggle prls pbm mbl"
-              >
-              <h2
-                class="mtbs dib"
-                >New account?</h2>
-              <a
-                href="#"
-                class="btn"
-              >click here to sign up!</a>
-            </div>
-            <h2 class="mtbs">Log in</h2>
-            <label
-              class="form-label form-label-small"
-              for="email"
-            >Email</label>
-            <input
-              class="form-input form-input-small mbm"
-              name="email"
-              type="email"
-              width="200"
-              required
-            >
-            <label
-              class="form-label form-label-small"
-              for="password"
-            >
-              Password
-            </label>
-            <input
-              class="form-input form-input-small mbm"
-              id="password"
-              name="password"
-              type="password"
-              width="200"
-              required
-            >
-            <button
-              class="btn btn-small btn-login"
-              name="sign-in"
-              type="submit"
-            >Log in</button>
-            <a
-              role="button"
-              href="#"
-              class="js-reset-password fs prls"
-            >Forgot password?</a>
-          </form>
-        </div>
+        <h1 class="main-title"><a href="/">Tracker</a></h1>
+        <nav class="main-nav">
+          <ul class="main-nav-links">
+            <li><a class="login-signup-link" href="account.html">login/sign up</a><a class="js-signedin-message hide signedin-message" href="account.html"><span class="js-username"></span></a></li>
+            <li><a href="about.html">about</a></li>
+          </ul>
+        </nav>
         <div class="js-signedin-message hide signedin-message text-right mbm">
           <p>
-            Hello there, <span class="js-username"></span>!
-            <button
-              class="js-signout-btn btn btn-small"
-            >Sign out</button>
+            <span class="js-username"></span>
           </p>
         </div>
-        <h1 class="main-title pm">Something Tracker</h1>
       </header>
-      <div class="grid">
-        <div class="grid-col">
-          <form class="js-tracker-input mbm">
-            <label class="form-label pbs" for="note">What would you like to track?</label>
-            <textarea
-              class="form-input mbm"
-              name="note"
-              id="note"
-              required
-            ></textarea>
+      <main class="main-content">
+        <form class="js-tracker-input tracker-input">
+          <div class="tracker-amount">
             <label class="form-label pbs" for="amount">Amount</label>
             <input
               class="form-input mbm"
@@ -127,43 +35,41 @@
               required
               value="1"
             >
-            <div class="text-right">
-              <button
-                class="btn full-width-small"
-                type="submit"
-              >Add item</button>
-            </div>
-          <form>
-        </div>
-        <div class="grid-col">
-          <h4 class="pbs">Tracked Items</h4>
-          <table class="table mbm">
-            <thead>
-              <tr>
-                <th>Amount</th>
-                <th>Item</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody class="js-tracker-output js-edit-delete text-center">
-              <tr class="table-placeholder">
-                <td colspan="4">
-                  Nothing tracked yet, add something!
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          </div>
+          <div class="tracker-item">
+            <label class="form-label pbs" for="note">Item</label>
+            <input
+              class="form-input mbm"
+              name="note"
+              id="note"
+              type="text"
+              required
+            ></input>
+          </div>
           <button
-            class="js-tracker-clear btn pull-right full-width-small hide"
-            type="button"
-          >
-            Clear tracked items
-          </button>
-        </div>
-      </div>
+            class="btn full-width-small mbm"
+            type="submit"
+          >Add item</button>
+        </form>
+        <table class="table mbm">
+          <tbody class="js-tracker-output js-edit-delete text-center">
+            <tr class="table-placeholder">
+              <td colspan="4">
+                Nothing tracked yet, add something!
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button
+          class="js-tracker-clear btn pull-right full-width-small hide"
+          type="button"
+        >
+          Clear tracked items
+        </button>
+      </main>
     </div>
     <script src="hoodie/bundle.js"></script>
-    <script src="assets/app.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/index.js"></script>
   </body>
 </html>

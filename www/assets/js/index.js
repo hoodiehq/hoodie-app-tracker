@@ -1,100 +1,10 @@
-var $passwordResetButton = document.querySelector('.js-reset-password')
-var $signinForm = document.querySelector('.js-signin-form')
-var $signupForm = document.querySelector('.js-signup-form')
-var $accountForms = document.querySelector('.js-account-forms')
 var $signedinMessage = document.querySelector('.js-signedin-message')
-var $signupButton = document.querySelector('.js-signup-btn')
-var $signoutButton = document.querySelector('.js-signout-btn')
-var $signinToggle = document.querySelector('.js-signin-toggle')
-var $signupToggle = document.querySelector('.js-signup-toggle')
 
 var $trackerForm = document.querySelector('.js-tracker-input')
 var $trackerOutput = document.querySelector('.js-tracker-output')
 var $trackerClearButton = document.querySelector('.js-tracker-clear')
 
 var $editDeleteItem = document.querySelector('.js-edit-delete')
-
-$passwordResetButton.addEventListener('click', function (event) {
-  event.preventDefault()
-
-  var email = prompt('Email', $signinForm.querySelector('[name=email]').value)
-
-  if (!email) {
-    return
-  }
-
-  hoodie.account.request({
-    type: 'passwordreset',
-    username: email
-  })
-
-  .then(function () {
-    alert('done')
-  })
-
-  .catch(function (error) {
-    alert(error)
-  })
-})
-
-$signinForm.addEventListener('submit', function (event) {
-  event.preventDefault()
-
-  $signinForm.classList.toggle('show')
-
-  var email = $signinForm.querySelector('[name=email]').value
-  var password = $signinForm.querySelector('[name=password]').value
-
-  hoodie.account.signIn({
-    username: email,
-    password: password
-  })
-
-  .catch(function (error) {
-    alert(error)
-  })
-})
-
-$signinToggle.addEventListener('click', function (event) {
-  event.preventDefault()
-
-  $accountForms.setAttribute('data-show','signin')
-})
-
-$signupToggle.addEventListener('click', function (event) {
-  event.preventDefault()
-
-  $accountForms.setAttribute('data-show','signup')
-})
-
-$signupButton.addEventListener('click', function (event) {
-  event.preventDefault()
-
-  var email = $signupForm.querySelector('[name=email]').value
-  var password = $signupForm.querySelector('[name=password]').value
-
-  hoodie.account.signUp({
-    username: email,
-    password: password
-  })
-
-  .then(function () {
-    return hoodie.account.signIn({
-      username: email,
-      password: password
-    })
-  })
-
-  .catch(function (error) {
-    alert(error)
-  })
-})
-
-$signoutButton.addEventListener('click', function (event) {
-  event.preventDefault()
-
-  hoodie.account.signOut()
-})
 
 /**
  * If you submit a form it will emit a submit event.
@@ -184,7 +94,7 @@ $editDeleteItem.addEventListener('click', function (event) {
   var amount = row.firstChild.textContent
   var note = row.firstChild.nextSibling.textContent
 
-  if (event.target.textContent == 'Delete') {
+  if (event.target.innerHTML == 'Delete') {
     row.remove();
 
     hoodie.store.remove({
@@ -192,17 +102,17 @@ $editDeleteItem.addEventListener('click', function (event) {
     })
   }
 
-  if (event.target.textContent == 'Edit') {
+  if (event.target.innerHTML == 'Edit') {
     row.innerHTML = '<td><input type="number" name="amount" value="'+ amount +'" data-reset-value="'+ amount +'"></td><td><input type="text" name="note" value="'+ note +'" data-reset-value="'+ note +'"></td><td><a href="#" class="save-edit">Save</a></td><td><a href="#" class="cancel-edit">Cancel</a></td>'
   }
 
-  if (event.target.textContent == 'Cancel') {
+  if (event.target.innerHTML == 'Cancel') {
     amount = row.querySelector('input[name=amount]').dataset.resetValue
     note = row.querySelector('input[name=note]').dataset.resetValue
     row.innerHTML = '<td>' + amount + '</td><td>' + note + '</td><td><a href="#" class="edit-item">Edit</a></td><td><a href="#" class="delete-item">Delete</a></td>'
   }
 
-  if (event.target.textContent == 'Save') {
+  if (event.target.innerHTML == 'Save') {
     amount = row.querySelector('input[name=amount]').value
     note = row.querySelector('input[name=note]').value
     hoodie.store.update(id, {
@@ -212,24 +122,3 @@ $editDeleteItem.addEventListener('click', function (event) {
     row.innerHTML = '<td>' + amount + '</td><td>' + note + '</td><td><a href="#" class="edit-item">Edit</a></td><td><a href="#" class="delete-item">Delete</a></td>'
   }
 })
-
-function showSignedIn (username) {
-  document.querySelector('.js-username').textContent = username
-  document.body.setAttribute('data-account-state', 'signed-in')
-}
-
-function hideSignedIn () {
-  document.body.setAttribute('data-account-state', 'signed-out')
-}
-
-hoodie.account.on('signin', function (account) {
-  $signinForm.reset()
-  showSignedIn(account.username)
-})
-
-hoodie.account.on('signout', hideSignedIn)
-if (hoodie.account.isSignedIn()) {
-  showSignedIn(hoodie.account.username)
-} else {
-  hideSignedIn()
-}
