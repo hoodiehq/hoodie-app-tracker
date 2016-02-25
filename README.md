@@ -1,19 +1,19 @@
-# hoodie-app-something-tracker
+# hoodie-app-tracker
 
 > Default Hoodie app
 
-[![Build Status](https://travis-ci.org/hoodiehq/hoodie-app-something-tracker.svg?branch=master)](https://travis-ci.org/hoodiehq/hoodie-app-something-tracker)
-[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-app-something-tracker.svg)](https://david-dm.org/hoodiehq/hoodie-app-something-tracker)
-[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-app-something-tracker/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-app-something-tracker#info=devDependencies)
+[![Build Status](https://travis-ci.org/hoodiehq/hoodie-app-tracker.svg?branch=master)](https://travis-ci.org/hoodiehq/hoodie-app-tracker)
+[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-app-tracker.svg)](https://david-dm.org/hoodiehq/hoodie-app-tracker)
+[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-app-tracker/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-app-tracker#info=devDependencies)
 
-Something Tracker is a simple Hoodie app, meant to be a good starting point to
-play and build with Hoodie.
+Tracker is a simple Hoodie app, meant to be a starting point to play and build
+with Hoodie.
 
 ## Setup
 
 ```
-git clone git@github.com:hoodiehq/hoodie-app-something-tracker.git
-cd hoodie-app-something-tracker
+git clone git@github.com:hoodiehq/hoodie-app-tracker.git
+cd hoodie-app-tracker
 npm install --no-optional --production
 cp .hoodierc-example .hoodierc
 ```
@@ -32,7 +32,7 @@ npm start -- --dbUrl=http://admin:secret@localhost:5984
 
 ## Contribute
 
-`hoodie-app-something-tracker` is work in progress. The goal is to have a simple
+`hoodie-app-tracker` is work in progress. The goal is to have a simple
 application with very clear and easy to understand HTML / CSS / JS code which
 ideally uses no 3rd party code at all, besides the Hoodie client.
 
@@ -56,7 +56,7 @@ npm test
 
 ## What’s next?
 
-- help us make `hoodie-app-something-tracker` a great experience! We want to keep it
+- help us make `hoodie-app-tracker` a great experience! We want to keep it
   intentionally simple, so people can play / extend it. To make it as accessible
   (hackable) as possible, we want to keep the HTML / CSS / JS code to a minimum
   and not use 3rd party libraries at all if possible.
