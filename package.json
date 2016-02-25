@@ -1,15 +1,15 @@
 {
-  "name": "hoodie-app-something-tracker",
+  "name": "hoodie-app-tracker",
   "description": "Default Hoodie app",
   "author": "The Hoodie Community and other contributors | http://hood.ie/",
   "bugs": {
-    "url": "https://github.com/hoodiehq/hoodie-app-something-tracker/issues"
+    "url": "https://github.com/hoodiehq/hoodie-app-tracker/issues"
   },
   "engines": {
     "node": ">=4",
     "npm": ">=3"
   },
-  "homepage": "https://github.com/hoodiehq/hoodie-app-something-tracker",
+  "homepage": "https://github.com/hoodiehq/hoodie-app-tracker",
   "keywords": [
     "hoodie",
     "app"
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hoodiehq/hoodie-app-something-tracker.git"
+    "url": "https://github.com/hoodiehq/hoodie-app-tracker.git"
   },
   "scripts": {
     "pretest": "standard test/**/*.js",
