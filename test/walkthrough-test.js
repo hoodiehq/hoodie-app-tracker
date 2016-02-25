@@ -29,7 +29,7 @@ describe('hoodie', function () {
   it('loads successfully', function () {
     return this.client
       .url('/')
-      .getTitle().should.eventually.equal('Something Tracker')
+      .getTitle().should.eventually.equal('Tracker')
   })
 
   it('walkthrough', function () {
