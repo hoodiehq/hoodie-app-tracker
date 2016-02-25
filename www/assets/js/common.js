@@ -1,5 +1,6 @@
+/* global hoodie */
 function showSignedIn (username) {
-  document.querySelector('.js-username').textContent = username
+  document.querySelector('[data-value=username]').textContent = username
   document.body.setAttribute('data-account-state', 'signed-in')
 }
 
@@ -8,7 +9,6 @@ function hideSignedIn () {
 }
 
 hoodie.account.on('signin', function (account) {
-  $signinForm.reset()
   showSignedIn(account.username)
 })
 

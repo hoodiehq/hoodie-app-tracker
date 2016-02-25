@@ -4,70 +4,55 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tracker</title>
-    <link rel="stylesheet" href="assets/normalize.css" />
     <link rel="stylesheet" href="assets/app.css" />
   </head>
-  <body data-account-state="">
-    <div class="container">
-      <header class="main-header mbl">
-        <h1 class="main-title"><a href="/">Tracker</a></h1>
-        <nav class="main-nav">
-          <ul class="main-nav-links">
-            <li><a class="login-signup-link" href="account.html">login/sign up</a><a class="js-signedin-message hide signedin-message" href="account.html"><span class="js-username"></span></a></li>
-            <li><a href="about.html">about</a></li>
-          </ul>
-        </nav>
-        <div class="js-signedin-message hide signedin-message text-right mbm">
-          <p>
-            <span class="js-username"></span>
-          </p>
+
+  <body data-account-state="" data-store-state="">
+    <header>
+      <h1><a href="/">Tracker</a></h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="account.html">
+              <span data-hide-if="signed-in">login/sign up</span>
+              <span data-hide-if="signed-out" data-value="username"></span>
+            </a>
+          </li>
+          <li><a href="about.html">about</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <form class="add-item">
+        <div class="amount">
+          <label for="input-amount">Amount</label>
+          <input type="number" name="amount" id="input-amount" required>
         </div>
-      </header>
-      <main class="main-content">
-        <form class="js-tracker-input tracker-input">
-          <div class="tracker-amount">
-            <label class="form-label pbs" for="amount">Amount</label>
-            <input
-              class="form-input mbm"
-              type="number"
-              name="amount"
-              id="amount"
-              required
-              value="1"
-            >
-          </div>
-          <div class="tracker-item">
-            <label class="form-label pbs" for="note">Item</label>
-            <input
-              class="form-input mbm"
-              name="note"
-              id="note"
-              type="text"
-              required
-            ></input>
-          </div>
-          <button
-            class="btn full-width-small mbm"
-            type="submit"
-          >Add item</button>
-        </form>
-        <table class="table mbm">
-          <tbody class="js-tracker-output js-edit-delete text-center">
-            <tr class="table-placeholder">
+        <div class="item">
+          <label for="input-note">Item</label>
+          <input type="text" name="note" id="input-note" required>
+        </div>
+        <button type="submit">Add item</button>
+      </form>
+
+      <div class="items" data-num="0">
+        <table>
+          <tbody class="placeholder" data-hide-if="store-not-empty">
+            <tr>
               <td colspan="4">
                 Nothing tracked yet, add something!
               </td>
             </tr>
           </tbody>
+          <tbody class="list" data-hide-if="store-empty"></tbody>
         </table>
-        <button
-          class="js-tracker-clear btn pull-right full-width-small hide"
-          type="button"
-        >
+        <button data-action="clear" data-hide-if="store-empty">
           Clear tracked items
         </button>
-      </main>
-    </div>
+      </div>
+    </main>
+
     <script src="hoodie/bundle.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/index.js"></script>

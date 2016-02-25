@@ -1,19 +1,14 @@
-/* Core overides */
-
-html {
+* {
   box-sizing: border-box;
-  font-size: 16px;
+}
+html {
   color: #222;
+  font: 16px/1.5 Verdana, Helvetica;
 }
-
-*, *:after, *:before {
-  box-sizing: inherit;
-}
-
 body {
-  font-family: Verdana, Helvetica;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem auto;
+  max-width: 600px;
+  padding: 0 1rem;
 }
 
 a {
@@ -29,201 +24,180 @@ a:hover {
   text-decoration: underline;
 }
 
-h1, h4 {
-  margin-top: 0;
-  margin-bottom: 0;
+label {
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
-h1 {
-  line-height: 1.5;
+button,
+input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
 }
-
-textarea {
-  height: 3.25em;
-  max-width: 100%;
+button {
+  cursor: pointer;
 }
-
-/* Layout */
-
-.table td input {
+button.small {
+  padding: .5rem;
+  font-size: .8rem;
+}
+input {
+  display: block;
+  padding: 1rem;
+  height: 50px;
   width: 100%;
 }
 
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  max-width: 600px;
+table {
+  width: 100%;
 }
 
-/* Components */
-
-.signedin-message {
-  display: none;
-}
-
-[data-account-state='signed-out'] .account-login,
-[data-account-state='signed-out'] .password-reset {
-  display: block;
-}
-
-[data-account-state='signed-in'] .account-settings {
-  display: block;
-}
-
-[data-account-state='signed-in'] .signedin-message {
-  display: inline-block;
-}
-
-[data-account-state='signed-in'] .account-login,
-[data-account-state='signed-in'] .login-signup-link {
-  display: none;
-}
-
-.main-header {
+/* Header */
+body > header {
   padding: 15px 0 35px;
 }
-
-.main-header:after {
+body > header:after {
   content: '';
   display: block;
   clear: both;
 }
-
-.main-header ul {
+body > header h1 {
+  float: left;
+  font-size: 2em;
+  margin: 0;
+}
+body > header ul {
   list-style-type: none;
   float: right;
   margin: 0;
 }
-
-.main-header ul li {
+body > header ul li {
   display: inline-block;
-}
-
-.main-header ul li a {
   margin-left: 10px;
 }
 
-.main-title {
-  float: left;
-  margin: 0;
-  font-size: 2em;
-  line-height: 1em;
+/* toggle content based on account & store status */
+[data-account-state] {
+  display: none;
 }
-
-.account-settings {
+[data-account-state='signed-in'],
+[data-account-state='signed-out'] {
+  display: block;
+}
+[data-store-state='empty'] [data-hide-if="store-empty"],
+[data-store-state='not-empty'] [data-hide-if="store-not-empty"] {
+  display: none;
+}
+[data-account-state='signed-in'] [data-hide-if="signed-in"],
+[data-account-state='signed-out'] [data-hide-if="signed-out"] {
   display: none;
 }
 
-.tracker-input {
+/* index page */
+form.add-item {
   border-bottom: 1px solid #333;
   padding-bottom: 25px;
   margin-bottom: 25px;
   position: relative;
 }
 
-.tracker-input:after {
+form.add-item:after {
   content: '';
   display: block;
   clear: both;
 }
 
-.tracker-input .tracker-amount,
-.tracker-input .tracker-item,
-.tracker-input .btn {
+form.add-item .tracker-amount,
+form.add-item .tracker-item,
+form.add-item .btn {
   width: 100%;
 }
 
-.tracker-input input {
+form.add-item input {
   margin-bottom: 20px;
 }
 
-.tracker-input label {
+form.add-item label {
   margin-bottom: 8px;
 }
 
+form.add-item button {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
-  .tracker-input {
+  form.add-item {
     padding-bottom: 5px;
   }
 
-  .tracker-input .tracker-amount {
+  form.add-item .amount {
     width: 16%;
     float: left;
   }
 
-  .tracker-input .tracker-item {
+  form.add-item .item {
     width: 60%;
     float: left;
     margin: 0 2%;
   }
 
-  .tracker-input .btn {
+  form.add-item button {
     width: 20%;
     float: left;
-    position: absolute;
-    bottom: 25px;
+    margin-top: 24px;
     height: 50px;
   }
 }
 
-.form-input {
-  padding: 1rem;
-  height: 50px;
-}
-
-.form-label {
-  display: inline-block;
-  font-weight: bold;
-}
-
-[data-show] form {
+.items {
   display: none;
 }
-
-.form-label,
-.form-input {
+[data-store-state='empty'] .items,
+[data-store-state='not-empty'] .items {
   display: block;
-  margin-bottom: 8px;
 }
 
-.form-label-small,
-.form-input-small,
-.btn-small {
-  font-size: .8rem;
+.items .placeholder td {
+  text-align: center;
 }
-
-.form-input-small,
-.btn-small {
-  padding: .5rem;
-}
-
-.form-label,
-.form-input,
-.textarea,
-.table {
+.items table + button {
   width: 100%;
 }
 
-.form .return-link {
+@media (min-width: 768px) {
+  .items table + button {
+    width: auto;
+    float: right;
+  }
+}
+
+/* account page */
+.account-page main label {
+  font-size: .8rem;
+}
+.account-page main input {
+  font-size: .8rem;
+  padding: .5rem;
+}
+
+@media (min-width: 768px) {
+  .account-page main input {
+    width: 300px;
+  }
+}
+
+[data-show] > * {
+  display: none;
+}
+[data-show="signin"] .signin,
+[data-show="signup"] .signup,
+[data-show="password-reset"] .password-reset,
+[data-show="options"] .options,
+[data-show="change-email"] .change-email,
+[data-show="change-password"] .change-password,
+[data-show="delete-account"] .delete-account {
   display: block;
-  margin-bottom: 15px;
-}
-
-[data-show='signin'] .form-signin,
-[data-show='signup'] .form-signup,
-[data-show='signin'] .form-password-reset {
-  display: block;
-}
-
-.signedin-message p {
-  margin: 0;
-}
-
-.signup-toggle,
-.signin-toggle {
-  font-size: .8em;
 }
 
 .signup-link {
@@ -232,9 +206,56 @@ textarea {
   border-radius: 5px;
   padding: 10px;
 }
-
 .signup-link h3 {
   display: inline-block;
+}
+
+.options button {
+  display: block;
+  border: 2px solid #333;
+  color: #333;
+  background: transparent;
+  text-align: left;
+  width: 300px;
+  position: relative;
+}
+
+.options button:after {
+  content: '►';
+  position: absolute;
+  right: 15px;
+}
+.options button:hover {
+  border: 2px solid #e94e1b;
+  color: #e94e1b;
+}
+
+.options button:not(:last-child) {
+  margin-bottom: 8px;
+}
+/* Layout */
+
+
+
+table td input {
+  width: 100%;
+}
+
+.return-link {
+  display: block;
+  margin-bottom: 15px;
+}
+
+/* Components */
+
+.account-settings {
+  display: none;
+}
+
+
+.signup-toggle,
+.signin-toggle {
+  font-size: .8em;
 }
 
 .signup-toggle {
@@ -253,6 +274,7 @@ textarea {
   text-align: right;
 }
 
+button,
 .btn {
   display: inline-block;
   border-radius: 5px;
@@ -262,101 +284,62 @@ textarea {
   border: none;
 }
 
+button,
 .btn:hover {
   text-decoration: none;
 }
 
-.btn + .btn-small {
-  margin-left: .5rem;
-}
-
-.btn.btn-save {
+button.primary {
   background-color: #e94e1b;
   color: #fff;
 }
 
-.btn.choice {
-  display: block;
-  border: 2px solid #333;
-  color: #333;
-  background: transparent;
-  text-align: left;
-  width: 300px;
-  position: relative;
-}
-
-.btn.choice::after {
-  content: '►';
-  position: absolute;
-  right: 15px;
-}
-.btn.choice:hover {
-  border: 2px solid #e94e1b;
-  color: #e94e1b;
-}
-
-.btn.choice:not(:last-child) {
-  margin-bottom: 8px;
-}
-
-.form-input,
-.table {
+input,
+table {
   border: 1px solid #aaa;
 }
 
-.table th:first-child{
+table {
+  border-collapse: collapse;
+}
+
+table th:first-child{
   width: 20%;
 }
 
 .btn:focus,
-.form-input:focus {
+input:focus {
   border-color: transparent;
   outline: none;
   box-shadow: 0 0 0 2px #e94e1b;;
 }
 
 /* Clearfix */
-
-.form:before,
-.form:after {
-  content: " ";
-  display: table;
-}
-.form:after {
-  clear: both;
-}
-
-@media (min-width: 768px) {
-  .account-forms .form-input {
-    width: 300px;
-  }
-}
-
-.table {
+table {
   border: 1px solid #aaa;
   margin-bottom: 15px;
 }
 
-.table th,
-.table td {
+table th,
+table td {
   padding: 1rem;
   text-align: left;
 }
 
-.table th:first-child,
-.table td:first-child {
+table th:first-child,
+table td:first-child {
   padding: 1rem;
 }
 
-.table td {
+table td {
   border: 1px solid #aaa;
 }
 
-.table tr td:first-child {
+table tr td:first-child {
   width: 100px;
 }
 
-.table tr td:nth-child(2) {
+table tr td:nth-child(2) {
   width: 300px;
 }
 
@@ -366,20 +349,10 @@ textarea {
   display: none;
 }
 
-.text-center {
-  text-align: center;
-}
-
 .text-right {
   text-align: right;
 }
 
 .pull-right {
   float: right;
-}
-
-@media (max-width: 768px) {
-  .full-width-small {
-    width: 100%;
-  }
 }
