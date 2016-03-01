@@ -19,7 +19,7 @@
 })
 
 /**
- * Handle signpu form submit
+ * Handle signup form submit
  */
 document.querySelector('form.signup').addEventListener('submit', function (event) {
   event.preventDefault()
