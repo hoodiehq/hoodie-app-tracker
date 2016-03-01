@@ -45,7 +45,6 @@ button.small {
 input {
   display: block;
   padding: 1rem;
-  height: 50px;
   width: 100%;
 }
 
@@ -55,26 +54,42 @@ table {
 
 /* Header */
 body > header {
-  padding: 15px 0 35px;
-}
-body > header:after {
-  content: '';
-  display: block;
-  clear: both;
+  padding: 25px 0;
+  position: relative;
 }
 body > header h1 {
-  float: left;
   font-size: 2em;
+  line-height: 1em;
   margin: 0;
+}
+@media (min-width: 768px) {
+  body > header {
+    padding: 45px 0;
+  }
+  body > header h1 {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  body > header nav {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 body > header ul {
   list-style-type: none;
-  float: right;
+  display: block;
+  padding: 0;
   margin: 0;
 }
 body > header ul li {
   display: inline-block;
-  margin-left: 10px;
+}
+body > header ul li:not(:last-child) {
+  margin-right: 20px;
 }
 
 /* toggle content based on account & store status */
@@ -146,7 +161,6 @@ form.add-item button {
     width: 20%;
     float: left;
     margin-top: 24px;
-    height: 50px;
   }
 }
 
@@ -314,7 +328,6 @@ input:focus {
   box-shadow: 0 0 0 2px #e94e1b;;
 }
 
-/* Clearfix */
 table {
   border: 1px solid #aaa;
   margin-bottom: 15px;
