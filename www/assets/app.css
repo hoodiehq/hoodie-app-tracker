@@ -13,7 +13,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #e94e1b;
+  color: #273183;
 }
 
 a.active {
@@ -22,6 +22,10 @@ a.active {
 
 a:hover {
   text-decoration: underline;
+}
+
+p {
+  margin-top: 0;
 }
 
 label {
@@ -60,7 +64,8 @@ body > header {
 body > header h1 {
   font-size: 2em;
   line-height: 1em;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 @media (min-width: 768px) {
   body > header {
@@ -216,12 +221,14 @@ form.add-item button {
 
 .signup-link {
   text-align: center;
-  border: 1px solid #e94e1b;
+  border: 1px solid #273183;
   border-radius: 5px;
-  padding: 10px;
+  padding: 15px;
 }
 .signup-link h3 {
   display: inline-block;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .options button {
@@ -240,8 +247,8 @@ form.add-item button {
   right: 15px;
 }
 .options button:hover {
-  border: 2px solid #e94e1b;
-  color: #e94e1b;
+  border: 2px solid #273183;
+  color: #273183;
 }
 
 .options button:not(:last-child) {
@@ -304,7 +311,7 @@ button,
 }
 
 button.primary {
-  background-color: #e94e1b;
+  background-color: #273183;
   color: #fff;
 }
 
@@ -325,7 +332,7 @@ table th:first-child{
 input:focus {
   border-color: transparent;
   outline: none;
-  box-shadow: 0 0 0 2px #e94e1b;;
+  box-shadow: 0 0 0 2px #273183;
 }
 
 table {
