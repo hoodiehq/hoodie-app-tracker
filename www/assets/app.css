@@ -196,8 +196,8 @@ form.add-item button {
   font-size: .8rem;
 }
 .account-page main input {
-  font-size: .8rem;
-  padding: .5rem;
+  font-size: 1rem;
+  padding: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -301,8 +301,8 @@ button,
   border-radius: 5px;
   background: #CCC;
   color: #000;
-  padding: 15px;
-  border: none;
+  padding: 1rem;
+  border: 1px solid #ccc;
 }
 
 button,
@@ -313,6 +313,7 @@ button,
 button.primary {
   background-color: #273183;
   color: #fff;
+  border: 1px solid #273183;
 }
 
 input,
