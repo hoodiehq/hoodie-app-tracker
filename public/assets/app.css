@@ -13,7 +13,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #273183;
+  color: #0b8e36;
 }
 
 a.active {
@@ -221,7 +221,7 @@ form.add-item button {
 
 .signup-link {
   text-align: center;
-  border: 1px solid #273183;
+  border: 1px solid #0b8e36;
   border-radius: 5px;
   padding: 15px;
 }
@@ -247,8 +247,8 @@ form.add-item button {
   right: 15px;
 }
 .options button:hover {
-  border: 2px solid #273183;
-  color: #273183;
+  border: 2px solid #0b8e36;
+  color: #0b8e36;
 }
 
 .options button:not(:last-child) {
@@ -311,9 +311,9 @@ button,
 }
 
 button.primary {
-  background-color: #273183;
+  background-color: #0b8e36;
   color: #fff;
-  border: 1px solid #273183;
+  border: 1px solid #0b8e36;
 }
 
 input,
@@ -333,7 +333,7 @@ table th:first-child{
 input:focus {
   border-color: transparent;
   outline: none;
-  box-shadow: 0 0 0 2px #273183;
+  box-shadow: 0 0 0 2px #0b8e36;
 }
 
 table {
