@@ -13,7 +13,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #436EEE;
+  color: #A1A1A1;
 }
 
 a.active {
@@ -221,7 +221,7 @@ form.add-item button {
 
 .signup-link {
   text-align: center;
-  border: 1px solid #436EEE;
+  border: 1px solid #A1A1A1;
   border-radius: 5px;
   padding: 15px;
 }
@@ -247,8 +247,8 @@ form.add-item button {
   right: 15px;
 }
 .options button:hover {
-  border: 2px solid #436EEE;
-  color: #436EEE;
+  border: 2px solid #A1A1A1;
+  color: #A1A1A1;
 }
 
 .options button:not(:last-child) {
@@ -289,7 +289,7 @@ table td input {
 }
 
 .signout-container {
-  border-top: 1px solid #999;
+  border-top: 1px solid #A1A1A1;
   margin: 25px 0;
   padding: 15px 0;
   text-align: right;
@@ -299,10 +299,10 @@ button,
 .btn {
   display: inline-block;
   border-radius: 5px;
-  background: #CCC;
+  background: #A1A1A1;
   color: #000;
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #A1A1A1;
 }
 
 button,
@@ -311,14 +311,14 @@ button,
 }
 
 button.primary {
-  background-color: #436EEE;
+  background-color: #A1A1A1;
   color: #fff;
-  border: 1px solid #436EEE;
+  border: 1px solid #A1A1A1;
 }
 
 input,
 table {
-  border: 1px solid #aaa;
+  border: 1px solid #A1A1A1;
 }
 
 table {
@@ -333,11 +333,11 @@ table th:first-child{
 input:focus {
   border-color: transparent;
   outline: none;
-  box-shadow: 0 0 0 2px #436EEE;
+  box-shadow: 0 0 0 2px #A1A1A1;
 }
 
 table {
-  border: 1px solid #aaa;
+  border: 1px solid #A1A1A1;
   margin-bottom: 15px;
 }
 
@@ -353,7 +353,7 @@ table td:first-child {
 }
 
 table td {
-  border: 1px solid #aaa;
+  border: 1px solid #A1A1A1;
 }
 
 table tr td:first-child {
