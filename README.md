@@ -30,6 +30,10 @@ admin username or password).
 npm start -- --dbUrl=http://admin:secret@localhost:5984
 ```
 
+# Deployment
+
+You can find a detailed instruction [here](deployment.md).
+
 ## Contribute
 
 `hoodie-app-tracker` is work in progress. The goal is to have a simple
