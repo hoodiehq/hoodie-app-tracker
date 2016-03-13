@@ -364,16 +364,12 @@ table tr td:nth-child(2) {
   width: 300px;
 }
 
-/* Utils */
-
-.hide {
-  display: none;
+img.hoodie-camp {
+  max-width: 100%;
 }
 
-.text-right {
-  text-align: right;
-}
-
-.pull-right {
+img.low-profile-dog {
+  width: 120px;
+  height: 160px;
   float: right;
 }
