@@ -12,7 +12,6 @@ body {
 }
 
 a {
-  text-decoration: none;
   color: #A1A1A1;
 }
 
@@ -21,7 +20,7 @@ a.active {
 }
 
 a:hover {
-  text-decoration: underline;
+  color: #222;
 }
 
 p {
@@ -60,6 +59,9 @@ table {
 body > header {
   padding: 25px 0;
   position: relative;
+}
+body > header a {
+  text-decoration: none;
 }
 body > header h1 {
   font-size: 2em;
@@ -354,6 +356,10 @@ table td:first-child {
 
 table td {
   border: 1px solid #A1A1A1;
+}
+
+table a {
+  text-decoration: none;
 }
 
 table tr td:first-child {
