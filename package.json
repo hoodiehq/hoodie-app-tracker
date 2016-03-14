@@ -16,9 +16,6 @@
   ],
   "license": "Apache-2.0",
   "main": "www/index.html",
-  "publishConfig": {
-    "tag": "next"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/hoodiehq/hoodie-app-tracker.git"
