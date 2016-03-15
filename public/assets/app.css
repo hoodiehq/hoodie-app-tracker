@@ -314,6 +314,10 @@ button,
   text-decoration: none;
 }
 
+.btn-link {
+  padding: 1rem;
+}
+
 button.primary {
   background-color: blue;
   color: #fff;
