@@ -77,14 +77,19 @@ describe('hoodie.connectionStatus', function () {
     .executeAsync(function checkConnection (done) {
       return hoodie.connectionStatus.check()
 
-      .catch(function () {
-        done(window.events)
-      })
-
       .then(function () {
         done(new Error('request should fail'))
       })
-    }).then(toValue)
+
+      .catch(function () {
+        // timeout to avoid racing condition:
+        // https://github.com/hoodiehq/hoodie-app-tracker/issues/32
+        setTimeout(function () {
+          done(window.events)
+        }, 0)
+      })
+    })
+    .then(toValue)
     .then(function (events) {
       expect(events.length).to.equal(1)
       expect(events[0]).to.equal('disconnect')
@@ -107,7 +112,11 @@ describe('hoodie.connectionStatus', function () {
       return hoodie.connectionStatus.check()
 
       .then(function () {
-        done(window.events)
+        // timeout to avoid racing condition:
+        // https://github.com/hoodiehq/hoodie-app-tracker/issues/32
+        setTimeout(function () {
+          done(window.events)
+        }, 0)
       })
 
       .catch(function () {
