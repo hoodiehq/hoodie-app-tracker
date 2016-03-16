@@ -168,7 +168,7 @@ form.add-item button {
   form.add-item button {
     width: 30%;
     float: left;
-    margin-top: 24px;
+    margin-top: 27px;
   }
 }
 
@@ -293,7 +293,7 @@ table td input {
 }
 
 .signout-container {
-  border-top: 1px solid #222;
+  border-top: 1px solid #A1A1A1;
   margin: 25px 0;
   padding: 15px 0;
   text-align: right;
@@ -326,7 +326,7 @@ button.primary {
 
 input,
 table {
-  border: 1px solid #222;
+  border: 1px solid #A1A1A1;
 }
 
 table {
@@ -361,7 +361,7 @@ table td:first-child {
 }
 
 table td {
-  border: 1px solid #222;
+  border: 1px solid #A1A1A1;
 }
 
 table a {
@@ -369,7 +369,7 @@ table a {
 }
 
 table tr td:first-child {
-  width: 100px;
+  width: 150px;
 }
 
 table tr td:nth-child(2) {
