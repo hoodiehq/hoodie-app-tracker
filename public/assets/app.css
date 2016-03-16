@@ -13,14 +13,15 @@ body {
 
 a {
   color: blue;
+  text-decoration: none;
 }
 
 a.active {
-  color: #222;
+  text-decoration: underline;
 }
 
 a:hover {
-  color: #222;
+  text-decoration: underline;
 }
 
 p {
@@ -222,6 +223,7 @@ form.add-item button {
 }
 
 .signup-link {
+  margin-top: 25px;
   text-align: center;
   border: 1px solid blue;
   border-radius: 5px;
@@ -310,6 +312,10 @@ button,
 button,
 .btn:hover {
   text-decoration: none;
+}
+
+.btn-link {
+  padding: 1rem;
 }
 
 button.primary {
