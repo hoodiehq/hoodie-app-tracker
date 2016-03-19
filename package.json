@@ -15,7 +15,6 @@
     "app"
   ],
   "license": "Apache-2.0",
-  "main": "www/index.html",
   "repository": {
     "type": "git",
     "url": "https://github.com/hoodiehq/hoodie-app-tracker.git"
@@ -38,7 +37,7 @@
   },
   "frontend-test-setup": {
     "server": {
-      "cmd": "hoodie --dbUrl=http://admin:secret@localhost:5984 --loglevel=silly",
+      "cmd": "hoodie --loglevel=silly --inMemory=true",
       "host": "127.0.0.1",
       "port": 8080
     }
