@@ -14,7 +14,7 @@ with Hoodie.
 ```
 git clone git@github.com:hoodiehq/hoodie-app-tracker.git
 cd hoodie-app-tracker
-npm install --no-optional --production
+npm install --production
 cp .hoodierc-example .hoodierc
 ```
 
@@ -22,12 +22,8 @@ If you want to use the password reset feature, you must configure an email accou
 to send out notification, like a Google Mail account. Edit the `.hoodierc` file,
 the options are passed to [nodemailer.createTransport()](https://github.com/nodemailer/nodemailer-smtp-transport#usage)
 
-Make sure to have a CouchDB with an admin account (Password: secret).
-Start the app with (replace "admin" & "secret" if you have a different
-admin username or password).
-
 ```
-npm start -- --dbUrl=http://admin:secret@localhost:5984
+npm start
 ```
 
 # Deployment
@@ -49,7 +45,7 @@ the [www/](www/) folder.
 Install devDependencies by running `npm install` without `--production`
 
 ```
-npm install --no-optional
+npm install
 ```
 
 Then run tests with
