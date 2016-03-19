@@ -42,6 +42,8 @@ env:
   matrix:
     # - CLIENT=selenium:firefox
     - CLIENT=saucelabs:chrome
+    # test with CouchDB (by default it tests with PouchDB)
+    - hoodie_dbUrl=http://admin:secret@127.0.0.1:5984 CLIENT=saucelabs:chrome
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
