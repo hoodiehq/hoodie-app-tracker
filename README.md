@@ -15,18 +15,25 @@ with Hoodie.
 git clone git@github.com:hoodiehq/hoodie-app-tracker.git
 cd hoodie-app-tracker
 npm install --production
-cp .hoodierc-example .hoodierc
 ```
+
+Start server with
+
+```
+npm start
+```
+
+### Optional: Setup email for password reset
 
 If you want to use the password reset feature, you must configure an email account
 to send out notification, like a Google Mail account. Edit the `.hoodierc` file,
 the options are passed to [nodemailer.createTransport()](https://github.com/nodemailer/nodemailer-smtp-transport#usage)
 
 ```
-npm start
+cp .hoodierc-example .hoodierc
 ```
 
-# Deployment
+## Deployment
 
 You can find a detailed instruction [here](deployment.md).
 
