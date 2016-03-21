@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tracker</title>
+    <title>Tracker | Account</title>
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="assets/app.css" />
   </head>
@@ -25,7 +25,10 @@
     </header>
 
     <main>
-      <a href="/">← Return to the tracker</a>
+      <a href="/">
+        <span aria-hidden="true">←</span>
+        Return to the tracker
+      </a>
 
       <div data-show="signin" data-hide-if="signed-in">
         <form class="signup" action="signup">
@@ -50,7 +53,10 @@
         <form class="signin" action="signin">
           <div class="signup-link">
             <h3>New account?</h3>
-            <a href="#" class="btn" data-action="show-signup">click here to sign up!</a>
+            <a href="#" class="btn" data-action="show-signup">
+              <span class="sr-only">Need an account?</span>
+              Sign up!
+            </a>
           </div>
 
           <h2>Log in</h2>
@@ -142,6 +148,8 @@
       </div>
     </main>
 
+    <span id="a11y-announcer" class="sr-only" aria-live="polite"></span>
+    <script src="assets/js/a11y-announce.js"></script>
     <script src="/hoodie/client.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/account.js"></script>

@@ -1,3 +1,6 @@
+var originalDocumentTitle = document.title
+var locationHash = window.location.hash.replace('#', '')
+
 /**
  * Find all elements with a data-show attribute and apply a click handler
  * in which we check if an element with a data-action attribute was clicked.
@@ -14,8 +17,14 @@
     }
 
     event.preventDefault()
-    $formsContainer.dataset.show = action.substr('show-'.length)
+    var showTarget = action.substr('show-'.length)
+    $formsContainer.dataset.show = showTarget
+    setHashState(showTarget)
   })
+  if (locationHash) {
+    el.dataset.show = locationHash
+    setHashState(locationHash)
+  }
 })
 
 /**
@@ -39,6 +48,8 @@ document.querySelector('form.signup').addEventListener('submit', function (event
     })
   })
 
+  .then(setHashState)
+
   .catch(handleError)
 })
 
@@ -55,6 +66,8 @@ document.querySelector('form.signin').addEventListener('submit', function (event
     username: email,
     password: password
   })
+
+  .then(setHashState)
 
   .catch(handleError)
 })
@@ -90,6 +103,7 @@ document.querySelector('form.password-reset').addEventListener('submit', functio
   .then(function () {
     alert('Email sent to ' + email)
     document.querySelector('[data-show="password-reset"]').dataset.show = 'signin'
+    setHashState('signin')
   })
 
   .catch(handleError)
@@ -134,6 +148,8 @@ document.querySelector('[data-action="show-password-reset"]').addEventListener('
 document.querySelector('[data-action=signout]').addEventListener('click', function (event) {
   event.preventDefault()
   hoodie.account.signOut()
+
+  .then(setHashState)
 })
 
 /**
@@ -147,6 +163,24 @@ document.querySelector('[data-action="delete-account"]').addEventListener('click
 
 function handleError (error) {
   alert(error)
+}
+
+function setHashState (hash) {
+  var url = window.location.origin + window.location.pathname
+  var title = originalDocumentTitle
+  if (typeof hash === 'string') {
+    url += '#' + hash
+    var formattedHash = hash
+      .split('-')
+      .map(function (string) {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+      })
+      .join(' ')
+    title += ' | ' + formattedHash
+  }
+  document.title = title
+  window.history.replaceState(null, null, url)
+  window.announce(document.title + ': Page loaded', 'assertive')
 }
 
 /* global hoodie, alert */
