@@ -62,10 +62,25 @@ describe('hoodie.store', function () {
       expect(hasChanges).to.equal(true)
     })
 
+    // sanity check
+    .execute(function dafug () {
+      return hoodie.account.username
+    }).then(toValue)
+    .then(function (username) {
+      expect(username).to.equal(null)
+    })
+
     .executeAsync(function (done) {
       hoodie.account.signUp({
         username: 'storetest',
         password: 'secret'
+      })
+
+      .then(function () {
+        return hoodie.account.signIn({
+          username: 'storetest',
+          password: 'secret'
+        })
       })
 
       .then(done, done)
@@ -74,12 +89,12 @@ describe('hoodie.store', function () {
     .waitUntil(function () {
       return this.execute(function storeHasNoLocalChanges () {
         return hoodie.store.hasLocalChanges() === false
-      })
+      }).then(toValue)
     }, 10000)
   })
 
   // https://github.com/hoodiehq/hoodie-client/issues/44
-  it.skip('.findAll() objects after signin', function () {
+  it('.findAll() objects after signin', function () {
     return this.client
 
     .executeAsync(function (done) {
@@ -93,9 +108,11 @@ describe('hoodie.store', function () {
 
     .waitUntil(function () {
       return this.executeAsync(function findsObjects (done) {
-        hoodie.store.findAll().then(function (objects) {
-          return objects.length === 1
-        })
+        hoodie.store.findAll().then(done, done)
+      }).then(toValue)
+
+      .then(function (objects) {
+        return objects.length === 1
       })
     }, 10000)
   })
