@@ -17,6 +17,9 @@ loadAndRenderItems()
  * Anytime there is a data change we reload and render the list of items
  */
 hoodie.store.on('change', loadAndRenderItems)
+hoodie.store.on('clear', function () {
+  render([])
+})
 
 $clearButton.addEventListener('click', function () {
   hoodie.store.removeAll()
