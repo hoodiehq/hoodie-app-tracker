@@ -35,7 +35,7 @@ $ docker run -d -p 8080:8080 \
 $ docker run -d -p 8080:8080 \
     --name my-app \
     --link my-couchdb:couchdb \
-    -e hoodie_dbUrl=http://admin:secret@couchdb:5984/
+    -e hoodie_dbUrl=http://admin:secret@couchdb:5984/ \
     hoodiehq/hoodie-app-tracker
 ```
 
