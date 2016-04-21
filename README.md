@@ -7,7 +7,14 @@
 [![devDependency Status](https://david-dm.org/hoodiehq/hoodie-app-tracker/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-app-tracker#info=devDependencies)
 
 Tracker is a simple Hoodie app, meant to be a starting point to play and build
-with Hoodie.
+with Hoodie. Find the repository on [GitHub](https://github.com/hoodiehq/hoodie-app-tracker).
+
+## Requirements
+
+Tracker needs `node >=4`. To see which version you have installed, run
+```
+node -v
+```
 
 ## Setup
 
