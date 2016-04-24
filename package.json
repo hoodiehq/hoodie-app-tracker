@@ -23,6 +23,7 @@
     "pretest": "standard test/**/*.js",
     "test": "frontend-test-background mocha test/*.js",
     "start": "hoodie",
+    "now-start": "hoodie --inMemory",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
