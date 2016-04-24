@@ -26,7 +26,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
-    "hoodie": "git://github.com/hoodiehq/hoodie#tent"
+    "hoodie": "^12.0.0"
   },
   "devDependencies": {
     "@gr2m/frontend-test-setup": "^1.1.3",
