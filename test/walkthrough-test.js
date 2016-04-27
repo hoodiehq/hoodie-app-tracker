@@ -79,12 +79,12 @@ describe('hoodie', function () {
       }).then(toValue)
       .should.eventually.have.property('username', username)
 
-      // .executeAsync(function storeFindAll(done) {
-      //   return hoodie.store.findAll()
-      //
-      //   .then(done, done)
-      // }).then(toValue)
-      // .should.eventually.be.empty
+      .executeAsync(function storeFindAll (done) {
+        return hoodie.store.findAll()
+
+        .then(done, done)
+      }).then(toValue)
+      .should.eventually.be.empty
 
       .catch(logError)
 
