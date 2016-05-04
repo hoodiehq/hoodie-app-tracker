@@ -33,7 +33,7 @@
     "chai": "^3.5.0",
     "mocha": "^2.3.4",
     "semantic-release": "^6.0.3",
-    "standard": "^6.0.7"
+    "standard": "^7.0.1"
   },
   "frontend-test-setup": {
     "server": {
