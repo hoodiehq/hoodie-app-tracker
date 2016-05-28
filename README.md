@@ -51,8 +51,8 @@ application with very clear and easy to understand HTML / CSS / JS code which
 ideally uses no 3rd party code at all, besides the Hoodie client.
 
 If you want to contribute to the frontend assets, you can simply open
-[www/index.html](www/index.html) directly in your browser and edit the files in
-the [www/](www/) folder.
+the project folder and edit the files in
+the [public/](public/) folder.
 
 ## Tests
 
