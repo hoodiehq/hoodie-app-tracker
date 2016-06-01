@@ -13,6 +13,7 @@ hoodie.account.on('signin', function (account) {
 })
 
 hoodie.account.on('signout', hideSignedIn)
+
 if (hoodie.account.isSignedIn()) {
   showSignedIn(hoodie.account.username)
 } else {

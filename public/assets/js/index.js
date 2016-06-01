@@ -14,15 +14,11 @@ function loadAndRenderItems () {
 loadAndRenderItems()
 
 /**
- * Anytime there is a data change we reload and render the list of items
  */
-hoodie.store.on('change', loadAndRenderItems)
-hoodie.store.on('clear', function () {
-  render([])
-})
-
 $clearButton.addEventListener('click', function () {
   hoodie.store.removeAll()
+  $itemsList.innerHTML=''
+  document.body.dataset.storeState = 'empty'
 })
 
 /**
@@ -49,6 +45,7 @@ $addItemForm.addEventListener('submit', function (event) {
     amount: amount,
     note: note
   })
+  loadAndRenderItems()
 })
 
 /**
@@ -77,13 +74,17 @@ $itemsList.addEventListener('click', function (event) {
                       '<td><a href="#" data-action="update">Save</a></td><td><a href="#" data-action="cancel">Cancel</a></td>'
       break
     case 'cancel':
-      loadAndRenderItems()
+      row.innerHTML ='<td>' + row.firstChild.firstChild.value + '</td>' +
+                     '<td>' + row.firstChild.nextSibling.firstChild.value + '</td>' +
+                     '<td><a href="#" data-action="edit">Edit</a></td>' +
+                     '<td><a href="#" data-action="remove">Delete</a></td>'
       break
 
     case 'remove':
       hoodie.store.remove({
         id: id
       })
+      row.remove()
       break
     case 'update':
       amount = row.querySelector('input[name=amount]').value
@@ -92,6 +93,11 @@ $itemsList.addEventListener('click', function (event) {
         amount: amount,
         note: note
       })
+      row.innerHTML ='<td>' + amount + '</td>' +
+                     '<td>' + note + '</td>' +
+                     '<td><a href="#" data-action="edit">Edit</a></td>' +
+                     '<td><a href="#" data-action="remove">Delete</a></td>'
+      break
   }
 })
 
