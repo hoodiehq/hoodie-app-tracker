@@ -14,13 +14,7 @@ function loadAndRenderItems () {
 loadAndRenderItems()
 
 /**
- * Anytime there is new data added we reload and render the list of items
  */
-hoodie.store.on('change', loadAndRenderItems)
-hoodie.store.on('clear', function () {
-  render([])
-})
-
 $clearButton.addEventListener('click', function () {
   hoodie.store.removeAll()
   $itemsList.innerHTML=''
@@ -51,7 +45,7 @@ $addItemForm.addEventListener('submit', function (event) {
     amount: amount,
     note: note
   })
-
+  loadAndRenderItems()
 })
 
 /**
