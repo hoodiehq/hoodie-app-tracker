@@ -18,11 +18,11 @@ var locationHash = window.location.hash.replace('#', '')
 
     event.preventDefault()
     var showTarget = action.substr('show-'.length)
-    $formsContainer.dataset.show = showTarget
+    $formsContainer.setAttribute('data-show', showTarget)
     setHashState(showTarget)
   })
   if (locationHash) {
-    el.dataset.show = locationHash
+    el.setAttribute('data-show', locationHash)
     setHashState(locationHash)
   }
 })
@@ -102,7 +102,7 @@ document.querySelector('form.password-reset').addEventListener('submit', functio
 
   .then(function () {
     alert('Email sent to ' + email)
-    document.querySelector('[data-show="password-reset"]').dataset.show = 'signin'
+    document.querySelector('[data-show="password-reset"]').setAttribute('data-show', 'signin')
     setHashState('signin')
   })
 
