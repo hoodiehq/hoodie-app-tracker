@@ -97,11 +97,11 @@ $itemsList.addEventListener('click', function (event) {
 
 function render (items) {
   if (items.length === 0) {
-    document.body.dataset.storeState = 'empty'
+    document.body.setAttribute('data-store-state', 'empty')
     return
   }
 
-  document.body.dataset.storeState = 'not-empty'
+  document.body.setAttribute('data-store-state', 'not-empty')
   $itemsList.innerHTML = items
     .sort(orderByCreatedAt)
     .map(function (item) {
