@@ -150,6 +150,12 @@
 
     <span id="a11y-announcer" class="sr-only" aria-live="polite"></span>
     <script src="assets/js/a11y-announce.js"></script>
+
+    <script>
+      if(typeof window['Promise'] === 'undefined') {
+        document.write('<script src="assets/js/lie.js"><' + '/script>')
+      }
+    </script>
     <script src="/hoodie/client.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/account.js"></script>
