@@ -72,8 +72,8 @@ $itemsList.addEventListener('click', function (event) {
 
   switch (action) {
     case 'edit':
-      row.innerHTML = '<td><input type="number" name="amount" value="' + amount + '" data-reset-value="' + amount + '"></td>' +
-                      '<td><input type="text" name="note" value="' + note + '" data-reset-value="' + note + '"></td>' +
+      row.innerHTML = '<td><input type="number" name="amount" value="' + escapeHtml(amount) + '" data-reset-value="' + escapeHtml(amount) + '"></td>' +
+                      '<td><input type="text" name="note" value="' + escapeHtml(note) + '" data-reset-value="' + escapeHtml(note) + '"></td>' +
                       '<td><a href="#" data-action="update">Save</a></td><td><a href="#" data-action="cancel">Cancel</a></td>'
       break
     case 'cancel':
@@ -106,15 +106,23 @@ function render (items) {
     .sort(orderByCreatedAt)
     .map(function (item) {
       return '<tr data-id="' + item.id + '">' +
-             '<td>' + item.amount + '</td>' +
-             '<td>' + item.note + '</td>' +
+             '<td>' + escapeHtml(item.amount) + '</td>' +
+             '<td>' + escapeHtml(item.note) + '</td>' +
              '<td><a href="#" data-action="edit">Edit</a></td>' +
              '<td><a href="#" data-action="remove">Delete</a></td>' +
              '</tr>'
     }).join('')
 }
+
 function orderByCreatedAt (item1, item2) {
   return item1.createdAt < item2.createdAt ? 1 : -1
+}
+
+function escapeHtml (unsafeHtml) {
+  var text = document.createTextNode(unsafeHtml)
+  var div = document.createElement('div')
+  div.appendChild(text)
+  return div.innerHTML
 }
 
 /* global hoodie */
