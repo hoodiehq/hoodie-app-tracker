@@ -1,5 +1,21 @@
 # Deployment
 
+## Deploy with now
+
+[now](https://zeit.co/now) is a great way to quickly deploy Node.js applications.
+Unfortunately, now is a read-only file system, so you must either run your app
+in memory or set an external CouchDB URL.
+
+Add this script to your package.json and you are good to go:
+
+```
+  "now-start": "hoodie --inMemory",
+```
+
+Alternatively, you can also set [environment variables](https://zeit.co/now).
+If you set `hoodie_inMemory=true` it will have the same effect as the `"now-start"`
+script above. To set a CouchDB URL, set `hoodie_dbUrl=https://admin:secret@my-app.my-couchdb-host.com`
+
 ## Deploy with Docker
 
 ### Start CouchDB
