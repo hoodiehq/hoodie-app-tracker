@@ -48,7 +48,9 @@ document.querySelector('form.signup').addEventListener('submit', function (event
     })
   })
 
-  .then(setHashState)
+  .then(function () {
+    location.href = 'index.html'
+  })
 
   .catch(handleError)
 })
