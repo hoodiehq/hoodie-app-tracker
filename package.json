@@ -26,7 +26,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
-    "hoodie": "^24.0.2"
+    "hoodie": "^24.2.3"
   },
   "devDependencies": {
     "@gr2m/frontend-test-setup": "^1.1.3",
