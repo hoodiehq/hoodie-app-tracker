@@ -32,7 +32,11 @@ describe('hoodie.connectionStatus', function () {
   this.timeout(90000)
 
   beforeEach(function () {
-    return this.client.url('/')
+    var client = this.client
+
+    return client.url('/').then(function () {
+      return client.url('/')
+    })
 
     // keep track of events for tests
     .execute(function setEvents () {
