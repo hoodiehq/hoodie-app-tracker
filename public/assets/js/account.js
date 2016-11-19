@@ -84,6 +84,11 @@ document.querySelector('form.change-email').addEventListener('submit', function 
     username: email
   })
 
+  .then(function () {
+    alert('email updated')
+    showOptions()
+  })
+
   .catch(handleError)
 })
 
@@ -115,10 +120,17 @@ document.querySelector('form.password-reset').addEventListener('submit', functio
 document.querySelector('form.change-password').addEventListener('submit', function (event) {
   event.preventDefault()
 
-  var password = this.querySelector('[name=password]').value
+  var $passwordInput = this.querySelector('[name=password]')
+  var password = $passwordInput.value
 
   hoodie.account.update({
     password: password
+  })
+
+  .then(function () {
+    $passwordInput.value = ''
+    alert('password updated')
+    showOptions()
   })
 
   .catch(handleError)
@@ -160,6 +172,10 @@ document.querySelector('[data-action="delete-account"]').addEventListener('click
   event.preventDefault()
   hoodie.account.destroy()
 })
+
+function showOptions () {
+  document.querySelector('.options').closest('[data-show]').setAttribute('data-show', 'options')
+}
 
 function handleError (error) {
   alert(error)
