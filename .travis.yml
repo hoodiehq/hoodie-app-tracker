@@ -4,15 +4,8 @@ notifications:
   email: false
 services:
   - docker
-# https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-%28or-io.js-v3%29-compiler-requirements
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
 node_js:
-  - 4
+  - 6
 before_install:
   - docker version
   - docker run -d -p 127.0.0.1:5984:5984 klaemo/couchdb:1.6.1
@@ -37,10 +30,7 @@ deploy:
   on:
     branch: master
 env:
-  global:
-    - CXX=g++-4.8
   matrix:
-    # - CLIENT=selenium:firefox
     - CLIENT=saucelabs:chrome
     # test with CouchDB (by default it tests with PouchDB)
     - hoodie_dbUrl=http://admin:secret@127.0.0.1:5984 CLIENT=saucelabs:chrome
