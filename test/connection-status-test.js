@@ -1,23 +1,6 @@
-/* global describe, beforeEach, it, hoodie */
-require('@gr2m/frontend-test-setup')
+module.exports = connectionStatusTest
 
-var expect = require('chai').expect
-
-function toValue (result) {
-  if (isError(result.value)) {
-    var error = new Error(result.value.message)
-    Object.keys(result.value).forEach(function (key) {
-      error[key] = result.value[key]
-    })
-    throw error
-  }
-
-  return result.value
-}
-
-function isError (value) {
-  return value && value.name && /error/i.test(value.name)
-}
+var toValue = require('./utils/to-value')
 
 function patchXHRToFail () {
   (function (open) {
@@ -28,113 +11,113 @@ function patchXHRToFail () {
   })(window.XMLHttpRequest.prototype.open)
 }
 
-describe('hoodie.connectionStatus', function () {
-  this.timeout(90000)
+function connectionStatusTest (test, api, server, debug) {
+  test('hoodie.connectionStatus', function (t) {
+    t.beforeEach(function (done) {
+      api.browser
 
-  beforeEach(function () {
-    return this.client.url('/')
+      .waitUntil(function () {
+        return this.url(server.info.uri)
+          .execute(function checkIfHoodieExists () {
+            return !!window.hoodie
+          }).then(toValue)
+      }, 10000, 'waiting for hoodie to exist after pageload')
 
-    // keep track of events for tests
-    .execute(function setEvents () {
-      window.events = []
-
-      ;[
-        'disconnect',
-        'reconnect'
-      ].forEach(function (eventName) {
-        hoodie.connectionStatus.on(eventName, function () {
-          window.events.push(eventName)
+      // keep track of events for tests
+      .execute(function setEvents () {
+        window.events = [];
+        ['disconnect', 'reconnect'].forEach(function (eventName) {
+          window.hoodie.connectionStatus.on(eventName, function () {
+            window.events.push(eventName)
+          })
         })
-      })
-    })
-  })
-
-  it('.check() when request succeeds', function () {
-    return this.client
-
-    // hoodie.checkConnection to resolve
-    .executeAsync(function checkConnection (done) {
-      return hoodie.connectionStatus.check()
-
-      .then(done, done)
-    }).then(toValue)
-    .should.eventually.equal(null)
-  })
-
-  it('.ok returns true', function () {
-    return this.client
-
-    .execute(function getConnectionStatus () {
-      return hoodie.connectionStatus.ok
-    }).then(toValue)
-    .should.eventually.equal(true)
-  })
-
-  it('.check() when request errors', function () {
-    return this.client
-
-    .execute(patchXHRToFail)
-    .executeAsync(function checkConnection (done) {
-      return hoodie.connectionStatus.check()
-
+        return 'ok'
+      }).then(toValue)
       .then(function () {
-        done(new Error('request should fail'))
+        done()
       })
-
-      .catch(function () {
-        // timeout to avoid racing condition:
-        // https://github.com/hoodiehq/hoodie-app-tracker/issues/32
-        setTimeout(function () {
-          done(window.events)
-        }, 0)
-      })
+      .catch(done)
     })
-    .then(toValue)
-    .then(function (events) {
-      expect(events.length).to.equal(1)
-      expect(events[0]).to.equal('disconnect')
+
+    t.test('.check() when request succeeds', function (tt) {
+      api.browser
+
+      // window.hoodie.checkConnection to resolve
+      .executeAsync(function checkConnection1 (done) {
+        try {
+          window.hoodie.connectionStatus.check().then(done, done)
+        } catch (error) {
+          done(error)
+        }
+      }).then(toValue).then(function (result) {
+        tt.is(result, null)
+        tt.end()
+      }).catch(t.error)
     })
-  })
 
-  it('.ok after .check() failed', function () {
-    return this.client
-
-    .execute(function getConnectionStatus () {
-      return hoodie.connectionStatus.ok
-    }).then(toValue)
-    .should.eventually.equal(false)
-  })
-
-  it('.check() when request succeeds after it failed before', function () {
-    return this.client
-
-    .executeAsync(function checkConnection (done) {
-      return hoodie.connectionStatus.check()
-
-      .then(function () {
-        // timeout to avoid racing condition:
-        // https://github.com/hoodiehq/hoodie-app-tracker/issues/32
-        setTimeout(function () {
-          done(window.events)
-        }, 0)
-      })
-
-      .catch(function () {
-        done(new Error('.check() should resolve'))
-      })
-    }).then(toValue)
-    .then(function (events) {
-      expect(events.length).to.equal(1)
-      expect(events[0]).to.equal('reconnect')
+    t.test('.ok returns true', function (tt) {
+      api.browser.execute(function getConnectionStatus1 () {
+        return window.hoodie.connectionStatus.ok
+      }).then(toValue).then(function (result) {
+        tt.is(result, true)
+        tt.end()
+      }).catch(t.error)
     })
-  })
 
-  it('.ok after reconnect', function () {
-    return this.client
+    t.test('.check() when request errors', function (tt) {
+      api.browser.execute(patchXHRToFail).executeAsync(function checkConnection2 (done) {
+        return window.hoodie.connectionStatus.check().then(function () {
+          done(new Error('request should fail'))
+        }).catch(function () {
+          // timeout to avoid racing condition:
+          // https://github.com/hoodiehq/hoodie-app-tracker/issues/32
+          setTimeout(function () {
+            done(window.events)
+          }, 0)
+        })
+      }).then(toValue).then(function (events) {
+        tt.is(events.length, 1)
+        tt.is(events[0], 'disconnect')
+        tt.end()
+      }).catch(t.error)
+    })
 
-    .execute(function getConnectionStatus () {
-      return hoodie.connectionStatus.ok
-    }).then(toValue)
-    .should.eventually.equal(true)
+    t.test('.ok after .check() failed', function (tt) {
+      api.browser.execute(function getConnectionStatus2 () {
+        return window.hoodie.connectionStatus.ok
+      }).then(toValue).then(function (result) {
+        tt.is(result, false)
+        tt.end()
+      }).catch(tt.error)
+    })
+
+    t.test('.check() when request succeeds after it failed before', function (tt) {
+      api.browser.executeAsync(function checkConnection3 (done) {
+        return window.hoodie.connectionStatus.check().then(function () {
+          // timeout to avoid racing condition:
+          // https://github.com/hoodiehq/hoodie-app-tracker/issues/32
+          setTimeout(function () {
+            done(window.events)
+          }, 0)
+        }).catch(function () {
+          done(new Error('.check() should resolve'))
+        })
+      }).then(toValue).then(function (events) {
+        tt.is(events.length, 1)
+        tt.is(events[0], 'reconnect')
+        tt.end()
+      }).catch(tt.error)
+    })
+
+    t.test('.ok after reconnect', function (tt) {
+      api.browser.execute(function getConnectionStatus3 () {
+        return window.hoodie.connectionStatus.ok
+      }).then(toValue).then(function (result) {
+        tt.is(result, true)
+        tt.end()
+      }).catch(tt.error)
+    })
+
+    t.end()
   })
-})
+}

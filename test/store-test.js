@@ -1,119 +1,83 @@
-/* global describe, beforeEach, afterEach, it, hoodie */
-require('@gr2m/frontend-test-setup')
+module.exports = storeTest
+var toValue = require('./utils/to-value')
 
-var expect = require('chai').expect
-
-function toValue (result) {
-  if (isError(result.value)) {
-    var error = new Error(result.value.message)
-    Object.keys(result.value).forEach(function (key) {
-      error[key] = result.value[key]
+function storeTest (test, api, server, debug) {
+  test('hoodie.store', function (t) {
+    t.beforeEach(function (done) {
+      api.browser.url(server.info.uri).then(function () {
+        done()
+      })
     })
 
-    throw error
-  }
-
-  return result.value
-}
-
-function isError (value) {
-  return value && value.error === true
-}
-
-describe('hoodie.store', function () {
-  this.timeout(90000)
-
-  beforeEach(function () {
-    return this.client.url('/')
-  })
-
-  afterEach(function () {
-    return this.client.execute(function () {
-      window.localStorage.clear()
+    t.afterEach(function (done) {
+      api.browser.execute(function () {
+        window.localStorage.clear()
+      }).url('about:blank').then(function () {
+        done()
+      }).catch(function (error) {
+        done(error)
+      })
     })
-  })
 
-  it('.hasLocalChanges() cleared after sign up', function () {
-    return this.client
-
-    .executeAsync(function (done) {
-      hoodie.store.removeAll()
-
-      .then(function () {
-        return hoodie.store.hasLocalChanges()
+    t.test('.hasLocalChanges() cleared after sign up', function (tt) {
+      api.browser.executeAsync(function (done) {
+        window.hoodie.store.removeAll().then(function () {
+          return window.hoodie.store.hasLocalChanges()
+        }).then(done, done)
+      }).then(toValue).then(function (hasChanges) {
+        tt.is(hasChanges, false)
+      }).executeAsync(function (done) {
+        window.hoodie.store.add({ foo: 'bar' }).then(function () {
+          return window.hoodie.store.hasLocalChanges()
+        }).then(done, done)
+      }).then(toValue).then(function (hasChanges) {
+        tt.is(hasChanges, true)
       })
 
-      .then(done, done)
-    }).then(toValue)
-    .then(function (hasChanges) {
-      expect(hasChanges).to.equal(false)
-    })
-
-    .executeAsync(function (done) {
-      hoodie.store.add({foo: 'bar'})
-
-      .then(function () {
-        return hoodie.store.hasLocalChanges()
-      })
-
-      .then(done, done)
-    }).then(toValue)
-    .then(function (hasChanges) {
-      expect(hasChanges).to.equal(true)
-    })
-
-    // sanity check
-    .execute(function dafug () {
-      return hoodie.account.username
-    }).then(toValue)
-    .then(function (username) {
-      expect(username).to.equal(null)
-    })
-
-    .executeAsync(function (done) {
-      hoodie.account.signUp({
-        username: 'storetest',
-        password: 'secret'
-      })
-
-      .then(function () {
-        return hoodie.account.signIn({
+      // sanity check
+      .execute(function getUsername () {
+        return window.hoodie.account.username
+      }).then(toValue).then(function (username) {
+        tt.is(username, null)
+      }).executeAsync(function (done) {
+        window.hoodie.account.signUp({
           username: 'storetest',
           password: 'secret'
+        }).then(function () {
+          return window.hoodie.account.signIn({
+            username: 'storetest',
+            password: 'secret'
+          })
+        }).then(done, done)
+      }).waitUntil(function () {
+        return this.execute(function storeHasNoLocalChanges (done) {
+          return window.hoodie.store.hasLocalChanges() === false
+        }).then(toValue)
+      }, 10000, 'waiting for "hoodie.store.hasLocalChanges() === false"').then(function () {
+        tt.end()
+      }).catch(tt.error)
+    })
+
+    // https://github.com/hoodiehq/hoodie-client/issues/44
+    t.test('.findAll() objects after signin', function (tt) {
+      tt.plan(1)
+
+      api.browser.executeAsync(function (done) {
+        window.hoodie.account.signIn({
+          username: 'storetest',
+          password: 'secret'
+        }).then(done, done)
+      }).waitUntil(function () {
+        return this.executeAsync(function findsObjects (done) {
+          window.hoodie.store.findAll().then(done, done)
+        }).then(toValue).then(function (objects) {
+          return objects.length === 1
         })
-      })
-
-      .then(done, done)
+      }, 10000).then(function () {
+        tt.pass('finds objects after signin')
+      }).catch(tt.error)
     })
 
-    .waitUntil(function () {
-      return this.execute(function storeHasNoLocalChanges () {
-        return hoodie.store.hasLocalChanges() === false
-      }).then(toValue)
-    }, 10000)
+    t.end()
   })
-
-  // https://github.com/hoodiehq/hoodie-client/issues/44
-  it('.findAll() objects after signin', function () {
-    return this.client
-
-    .executeAsync(function (done) {
-      hoodie.account.signIn({
-        username: 'storetest',
-        password: 'secret'
-      })
-
-      .then(done, done)
-    })
-
-    .waitUntil(function () {
-      return this.executeAsync(function findsObjects (done) {
-        hoodie.store.findAll().then(done, done)
-      }).then(toValue)
-
-      .then(function (objects) {
-        return objects.length === 1
-      })
-    }, 10000)
-  })
-})
+}
