@@ -48,7 +48,9 @@ document.querySelector('form.signup').addEventListener('submit', function (event
     })
   })
 
-  .then(setHashState)
+  .then(function () {
+    location.href = 'index.html'
+  })
 
   .catch(handleError)
 })
@@ -67,7 +69,9 @@ document.querySelector('form.signin').addEventListener('submit', function (event
     password: password
   })
 
-  .then(setHashState)
+  .then(function () {
+    location.href = 'index.html'
+  })
 
   .catch(handleError)
 })
