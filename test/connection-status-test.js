@@ -6,6 +6,7 @@ function patchXHRToFail () {
   (function (open) {
     window.XMLHttpRequest.prototype.origOpen = open
     window.XMLHttpRequest.prototype.open = function (method, url, async, user, pass) {
+      console.log('PATCHED HML!')
       open.call(this, method, 'http://fail', async, user, pass)
     }
   })(window.XMLHttpRequest.prototype.open)
@@ -19,9 +20,14 @@ function connectionStatusTest (test, api, server, debug) {
       .waitUntil(function () {
         return this.url(server.info.uri)
           .execute(function checkIfHoodieExists () {
-            return !!window.hoodie
+            try {
+              window.hoodie.connectionStatus.ok
+              return true
+            } catch (e) {
+              return false
+            }
           }).then(toValue)
-      }, 10000, 'waiting for hoodie to exist after pageload')
+      }, 10000, 'waiting for hoodie is ready')
 
       // keep track of events for tests
       .execute(function setEvents () {
@@ -65,17 +71,29 @@ function connectionStatusTest (test, api, server, debug) {
     })
 
     t.test('.check() when request errors', function (tt) {
-      api.browser.execute(patchXHRToFail).executeAsync(function checkConnection2 (done) {
-        return window.hoodie.connectionStatus.check().then(function () {
+      api.browser
+
+      .pause(3000)
+
+      .execute(patchXHRToFail)
+
+      .executeAsync(function checkConnection2 (done) {
+        return window.hoodie.connectionStatus.check()
+
+        .then(function () {
           done(new Error('request should fail'))
-        }).catch(function () {
+        })
+
+        .catch(function () {
           // timeout to avoid racing condition:
           // https://github.com/hoodiehq/hoodie-app-tracker/issues/32
           setTimeout(function () {
             done(window.events)
           }, 0)
         })
-      }).then(toValue).then(function (events) {
+      }).then(toValue)
+
+      .then(function (events) {
         tt.is(events.length, 1)
         tt.is(events[0], 'disconnect')
         tt.end()
@@ -83,7 +101,9 @@ function connectionStatusTest (test, api, server, debug) {
     })
 
     t.test('.ok after .check() failed', function (tt) {
-      api.browser.execute(function getConnectionStatus2 () {
+      api.browser
+
+      .execute(function getConnectionStatus2 () {
         return window.hoodie.connectionStatus.ok
       }).then(toValue).then(function (result) {
         tt.is(result, false)
