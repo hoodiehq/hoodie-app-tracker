@@ -4,8 +4,6 @@ env:
   
 applications:
 - name: hoodie-app-tracker
-  memory: 512M
-  instances: 1
   services:
   - hoodie-app-tracker-cloudant-service
   - hoodie-app-tracker-dashdb-service
