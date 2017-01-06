@@ -1,0 +1,2 @@
+env:
+  - hoodie_dbUrl: VCAP_SERVICES.cloudantNoSQLDB[0].credentials.url
