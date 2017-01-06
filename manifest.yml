@@ -1,2 +1,14 @@
+---
 env:
   - hoodie_dbUrl: VCAP_SERVICES.cloudantNoSQLDB[0].credentials.url
+  
+applications:
+- name: hoodie-app-tracker
+  memory: 512M
+  instances: 1
+  services:
+  - hoodie-app-tracker-cloudant-service
+  - hoodie-app-tracker-dashdb-service
+  - hoodie-app-tracker-dataworks-service
+  
+  
