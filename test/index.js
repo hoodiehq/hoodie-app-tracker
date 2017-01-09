@@ -10,9 +10,9 @@ test('App Tracker', function (t) {
     }
 
     require('./connection-status-test')(t.test, api, server, debug)
-    // require('./smoke-test')(t.test, api, server, debug)
-    // require('./store-test')(t.test, api, server, debug)
-    // require('./walkthrough-test')(t.test, api, server, debug)
+    require('./smoke-test')(t.test, api, server, debug)
+    require('./store-test')(t.test, api, server, debug)
+    require('./walkthrough-test')(t.test, api, server, debug)
 
     t.end()
   })
