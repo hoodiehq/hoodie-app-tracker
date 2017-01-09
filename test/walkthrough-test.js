@@ -29,11 +29,7 @@ function walktroughTest (test, selsa, server, debug) {
         }).then(done, done)
       }, username).then(toValue).then(function (result) {
         tt.is(result.username, username)
-      }).waitUntil(function () {
-        return this.execute(function storeHasNoLocalChanges () {
-          return hoodie.store.hasLocalChanges() === false
-        })
-      }, 10000).executeAsync(function signOut (done) {
+      }).executeAsync(function signOut (done) {
         return hoodie.account.signOut().then(done, done)
       }).then(toValue).then(function (result) {
         tt.is(result.username, username)
