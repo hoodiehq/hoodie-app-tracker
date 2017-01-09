@@ -10,8 +10,10 @@ function storeTest (test, api, server, debug) {
     })
 
     t.afterEach(function (done) {
-      api.browser.execute(function () {
-        window.localStorage.clear()
+      api.browser.executeAsync(function (done) {
+        window.hoodie.account.destroy()
+
+        .then(done, done)
       }).url('about:blank').then(function () {
         done()
       }).catch(function (error) {
@@ -19,27 +21,26 @@ function storeTest (test, api, server, debug) {
       })
     })
 
-    t.test('.hasLocalChanges() cleared after sign up', function (tt) {
-      api.browser.executeAsync(function (done) {
-        window.hoodie.store.removeAll().then(function () {
-          return window.hoodie.store.hasLocalChanges()
-        }).then(done, done)
-      }).then(toValue).then(function (hasChanges) {
-        tt.is(hasChanges, false)
-      }).executeAsync(function (done) {
-        window.hoodie.store.add({ foo: 'bar' }).then(function () {
-          return window.hoodie.store.hasLocalChanges()
-        }).then(done, done)
-      }).then(toValue).then(function (hasChanges) {
-        tt.is(hasChanges, true)
+    // https://github.com/hoodiehq/hoodie-client/issues/44
+    t.test('.findAll() objects after signin', function (tt) {
+      tt.plan(4)
+
+      api.browser
+
+      .executeAsync(function (done) {
+        window.hoodie.store.add({ foo: 'bar' }).then(done, done)
       })
 
-      // sanity check
-      .execute(function getUsername () {
-        return window.hoodie.account.username
-      }).then(toValue).then(function (username) {
-        tt.is(username, null)
-      }).executeAsync(function (done) {
+      .executeAsync(function (done) {
+        window.hoodie.store.findAll().then(done, done)
+      }).then(toValue)
+
+      .then(function (docs) {
+        tt.is(docs.length, 1, 'finds 1 doc after creating one')
+        tt.is(docs[0].foo, 'bar', 'doc has expected properties')
+      })
+
+      .executeAsync(function (done) {
         window.hoodie.account.signUp({
           username: 'storetest',
           password: 'secret'
@@ -49,25 +50,28 @@ function storeTest (test, api, server, debug) {
             password: 'secret'
           })
         }).then(done, done)
-      }).waitUntil(function () {
-        return this.execute(function storeHasNoLocalChanges (done) {
-          return window.hoodie.store.hasLocalChanges() === false
-        }).then(toValue)
-      }, 10000, 'waiting for "hoodie.store.hasLocalChanges() === false"').then(function () {
-        tt.end()
-      }).catch(tt.error)
-    })
+      })
 
-    // https://github.com/hoodiehq/hoodie-client/issues/44
-    t.test('.findAll() objects after signin', function (tt) {
-      tt.plan(1)
+      .executeAsync(function (done) {
+        window.hoodie.account.signOut().then(done, done)
+      })
 
-      api.browser.executeAsync(function (done) {
+      .executeAsync(function (done) {
+        window.hoodie.store.findAll().then(done, done)
+      }).then(toValue)
+
+      .then(function (docs) {
+        tt.is(docs.length, 0, 'does not find created doc after signout')
+      })
+
+      .executeAsync(function (done) {
         window.hoodie.account.signIn({
           username: 'storetest',
           password: 'secret'
         }).then(done, done)
-      }).waitUntil(function () {
+      })
+
+      .waitUntil(function () {
         return this.executeAsync(function findsObjects (done) {
           window.hoodie.store.findAll().then(done, done)
         }).then(toValue).then(function (objects) {
