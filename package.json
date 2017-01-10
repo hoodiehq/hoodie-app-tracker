@@ -32,6 +32,6 @@
     "selsa": "^1.0.3",
     "semantic-release": "^6.0.3",
     "standard": "^8.0.0",
-    "tap": "^8.0.1"
+    "tap": "^9.0.3"
   }
 }
