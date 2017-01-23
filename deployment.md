@@ -131,5 +131,3 @@ In order to connect your hoodie app to the provisioned CouchDB.
 To deploy to Bluemix, simply: 
 `$ cf push`
 
-### Or Skip these 
-
