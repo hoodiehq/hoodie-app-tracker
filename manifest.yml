@@ -4,7 +4,6 @@ declared-services:
     label: cloudantNoSQLDB
     plan: Lite
 applications:
-- path: ./NodeStarterCode
 - name: hoodie-app-tracker
   services:
   - hoodie-app-tracker-cloudant-service
