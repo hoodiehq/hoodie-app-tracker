@@ -118,9 +118,10 @@ Create a Cloudant service within Bluemix if one has not already been created:
 
    > Use the [Standard plan](https://www.ibm.com/blogs/bluemix/2016/09/new-cloudant-lite-standard-plans-are-live-in-bluemix-public/) for production deployments.
 
-Create a Redis service within Bluemix if one has not already been created:
+Set the `"start"` script in your package.json file to:
+```"npm start -- --dbUrl=`node -e 'process.stdout.write(JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.url)'`"```
 
-`$ cf create-service rediscloud hoodiehq/hoodie-app-tracker`
+In order to connect your hoodie app to the provisioned CouchDB.
 
 ### Deploying
 
