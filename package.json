@@ -24,6 +24,7 @@
     "test": "node test/index.js",
     "start": "hoodie",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "install": "./admin.js db migrate"
   },
   "dependencies": {
     "hoodie": "27.1.1"
