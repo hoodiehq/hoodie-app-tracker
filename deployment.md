@@ -114,7 +114,7 @@ Complete these steps first (if you have not already:)
 
 Create a Cloudant service within Bluemix if one has not already been created:
 
-`$ cf create-service cloudantNoSQLDB Lite hoodiehq/hoodie-app-tracker`
+`$ cf create-service cloudantNoSQLDB Lite hoodie-app-tracker-cloudant-service`
 
    > Use the [Standard plan](https://www.ibm.com/blogs/bluemix/2016/09/new-cloudant-lite-standard-plans-are-live-in-bluemix-public/) for production deployments.
 
