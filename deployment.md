@@ -104,7 +104,10 @@ $ docker run -d --name hub-webhook \
 
 ## Deploy with Bluemix
 
-### Configure IBM Bluemix
+### One Simple Step: Use the Deploy to Bluemix Button!
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/hoodiehq/hoodie-app-tracker)
+
+### Or Manually Configure IBM Bluemix (Instead of using the Deploy to Bluemix Button)
 
 Complete these steps first (if you have not already:)
 
@@ -128,4 +131,5 @@ In order to connect your hoodie app to the provisioned CouchDB.
 To deploy to Bluemix, simply: 
 `$ cf push`
 
+### Or Skip these 
 
