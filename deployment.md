@@ -114,13 +114,13 @@ Complete these steps first (if you have not already:)
 
 Create a Cloudant service within Bluemix if one has not already been created:
 
-`$ cf create-service cloudantNoSQLDB Lite deployment-tracker-db`
+`$ cf create-service cloudantNoSQLDB Lite hoodiehq/hoodie-app-tracker`
 
    > Use the [Standard plan](https://www.ibm.com/blogs/bluemix/2016/09/new-cloudant-lite-standard-plans-are-live-in-bluemix-public/) for production deployments.
 
 Create a Redis service within Bluemix if one has not already been created:
 
-`$ cf create-service rediscloud 30mb deployment-tracker-redis-redis-cloud`
+`$ cf create-service rediscloud hoodiehq/hoodie-app-tracker`
 
 ### Deploying
 
