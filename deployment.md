@@ -101,3 +101,30 @@ $ docker run -d --name hub-webhook \
     -v /var/run/docker.sock:/var/run/docker.sock:ro \
     christophwitzko/docker-hub-webhook
 ```
+
+## Deploy with Bluemix
+
+### Configure IBM Bluemix
+
+Complete these steps first (if you have not already:)
+
+   1. [Install the Cloud Foundry command line interface.](https://www.ng.bluemix.net/docs/#starters/install_cli.html)
+   2. Follow the instructions at the above link to connect to Bluemix.
+   3. Follow the instructions at the above link to log in to Bluemix.
+
+Create a Cloudant service within Bluemix if one has not already been created:
+
+`$ cf create-service cloudantNoSQLDB Lite deployment-tracker-db`
+
+   > Use the [Standard plan](https://www.ibm.com/blogs/bluemix/2016/09/new-cloudant-lite-standard-plans-are-live-in-bluemix-public/) for production deployments.
+
+Create a Redis service within Bluemix if one has not already been created:
+
+`$ cf create-service rediscloud 30mb deployment-tracker-redis-redis-cloud`
+
+### Deploying
+
+To deploy to Bluemix, simply: 
+`$ cf push`
+
+
