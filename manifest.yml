@@ -1,6 +1,4 @@
 ---
-env:
-  - hoodie_dbUrl: VCAP_SERVICES.cloudantNoSQLDB[0].credentials.url 
 declared-services:
   hoodie-app-tracker-cloudant-service:
     label: cloudantNoSQLDB
