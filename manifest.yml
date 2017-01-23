@@ -6,7 +6,7 @@ applications:
 - name: hoodie-app-tracker
   services:
   - hoodie-app-tracker-cloudant-service
-  - hoodie-app-tracker-dashdb-service
-  - hoodie-app-tracker-dataworks-service
+  declared-services:
+  - hoodie-app-tracker-cloudant-service
   
   
