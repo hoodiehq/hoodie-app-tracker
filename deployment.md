@@ -128,3 +128,7 @@ In order to connect your hoodie app to the provisioned CouchDB.
 To deploy to Bluemix, simply: 
 `$ cf push`
 
+### Notes about Bluemix Deployment Requirements
+We wouldn't normally need a `Procfile` for a simple application like this as without it Bluemix will automatically create one for you. However, for this application we need it to populate the value for the `hoodie_dbUrl` environment variable. The `.cfignore` file is another thing you can sometimes get away without including. However there are two big reason to include it here. First, you’d be deploying several files that should really just stay in your local development environment. Second, and probably the biggest reason, is that Bluemix won’t install your npm modules and instead will just ship whatever happens to be in the `node_modules` directory in your local development environment. Lastly, the `manifest.yml` file is a requirement to be able to include the easy "Deploy to Bluemix" button here on this page. Without the manifest file we’d have to add two steps to the manual Bluemix deployment steps:
+1. [Provide an application name on `cf push`](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#name)
+2. [Manually bind the `hoodie-app-tracker-cloudant-service` service](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#services-block)
