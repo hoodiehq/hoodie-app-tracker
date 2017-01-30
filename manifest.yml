@@ -7,7 +7,3 @@ applications:
 - name: hoodie-app-tracker
   services:
   - hoodie-app-tracker-cloudant-service
-  
-
-  
-  
