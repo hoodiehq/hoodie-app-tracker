@@ -1,0 +1,6 @@
+.DS_Store
+.hoodie
+.hoodierc
+*.log
+node_modules
+data

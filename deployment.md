@@ -101,3 +101,34 @@ $ docker run -d --name hub-webhook \
     -v /var/run/docker.sock:/var/run/docker.sock:ro \
     christophwitzko/docker-hub-webhook
 ```
+
+## Deploy with Bluemix
+
+### One Simple Step: Use the Deploy to Bluemix Button!
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/mmcelaney/hoodie-app-tracker&branch=bluemix-cloudant-compatible)
+
+### Or Manually Configure IBM Bluemix (Instead of using the Deploy to Bluemix Button)
+
+Complete these steps first (if you have not already:)
+
+   1. [Install the Cloud Foundry command line interface.](https://www.ng.bluemix.net/docs/#starters/install_cli.html)
+   2. Follow the instructions at the above link to connect to Bluemix.
+   3. Follow the instructions at the above link to log in to Bluemix.
+
+Create a Cloudant service within Bluemix if one has not already been created:
+
+`$ cf create-service cloudantNoSQLDB Lite hoodie-app-tracker-cloudant-service`
+
+   > Use the [Standard plan](https://www.ibm.com/blogs/bluemix/2016/09/new-cloudant-lite-standard-plans-are-live-in-bluemix-public/) for production deployments.
+
+In order to connect your hoodie app to the provisioned CouchDB.
+
+### Deploying
+
+To deploy to Bluemix, simply:
+`$ cf push`
+
+### Notes about Bluemix Deployment Requirements
+We wouldn't normally need a `Procfile` for a simple application like this as without it Bluemix will automatically create one for you. However, for this application we need it to populate the value for the `hoodie_dbUrl` environment variable. The `.cfignore` file is another thing you can sometimes get away without including. However there are two big reason to include it here. First, you’d be deploying several files that should really just stay in your local development environment. Second, and probably the biggest reason, is that Bluemix won’t install your npm modules and instead will just ship whatever happens to be in the `node_modules` directory in your local development environment. Lastly, the `manifest.yml` file is a requirement to be able to include the easy "Deploy to Bluemix" button here on this page. Without the manifest file we’d have to add two steps to the manual Bluemix deployment steps:
+1. [Provide an application name on `cf push`](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#name)
+2. [Manually bind the `hoodie-app-tracker-cloudant-service` service](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#services-block)
