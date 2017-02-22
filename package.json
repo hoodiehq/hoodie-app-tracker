@@ -26,7 +26,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
-    "hoodie": "27.1.4"
+    "hoodie": "27.1.5"
   },
   "devDependencies": {
     "selsa": "^2.0.0",
