@@ -21,8 +21,7 @@ function connectionStatusTest (test, api, server, debug) {
         return this.url(server.info.uri)
           .execute(function checkIfHoodieExists () {
             try {
-              window.hoodie.connectionStatus.ok
-              return true
+              return window.hoodie.connectionStatus.hasOwnProperty('ok')
             } catch (e) {
               return false
             }
