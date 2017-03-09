@@ -1,3 +1,28 @@
+// DAFUQ?
+// hoodie.store.add({ foo: 'bar' })
+//
+// .then(function () {
+//   return hoodie.store.findAll()
+// })
+//
+// .then(function (docs) {
+//   console.assert(docs.length === 1)
+// })
+//
+// .then(function () {
+//   return hoodie.account.signUp({
+//     username: 'storetest',
+//     password: 'secret'
+//   })
+// })
+//
+// .then(function () {
+//   return window.hoodie.account.signIn({
+//     username: 'storetest',
+//     password: 'secret'
+//   })
+// })
+
 module.exports = storeTest
 var toValue = require('./utils/to-value')
 
