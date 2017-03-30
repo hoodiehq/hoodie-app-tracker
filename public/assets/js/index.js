@@ -81,9 +81,7 @@ $itemsList.addEventListener('click', function (event) {
       break
 
     case 'remove':
-      hoodie.store.remove({
-        id: id
-      })
+      hoodie.store.remove(id)
       break
     case 'update':
       amount = row.querySelector('input[name=amount]').value
@@ -105,7 +103,7 @@ function render (items) {
   $itemsList.innerHTML = items
     .sort(orderByCreatedAt)
     .map(function (item) {
-      return '<tr data-id="' + item.id + '">' +
+      return '<tr data-id="' + item._id + '">' +
              '<td>' + escapeHtml(item.amount) + '</td>' +
              '<td>' + escapeHtml(item.note) + '</td>' +
              '<td><a href="#" data-action="edit">Edit</a></td>' +
