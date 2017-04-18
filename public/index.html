@@ -57,5 +57,13 @@
     <script src="/hoodie/client.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/index.js"></script>
+    <script>
+      // Let's register our service worker
+            navigator.serviceWorker.register('sw.js', {
+        // The scope cannot be parent to the script url
+        scope: './'
+      });
+    </script>
+    <script src="logging.js"></script>
   </body>
 </html>
