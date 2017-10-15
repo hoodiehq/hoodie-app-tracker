@@ -12,7 +12,7 @@ body {
 }
 
 a {
-  color: blue;
+  color: #007BFF;
   text-decoration: none;
 }
 
@@ -21,6 +21,7 @@ a.active {
 }
 
 a:hover {
+  color: #0056B3;
   text-decoration: underline;
 }
 
@@ -303,15 +304,18 @@ button,
 .btn {
   display: inline-block;
   border-radius: 5px;
-  background: #CCC;
-  color: #000;
+  background: #4CAF50;
+  color: #FFF;
   padding: 1rem;
-  border: 1px solid #CCC;
+  border: 1px solid #4CAF50;
 }
 
-button,
+button:hover,
 .btn:hover {
   text-decoration: none;
+  background: #388E3C;
+  color: #FFF;
+
 }
 
 .btn-link {
@@ -319,9 +323,15 @@ button,
 }
 
 button.primary {
-  background-color: blue;
-  color: #fff;
-  border: 1px solid blue;
+  background-color: #007BFF;
+  color: #FFF;
+  border: 1px solid #007BFF;
+}
+
+button.primary:hover {
+  background-color: #0069D9;
+  color: #FFF;
+  border: 1px solid #0069D9;
 }
 
 input,
