@@ -1,0 +1,9 @@
+{
+  "short_name": "Tracker",
+  "name": "Hoodie Tracker App",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "icons": {
+    "48": "app-icon.png"
+  },
+}
