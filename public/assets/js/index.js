@@ -43,6 +43,7 @@ $addItemForm.addEventListener('submit', function (event) {
   // Get values from inputs, then clear the form
   var amount = $addItemForm.querySelector('[name=amount]').value
   var note = $addItemForm.querySelector('[name=note]').value
+  note = note.trim()
   $addItemForm.reset()
 
   hoodie.store.add({
@@ -113,7 +114,7 @@ function render (items) {
 }
 
 function orderByCreatedAt (item1, item2) {
-  return item1.createdAt < item2.createdAt ? 1 : -1
+  return item1.note < item2.note ? 1 : -1
 }
 
 function escapeHtml (unsafeHtml) {
