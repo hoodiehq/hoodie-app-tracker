@@ -49,7 +49,7 @@ describe('Hoodie Tracker Home Page', function () {
     })
   })
 
-  context('Add item', function () {
+  context('Add items', function () {
     it('should allow me to add items', function () {
       // create 1st item
       cy.get('#input-note').type(ITEM_ONE)

@@ -1,9 +1,19 @@
 {
+  "manifest_version": 2,
+  "name": "My Extension",
+  "version": "versionString",
   "short_name": "Tracker",
+  "default_locale": "en",
+  "description": "Tracker is a simple Hoodie app, meant to be a starting point to play and build with Hoodie",
   "name": "Hoodie Tracker App",
   "display": "standalone",
+  "icons": [
+   {
+     "src": "icon_48.png",
+     "sizes": "48x48",
+     "type": "image/png"
+   }
+ ],
   "orientation": "portrait-primary",
-  "icons": {
-    "48": "app-icon.png"
-  },
+  "web_accessible_resources" : ["icon_48.png"]
 }
