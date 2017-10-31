@@ -1,12 +1,11 @@
-
-describe('Hoodie Tracker App', function(){
-
+/* global describe, cy, beforeEach, context, it */
+describe('Hoodie Tracker Home Page', function () {
   // setup these constants to match what Tracker does
-  var ITEM_ONE   = 'milk bottles'
-  var ITEM_TWO   = 'cat food boxes'
+  var ITEM_ONE = 'milk bottles'
+  var ITEM_TWO = 'cat food boxes'
   var ITEM_THREE = 'skateboard tricks'
 
-  beforeEach(function(){
+  beforeEach(function () {
     // By default Cypress will automatically
     // clear the Local Storage prior to each
     // test which ensures no items carry over
@@ -20,41 +19,38 @@ describe('Hoodie Tracker App', function(){
     // which is automatically prepended to cy.visit
     //
     // https://on.cypress.io/api/visit
-    cy.visit("/")
+    cy.visit('/')
   })
 
   context('Visit home page', function () {
     it('should load index.html successfully', function () {
       cy.visit('/')
-     cy.get('title').contains('Tracker')
+      cy.get('title').contains('Tracker')
     })
   })
 
-  context('When page is initially opened', function(){
-    it('should focus on the item input field', function(){
-
+  context('When page is initially opened', function () {
+    it('should focus on the item input field', function () {
       cy.focused().should('have.id', 'input-note')
     })
-})
+  })
 
-context('No Items', function(){
-   it('should hide item table', function(){
+  context('No Items', function () {
+    it('should hide item table', function () {
      // We don't need to create
      // a gazillion helper functions which are difficult to
      // parse through. Instead we'll opt to use real selectors
      // so as to make our testing intentions as clear as possible.
      //
      // http://on.cypress.io/get
-     cy.get('.placeholder')
-     cy.get('td').contains('Nothing tracked yet, add something!')
-     cy.get('.list').should('not.be.visible')
-   })
-})
+      cy.get('.placeholder')
+      cy.get('td').contains('Nothing tracked yet, add something!')
+      cy.get('.list').should('not.be.visible')
+    })
+  })
 
-
-  context('Add item', function(){
-
-    it('should allow me to add items', function(){
+  context('Add item', function () {
+    it('should allow me to add items', function () {
       // create 1st item
       cy.get('#input-note').type(ITEM_ONE)
       cy.get('#input-amount').type('1')
@@ -72,98 +68,65 @@ context('No Items', function(){
       // need to wait for 500ms while table is created
       cy.wait(500)
        // make sure the 2nd label contains the 2nd item text
-       cy.get('table td').eq(5).should('contain', '2')
-       cy.get('table td').eq(6).should('contain', ITEM_TWO)
+      cy.get('table td').eq(5).should('contain', '2')
+      cy.get('table td').eq(6).should('contain', ITEM_TWO)
+    })
 
-      })
+    it('should clear text input field when an item is added', function () {
+      cy.get('#input-note').type(ITEM_ONE)
+      cy.get('#input-amount').type('23')
+      cy.get("button[type='submit']").click()
+      cy.wait(500)
+      cy.get('#input-note').should('have.text', '')
+      cy.get('#input-amount').should('have.text', '')
+    })
 
-
-     it('should clear text input field when an item is added', function(){
-       cy.get('#input-note').type(ITEM_ONE)
-       cy.get('#input-amount').type('23')
-       cy.get("button[type='submit']").click()
-       cy.wait(500)
-       cy.get('#input-note').should('have.text', '')
-       cy.get('#input-amount').should('have.text', '')
-     })
-
-
-
-    it('should trim text input', function(){
+    it('should trim text input', function () {
        // this is an example of another custom command
        // since we repeat the item creation over and over
        // again. It's up to you to decide when to abstract
        // repetitive behavior and roll that up into a custom
        // command vs explicitly writing the code.
-       cy.get('#input-note').type('    ' + ITEM_ONE + '    ')
-       cy.get('#input-amount').type('5')
-         cy.get("button[type='submit']").click()
+      cy.get('#input-note').type('    ' + ITEM_ONE + '    ')
+      cy.get('#input-amount').type('5')
+      cy.get("button[type='submit']").click()
        // we use as explicit assertion here about the text instead of
        // using 'contain' so we can specify the exact text of the element
        // does not have any whitespace around it
-       cy.get('table td').eq(6).should('have.text', ITEM_ONE)
-     })
+      cy.get('table td').eq(6).should('have.text', ITEM_ONE)
+    })
 
-    it('should show remove all button', function(){
+    it('should show remove all button', function () {
       cy.get('#input-note').type(ITEM_ONE)
       cy.get('#input-amount').type('23')
       cy.get("button[type='submit']").click()
       cy.get('.primary').should('be.visible')
     })
-})
-
-context('Table of items', function(){
-
-    it('should allow me to edit an item', function(){
-      cy.get('#input-note').type(ITEM_ONE)
-      cy.get('#input-amount').type('23')
-      cy.get("button[type='submit']").click()
-       cy.wait(250)
-         cy.get('table td').eq(3).click()
-            cy.wait(250)
-         cy.get('table td input').eq(1).type(ITEM_THREE)
-
-         cy.get('table td').eq(3).click()
-      // explicitly assert about the text value
-         cy.get('table td').eq(2).should('contain', ITEM_THREE)
-    })
-
-    it('should allow me to delete an item', function(){
-      cy.get('#input-note').type(ITEM_ONE)
-      cy.get('#input-amount').type('23')
-      cy.get("button[type='submit']").click()
-        cy.wait(250)
-      cy.get('table td').eq(4).click()
-        // explicitly assert about the text value
-          cy.wait(250)
-      cy.get('table td').eq(22).should('contain', ITEM_TWO)
-    })
-
   })
 
-  context('About page', function(){
-
-      it('should allow me visit About page', function(){
-        cy.get("a[href='about.html']").click()
-        cy.get('title').contains('Tracker | About')
-      })
-
+  context('Table of items', function () {
+    it('should allow me to edit an item', function () {
+      cy.get('#input-note').type(ITEM_ONE)
+      cy.get('#input-amount').type('23')
+      cy.get("button[type='submit']").click()
+      cy.wait(250)
+      cy.get('table td').eq(3).click()
+      cy.wait(250)
+      cy.get('table td input').eq(1).type(ITEM_THREE)
+      cy.get('table td').eq(3).click()
+      // explicitly assert about the text value
+      cy.get('table td').eq(2).should('contain', ITEM_THREE)
     })
 
-      context('Account page', function(){
-
-          it('should allow me visit Account page', function(){
-            cy.get("a[href='account.html']").click()
-            cy.get('title').contains('Tracker | Account')
-          })
-
-          it('should allow me to create an account', function(){
-            cy.get("a[href='account.html']").click()
-            cy.get('.btn').click()
-            cy.get('#input-signup-email').type('example@example')
-            cy.get('#input-signup-password').type('password')
-            cy.get('#signup').click()
-          })
-
+    it('should allow me to delete an item', function () {
+      cy.get('#input-note').type(ITEM_ONE)
+      cy.get('#input-amount').type('23')
+      cy.get("button[type='submit']").click()
+      cy.wait(250)
+      cy.get('table td').eq(4).click()
+      // explicitly assert about the text value
+      cy.wait(250)
+      cy.get('table td').eq(22).should('contain', ITEM_TWO)
+    })
   })
 })
