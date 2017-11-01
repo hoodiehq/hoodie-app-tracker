@@ -1,9 +1,10 @@
 /* global describe, cy, beforeEach, context, it */
 describe('Hoodie Tracker Home Page', function () {
   // setup these constants to match what Tracker does
-  var ITEM_ONE = 'milk bottles'
-  var ITEM_TWO = 'cat food boxes'
-  var ITEM_THREE = 'skateboard tricks'
+  var ITEM_ONE = 'Low-Profile Dog'
+  var ITEM_TWO = 'Docs Chicken'
+  var ITEM_THREE = 'Blog Bear'
+  var ITEM_FOUR = 'Development Beaver'
 
   beforeEach(function () {
     // By default Cypress will automatically
@@ -55,8 +56,6 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-note').type(ITEM_ONE)
       cy.get('#input-amount').type('1')
       cy.get("button[type='submit']").click()
-      // need to wait for 500ms while table is created
-      cy.wait(500)
       // make sure the 1st label contains the 1st item text
       cy.get('table td').eq(1).should('contain', '1')
       cy.get('table td').eq(2).should('contain', ITEM_ONE)
@@ -65,9 +64,7 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-note').type(ITEM_TWO)
       cy.get('#input-amount').type('2')
       cy.get("button[type='submit']").click()
-      // need to wait for 500ms while table is created
-      cy.wait(500)
-       // make sure the 2nd label contains the 2nd item text
+      // make sure the 2nd label contains the 2nd item text
       cy.get('table td').eq(5).should('contain', '2')
       cy.get('table td').eq(6).should('contain', ITEM_TWO)
     })
@@ -76,7 +73,6 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-note').type(ITEM_ONE)
       cy.get('#input-amount').type('23')
       cy.get("button[type='submit']").click()
-      cy.wait(500)
       cy.get('#input-note').should('have.text', '')
       cy.get('#input-amount').should('have.text', '')
     })
@@ -93,12 +89,12 @@ describe('Hoodie Tracker Home Page', function () {
        // we use as explicit assertion here about the text instead of
        // using 'contain' so we can specify the exact text of the element
        // does not have any whitespace around it
-      cy.get('table td').eq(6).should('have.text', ITEM_ONE)
+      cy.get('table td').eq(14).should('have.text', ITEM_ONE)
     })
 
     it('should show remove all button', function () {
       cy.get('#input-note').type(ITEM_ONE)
-      cy.get('#input-amount').type('23')
+      cy.get('#input-amount').type('7')
       cy.get("button[type='submit']").click()
       cy.get('.primary').should('be.visible')
     })
@@ -107,11 +103,9 @@ describe('Hoodie Tracker Home Page', function () {
   context('Table of items', function () {
     it('should allow me to edit an item', function () {
       cy.get('#input-note').type(ITEM_ONE)
-      cy.get('#input-amount').type('23')
+      cy.get('#input-amount').type('237')
       cy.get("button[type='submit']").click()
-      cy.wait(250)
       cy.get('table td').eq(3).click()
-      cy.wait(250)
       cy.get('table td input').eq(1).type(ITEM_THREE)
       cy.get('table td').eq(3).click()
       // explicitly assert about the text value
@@ -119,14 +113,12 @@ describe('Hoodie Tracker Home Page', function () {
     })
 
     it('should allow me to delete an item', function () {
-      cy.get('#input-note').type(ITEM_ONE)
-      cy.get('#input-amount').type('23')
+      cy.get('#input-note').type(ITEM_FOUR)
+      cy.get('#input-amount').type('21')
       cy.get("button[type='submit']").click()
-      cy.wait(250)
       cy.get('table td').eq(4).click()
       // explicitly assert about the text value
-      cy.wait(250)
-      cy.get('table td').eq(22).should('contain', ITEM_TWO)
+      cy.get('table td').eq(2).should('contain', ITEM_TWO)
     })
   })
 })

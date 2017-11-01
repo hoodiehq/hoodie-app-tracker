@@ -114,7 +114,9 @@ function render (items) {
 }
 
 function orderByCreatedAt (item1, item2) {
-  return item1.note < item2.note ? 1 : -1
+  var timeA = +new Date(item1.hoodie.createdAt)
+  var timeB = +new Date(item2.hoodie.createdAt)
+  return timeA > timeB ? 1 : -1
 }
 
 function escapeHtml (unsafeHtml) {
