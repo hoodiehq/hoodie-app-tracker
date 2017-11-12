@@ -1,19 +1,27 @@
 {
   "manifest_version": 2,
-  "name": "My Extension",
+  "name": "Hoodie Tracker App",
   "version": "versionString",
+  "theme_color": "#317EFB",
+  "background_color": "#ffffff",
   "short_name": "Tracker",
+  "scope": "/",
+  "start_url": "/",
   "default_locale": "en",
   "description": "Tracker is a simple Hoodie app, meant to be a starting point to play and build with Hoodie",
-  "name": "Hoodie Tracker App",
   "display": "standalone",
   "icons": [
    {
      "src": "icon_48.png",
      "sizes": "48x48",
      "type": "image/png"
+   },
+   {
+     "src": "icon_520.png",
+     "sizes": "520x520",
+     "type": "image/png"
    }
  ],
   "orientation": "portrait-primary",
-  "web_accessible_resources" : ["icon_48.png"]
+  "web_accessible_resources" : ["icon_48.png","icon_520.png"]
 }
