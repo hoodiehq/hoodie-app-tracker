@@ -25,7 +25,7 @@ describe('Hoodie Tracker Account Page', function () {
       cy.get("span[data-hide-if='signed-in']").should('be.visible')
     })
 
-    it('should allow me to sign out', function () {
+    it.skip('should allow me to sign out', function () {
       cy.get("a[href='account.html']").click()
       cy.get('.btn').click()
       cy.get('#input-signup-email').type('example@example')
