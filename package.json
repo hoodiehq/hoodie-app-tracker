@@ -20,9 +20,10 @@
     "url": "https://github.com/hoodiehq/hoodie-app-tracker.git"
   },
   "scripts": {
-    "cypress:open": "cypress open",
+    "cypress:open": "hoodie & cypress open",
+    "test": "hoodie & $(npm bin)/cypress run",
     "now-start": "hoodie --inMemory",
-    "pretest": "standard 'test/**/*.js'",
+    "pretest": "standard 'cypress/**/*.js'",
     "start": "hoodie",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },

@@ -1,6 +1,6 @@
 /* global describe, cy, beforeEach, context, it */
 describe('Hoodie Tracker Home Page', function () {
-  // setup these constants to match what Tracker does
+    // setup these constants to match what Tracker does
   var ITEM_ONE = 'Low-Profile Dog'
   var ITEM_TWO = 'Docs Chicken'
   var ITEM_THREE = 'Blog Bear'
