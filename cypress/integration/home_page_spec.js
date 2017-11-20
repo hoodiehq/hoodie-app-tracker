@@ -27,8 +27,6 @@ describe('Hoodie Tracker Home Page', function () {
     it('should load index.html successfully', function () {
       cy.visit('/')
       cy.get('title').contains('Tracker')
-      // clear items if in cache
-      cy.get('.primary').click()
     })
   })
 
@@ -58,10 +56,15 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-note').type(ITEM_ONE)
       cy.get('#input-amount').type('1')
       cy.get("button[type='submit']").click()
+      // clear items if items in cache
+      cy.get('.primary').click()
+      // create 1st item again
+      cy.get('#input-note').type(ITEM_ONE)
+      cy.get('#input-amount').type('1')
+      cy.get("button[type='submit']").click()
       // make sure the 1st label contains the 1st item text
       cy.get('table td').eq(1).should('contain', '1')
       cy.get('table td').eq(2).should('contain', ITEM_ONE)
-
        // create 2nd item
       cy.get('#input-note').type(ITEM_TWO)
       cy.get('#input-amount').type('2')
