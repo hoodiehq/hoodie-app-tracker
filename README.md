@@ -13,20 +13,11 @@ Find the repository on [GitHub](https://github.com/hoodiehq/hoodie-app-tracker).
 
 ## Offline
 
-In most situations this app will run when your device is offline. The app does
-this by using the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) standard. Most [web browsers support](https://caniuse.com/#feat=serviceworkers) Service
-Worker but Safari and iOS devices currently do not. Where Service Worker is not
-supported, the app won't work offline. Please see the start-service-worker.js
-and sw.j for details of how this is configured.
+In most situations this app will run when your device is offline. The app does this by using the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) standard. Most [web browsers support](https://caniuse.com/#feat=serviceworkers) Service Worker but Safari and iOS devices currently do not. Where Service Worker is not supported, the app won't work offline. Please see the start-service-worker.js and sw.j for details of how this is configured.
 
 ## Installable web app
 
-The app behaves like a native app on some devices by using the manifest.json
-file. This functionality is currently only fully supported by Chrome browser
-with some features supported by other browsers. The manifest provides
-information for the web app to behave like a native app. For instance, on mobile
-devices by allowing users to install an icon on the homepage and provides a
-splash/loading page when opening.
+The app behaves like a native app on some devices by using the [manifest.json](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json) file. This functionality is currently fully supported by the Chrome and Opera browsers with some features [supported by other browsers](https://caniuse.com/#feat=web-app-manifest). The manifest provides information for the web app to behave like a native app. For instance, on mobile devices by allowing users to install an icon on the homepage and provides a splash/loading page when opening.
 
 ## Requirements
 
@@ -50,9 +41,7 @@ npm start
 
 ### Optional: Setup email for password reset
 
-If you want to use the password reset feature, you must configure an email account
-to send out notification, like a Google Mail account. Edit the `.hoodierc` file,
-the options are passed to [nodemailer.createTransport()](https://github.com/nodemailer/nodemailer-smtp-transport#usage)
+If you want to use the password reset feature, you must configure an email account to send out notification, like a Google Mail account. Edit the `.hoodierc` file, the options are passed to [nodemailer.createTransport()](https://github.com/nodemailer/nodemailer-smtp-transport#usage)
 
 ```
 cp .hoodierc-example .hoodierc
@@ -64,13 +53,9 @@ You can find a detailed instruction [here](deployment.md).
 
 ## Contribute
 
-`hoodie-app-tracker` is work in progress. The goal is to have a simple
-application with very clear and easy to understand HTML / CSS / JS code which
-ideally uses no 3rd party code at all, besides the Hoodie client.
+`hoodie-app-tracker` is work in progress. The goal is to have a simple application with very clear and easy to understand HTML / CSS / JS code which ideally uses no 3rd party code at all, besides the Hoodie client.
 
-If you want to contribute to the frontend assets, you can simply open
-the project folder and edit the files in
-the [public/](public/) folder.
+If you want to contribute to the frontend assets, you can simply open the project folder and edit the files in the [public/](public/) folder.
 
 ## Tests
 
