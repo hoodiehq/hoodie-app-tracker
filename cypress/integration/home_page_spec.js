@@ -27,6 +27,8 @@ describe('Hoodie Tracker Home Page', function () {
     it('should load index.html successfully', function () {
       cy.visit('/')
       cy.get('title').contains('Tracker')
+      // clear items if in cache
+      cy.get('.primary').click()
     })
   })
 
