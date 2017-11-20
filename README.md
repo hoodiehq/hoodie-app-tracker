@@ -15,7 +15,7 @@ Find the repository on [GitHub](https://github.com/hoodiehq/hoodie-app-tracker).
 
 In most situations this app will run when your device is offline. The app does this by using the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) standard. Most [web browsers support](https://caniuse.com/#feat=serviceworkers) Service Worker but Safari and iOS devices currently do not. Where Service Worker is not supported, the app won't work offline. Please see the start-service-worker.js and sw.j for details of how this is configured.
 
-## Installable web app
+## Install app
 
 The app behaves like a native app on some devices by using the [manifest.json](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json) file. This functionality is currently fully supported by the Chrome and Opera browsers with some features [supported by other browsers](https://caniuse.com/#feat=web-app-manifest). The manifest provides information for the web app to behave like a native app. For instance, on mobile devices by allowing users to install an icon on the homepage and provides a splash/loading page when opening.
 
