@@ -69,7 +69,7 @@ Then run tests with
 npm test
 ```
 
-The tests are written using the [Cypress](https://www.cypress.io/) library. Cypress allows interactively viewing the tests within a browser. This is really useful as it allows you to see the tests running. The tests can be stopped, rewound and easily debugged. To run the tests interactively:
+The tests are written using the [Cypress](https://www.cypress.io/) library. Cypress allows interactively viewing the tests within a browser. This is really useful as it allows you to see the tests running. The tests can be stopped, rewound and easily debugged. To run the tests interactively
 
 ```
 npm run cypress:open
