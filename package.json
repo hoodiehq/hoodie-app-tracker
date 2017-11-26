@@ -24,7 +24,7 @@
     "test": "hoodie & $(npm bin)/cypress run",
     "now-start": "hoodie --inMemory",
     "pretest": "standard 'cypress/**/*.js'",
-    "start": "hoodie",
+    "start": "hoodie --inMemory",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
@@ -33,6 +33,6 @@
   "devDependencies": {
     "cypress": "^1.0.2",
     "semantic-release": "^8.0.0",
-    "standard": "^10.0.0"    
+    "standard": "^10.0.0"
   }
 }
