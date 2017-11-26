@@ -12,7 +12,7 @@ before_install:
   - docker build -t hoodiehq/hoodie-app-tracker .
   - npm prune
 script:
-  - npm run now-start &
+  - npm start &
   - cypress run
 after_success:
   - npm run semantic-release
