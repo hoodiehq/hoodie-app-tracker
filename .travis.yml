@@ -11,18 +11,8 @@ before_install:
   - docker run -d -p 127.0.0.1:5984:5984 klaemo/couchdb:1.6.1
   - docker build -t hoodiehq/hoodie-app-tracker .
   - npm prune
-before_script:
-  # tell us what CouchDB version we have
-  - curl http://localhost:5984
-  # create secret (works around CouchDB racing issue)
-  - curl -X PUT -d '"78875068a1979fb910d5d8f37d316aa4"' 'http://localhost:5984/_config/couch_httpd_auth/secret'
-  # create admin account for testing (admin:secret)
-  - curl -X PUT -d '"secret"' 'http://localhost:5984/_config/admins/admin'
-  # required for headless firefox / selenium test
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
 script:
-  - npm start &
+  - npm now-start &
   - cypress run
 after_success:
   - npm run semantic-release
@@ -31,11 +21,6 @@ deploy:
   script: docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker
   on:
     branch: master
-env:
-  matrix:
-    - CLIENT=saucelabs:chrome
-    # test with CouchDB (by default it tests with PouchDB)
-    - hoodie_dbUrl=http://admin:secret@127.0.0.1:5984 CLIENT=saucelabs:chrome
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
