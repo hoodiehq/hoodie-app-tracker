@@ -27,6 +27,7 @@ script:
 after_success:
   - npm run semantic-release
 deploy:
+  skip_cleanup: true
 - provider: script
   script: docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker
   on:
