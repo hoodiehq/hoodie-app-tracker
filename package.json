@@ -20,6 +20,7 @@
     "url": "https://github.com/hoodiehq/hoodie-app-tracker.git"
   },
   "scripts": {
+
     "cypress:open": "hoodie & cypress open",
     "test": "hoodie & $(npm bin)/cypress run",
     "now-start": "hoodie --inMemory",
