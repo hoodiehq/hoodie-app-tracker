@@ -27,11 +27,11 @@ script:
 after_success:
   - npm run semantic-release
 deploy:
-  - provider: script
-  script: docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker
-  on:
-    branch: master
+  provider: script
+  script: "docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
   skip_cleanup: true
+  true:
+    branch: master
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
