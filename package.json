@@ -1,5 +1,6 @@
 {
   "name": "hoodie-app-tracker",
+  "version": "0.0.0-development",
   "description": "Default Hoodie app",
   "author": "The Hoodie Community | http://hood.ie/",
   "bugs": {
