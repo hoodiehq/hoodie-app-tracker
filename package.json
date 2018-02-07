@@ -27,7 +27,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "hoodie": "28.2.0"
+    "hoodie": "28.2.6"
   },
   "devDependencies": {
     "selsa": "^2.0.0",
