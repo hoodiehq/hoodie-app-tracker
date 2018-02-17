@@ -118,6 +118,7 @@ body > header ul li:not(:last-child) {
   display: none;
 }
 
+
 /* index page */
 form.add-item {
   border-bottom: 1px solid #333;
@@ -176,6 +177,12 @@ form.add-item button {
 .items {
   display: none;
 }
+
+.hide-item-count {
+  display: none;
+}
+
+
 [data-store-state='empty'] .items,
 [data-store-state='not-empty'] .items {
   display: block;
