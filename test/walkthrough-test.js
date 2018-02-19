@@ -42,7 +42,7 @@ function walktroughTest (test, selsa, server, debug) {
       })
 
       // cleanup
-      .localStorage('DELETE')
+        .localStorage('DELETE')
     })
 
     t.end()

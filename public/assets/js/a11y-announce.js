@@ -1,4 +1,4 @@
-!(function (global, document) {
+;(function (global, document) {
   var announceTimer
   var $announcer = document.getElementById('a11y-announcer')
   var announce = function (message, tone) {
