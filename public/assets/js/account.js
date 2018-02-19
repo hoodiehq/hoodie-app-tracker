@@ -146,7 +146,7 @@ document.querySelector('form.change-password').addEventListener('submit', functi
 document.querySelector('[data-action="show-change-email"]').addEventListener('click', function (event) {
   event.preventDefault()
   hoodie.account.get('username').then(function (username) {
-    document.querySelector('#input-change-email').value = hoodie.account.username
+    document.querySelector('#input-change-email').value = username
   })
 })
 
