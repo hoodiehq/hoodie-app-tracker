@@ -1,7 +1,5 @@
 sudo: required
 language: node_js
-notifications:
-  email: false
 services:
   - docker
 node_js:
@@ -21,20 +19,36 @@ before_script:
   # required for headless firefox / selenium test
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-script:
-  - npm start &
-  - cypress run
-after_success:
-  - npm run semantic-release
-deploy:
-  provider: script
-  script: "docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
-  skip_cleanup: true
-  true:
-    branch: master
+<<<<<<< HEAD
+env:
+  matrix:
+    - CLIENT=saucelabs:chrome
+    # test with CouchDB (by default it tests with PouchDB)
+    - hoodie_dbUrl=http://admin:secret@127.0.0.1:5984 CLIENT=saucelabs:chrome
+
+# Trigger a push build on master and greenkeeper branches + PRs build on every branches
+# Avoid double build on PRs (See https://github.com/travis-ci/travis-ci/issues/1147)
 branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
-cache:
-  directories:
-    - /home/travis/.cypress/Cypress
+  only:
+    - master
+    - /^greenkeeper.*$/
+jobs:
+  include:
+    - stage: release
+      node_js: lts/*
+    - script:
+        - npm run semantic-release &
+        - npm start &
+        - cypress run
+      deploy:
+        -provider: script
+         script: "docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
+           on:
+             branch: master
+         skip_cleanup: true
+         branches:
+           except:
+            - /^v\d+\.\d+\.\d+$/
+         cache:
+           directories:
+              - /home/travis/.cypress/Cypress

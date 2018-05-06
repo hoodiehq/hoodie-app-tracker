@@ -41,18 +41,18 @@ document.querySelector('form.signup').addEventListener('submit', function (event
     password: password
   })
 
-  .then(function () {
-    return hoodie.account.signIn({
-      username: email,
-      password: password
+    .then(function () {
+      return hoodie.account.signIn({
+        username: email,
+        password: password
+      })
     })
-  })
 
-  .then(function () {
+    .then(function () {
     // window.location.href = 'index.html'
-  })
+    })
 
-  .catch(handleError)
+    .catch(handleError)
 })
 
 /**
@@ -69,11 +69,11 @@ document.querySelector('form.signin').addEventListener('submit', function (event
     password: password
   })
 
-  .then(function () {
-    window.location.href = 'index.html'
-  })
+    .then(function () {
+      window.location.href = 'index.html'
+    })
 
-  .catch(handleError)
+    .catch(handleError)
 })
 
 /**
@@ -88,12 +88,12 @@ document.querySelector('form.change-email').addEventListener('submit', function 
     username: email
   })
 
-  .then(function () {
-    alert('email updated')
-    showOptions()
-  })
+    .then(function () {
+      alert('email updated')
+      showOptions()
+    })
 
-  .catch(handleError)
+    .catch(handleError)
 })
 
 /**
@@ -109,13 +109,13 @@ document.querySelector('form.password-reset').addEventListener('submit', functio
     username: email
   })
 
-  .then(function () {
-    alert('Email sent to ' + email)
-    document.querySelector('[data-show="password-reset"]').setAttribute('data-show', 'signin')
-    setHashState('signin')
-  })
+    .then(function () {
+      alert('Email sent to ' + email)
+      document.querySelector('[data-show="password-reset"]').setAttribute('data-show', 'signin')
+      setHashState('signin')
+    })
 
-  .catch(handleError)
+    .catch(handleError)
 })
 
 /**
@@ -131,13 +131,13 @@ document.querySelector('form.change-password').addEventListener('submit', functi
     password: password
   })
 
-  .then(function () {
-    $passwordInput.value = ''
-    alert('password updated')
-    showOptions()
-  })
+    .then(function () {
+      $passwordInput.value = ''
+      alert('password updated')
+      showOptions()
+    })
 
-  .catch(handleError)
+    .catch(handleError)
 })
 
 /**
@@ -146,7 +146,7 @@ document.querySelector('form.change-password').addEventListener('submit', functi
 document.querySelector('[data-action="show-change-email"]').addEventListener('click', function (event) {
   event.preventDefault()
   hoodie.account.get('username').then(function (username) {
-    document.querySelector('#input-change-email').value = hoodie.account.username
+    document.querySelector('#input-change-email').value = username
   })
 })
 
@@ -167,7 +167,7 @@ document.querySelector('[data-action=signout]').addEventListener('click', functi
   event.preventDefault()
   hoodie.account.signOut()
 
-  .then(setHashState)
+    .then(setHashState)
 })
 
 /**

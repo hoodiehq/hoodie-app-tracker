@@ -149,6 +149,9 @@ form.add-item label {
 form.add-item button {
   width: 100%;
 }
+.hide-item-count {
+  display: none;
+}
 
 @media (min-width: 768px) {
   form.add-item {

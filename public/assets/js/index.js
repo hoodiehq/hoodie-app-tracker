@@ -1,6 +1,7 @@
 var $addItemForm = document.querySelector('form.add-item')
 var $itemsList = document.querySelector('.items .list')
 var $clearButton = document.querySelector('[data-action="clear"]')
+var $itemCount = document.querySelector('.item-count')
 
 /**
  * With hoodie we're storing our data locally and it will stick around next time you reload.
@@ -95,6 +96,7 @@ $itemsList.addEventListener('click', function (event) {
 })
 
 function render (items) {
+    $itemCount.classList.toggle('hide-item-count', items.length === 0);
   if (items.length === 0) {
     document.body.setAttribute('data-store-state', 'empty')
     return
@@ -111,6 +113,7 @@ function render (items) {
              '<td><a href="#" data-action="remove">Delete</a></td>' +
              '</tr>'
     }).join('')
+    $itemCount.innerHTML = "List Count: " + items.length;
 }
 
 function orderByCreatedAt (item1, item2) {
