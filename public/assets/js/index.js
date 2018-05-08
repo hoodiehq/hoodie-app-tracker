@@ -96,7 +96,7 @@ $itemsList.addEventListener('click', function (event) {
 })
 
 function render (items) {
-    $itemCount.classList.toggle('hide-item-count', items.length === 0);
+  $itemCount.classList.toggle('hide-item-count', items.length === 0)
   if (items.length === 0) {
     document.body.setAttribute('data-store-state', 'empty')
     return
@@ -113,7 +113,7 @@ function render (items) {
              '<td><a href="#" data-action="remove">Delete</a></td>' +
              '</tr>'
     }).join('')
-    $itemCount.innerHTML = "List Count: " + items.length;
+  $itemCount.innerHTML = 'List Count: ' + items.length
 }
 
 function orderByCreatedAt (item1, item2) {
