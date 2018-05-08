@@ -33,21 +33,15 @@ branches:
     - /^greenkeeper.*$/
 jobs:
   include:
-    stage: release
+    - stage: release
       node_js: lts/*
-      script:
-        - npm run semantic-release &
+    - script:
         - npm start &
-        - cypress run
-      deploy:
-         provider: script
-         script: "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
-         skip_cleanup: true
-           on:
-             branch: master
-         branches:
-           except:
-            - /^v\d+\.\d+\.\d+$/
-         cache:
-           directories:
-              - /home/travis/.cypress/Cypress
+        - cypress run &
+        - npm run semantic-release
+    deploy:
+      - provider: script
+        script: "docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
+        skip_cleanup: true
+        on:
+          branch: master
