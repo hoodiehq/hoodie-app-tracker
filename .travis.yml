@@ -44,7 +44,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: "docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
+          script: "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
           skip_cleanup: true
           on:
             branch: master
