@@ -38,6 +38,7 @@ jobs:
       script:
         - npm start &
         - cypress run
+      after_success:
         - npm run semantic-release
     - stage: deploy
       script: skip
