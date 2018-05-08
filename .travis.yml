@@ -19,7 +19,6 @@ before_script:
   # required for headless firefox / selenium test
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-<<<<<<< HEAD
 env:
   matrix:
     - CLIENT=saucelabs:chrome
