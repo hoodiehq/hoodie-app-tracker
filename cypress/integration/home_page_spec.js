@@ -1,6 +1,6 @@
 /* global describe, cy, beforeEach, context, it */
 describe('Hoodie Tracker Home Page', function () {
-    // setup these constants to match what Tracker does
+  // setup these constants to match what Tracker does
   var ITEM_ONE = 'Low-Profile Dog'
   var ITEM_TWO = 'Docs Chicken'
   var ITEM_THREE = 'Blog Bear'
@@ -38,12 +38,12 @@ describe('Hoodie Tracker Home Page', function () {
 
   context('No Items', function () {
     it('should hide item table', function () {
-     // We don't need to create
-     // a gazillion helper functions which are difficult to
-     // parse through. Instead we'll opt to use real selectors
-     // so as to make our testing intentions as clear as possible.
-     //
-     // http://on.cypress.io/get
+      // We don't need to create
+      // a gazillion helper functions which are difficult to
+      // parse through. Instead we'll opt to use real selectors
+      // so as to make our testing intentions as clear as possible.
+      //
+      // http://on.cypress.io/get
       cy.get('.placeholder')
       cy.get('td').contains('Nothing tracked yet, add something!')
       cy.get('.list').should('not.be.visible')
@@ -65,7 +65,7 @@ describe('Hoodie Tracker Home Page', function () {
       // make sure the 1st label contains the 1st item text
       cy.get('table td').eq(1).should('contain', '1')
       cy.get('table td').eq(2).should('contain', ITEM_ONE)
-       // create 2nd item
+      // create 2nd item
       cy.get('#input-note').type(ITEM_TWO)
       cy.get('#input-amount').type('2')
       cy.get("button[type='submit']").click()
@@ -83,17 +83,17 @@ describe('Hoodie Tracker Home Page', function () {
     })
 
     it('should trim text input', function () {
-       // this is an example of another custom command
-       // since we repeat the item creation over and over
-       // again. It's up to you to decide when to abstract
-       // repetitive behavior and roll that up into a custom
-       // command vs explicitly writing the code.
+      // this is an example of another custom command
+      // since we repeat the item creation over and over
+      // again. It's up to you to decide when to abstract
+      // repetitive behavior and roll that up into a custom
+      // command vs explicitly writing the code.
       cy.get('#input-note').type('    ' + ITEM_ONE + '    ')
       cy.get('#input-amount').type('5')
       cy.get("button[type='submit']").click()
-       // we use as explicit assertion here about the text instead of
-       // using 'contain' so we can specify the exact text of the element
-       // does not have any whitespace around it
+      // we use as explicit assertion here about the text instead of
+      // using 'contain' so we can specify the exact text of the element
+      // does not have any whitespace around it
       cy.get('table td').eq(14).should('have.text', ITEM_ONE)
     })
 
