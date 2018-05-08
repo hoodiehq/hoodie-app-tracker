@@ -35,13 +35,15 @@ jobs:
   include:
     - stage: release
       node_js: lts/*
-    - script:
+      script:
         - npm start &
         - cypress run &
         - npm run semantic-release
-    deploy:
-      - provider: script
-        script: "docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
-        skip_cleanup: true
-        on:
-          branch: master
+    - stage: deploy
+      script: skip
+      deploy:
+        - provider: script
+          script: "docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
+          skip_cleanup: true
+          on:
+            branch: master
