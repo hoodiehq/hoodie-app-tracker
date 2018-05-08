@@ -37,7 +37,7 @@ jobs:
       node_js: lts/*
       script:
         - npm start &
-        - cypress run &
+        - cypress run
         - npm run semantic-release
     - stage: deploy
       script: skip
