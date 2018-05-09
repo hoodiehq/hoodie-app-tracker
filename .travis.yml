@@ -31,16 +31,20 @@ branches:
   only:
     - master
     - /^greenkeeper.*$/
-    
 jobs:
   include:
     - stage: release
       node_js: lts/*
-      script: npm run semantic-release
+      script:
+        - npm start &
+        - cypress run
+      after_success:
+        - npm run semantic-release
     - stage: deploy
       script: skip
       deploy:
         - provider: script
-          script: docker login -e $DOCKER_EMAIL -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker
+          script: "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push hoodiehq/hoodie-app-tracker"
+          skip_cleanup: true
           on:
             branch: master

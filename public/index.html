@@ -2,10 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="theme-color" content="#317EFB"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tracker</title>
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="assets/app.css" />
+    <link rel="manifest" href="/manifest.json">
   </head>
 
   <body data-account-state="" data-store-state="">
@@ -32,7 +34,7 @@
         </div>
         <div class="item">
           <label for="input-note">Item</label>
-          <input type="text" name="note" id="input-note" required>
+          <input type="text" name="note" id="input-note" required autofocus>
         </div>
         <button type="submit">Add item</button>
       </form>
@@ -58,5 +60,6 @@
     <script src="/hoodie/client.js"></script>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/index.js"></script>
+    <script src="assets/js/start-service-worker.js"></script>
   </body>
 </html>
