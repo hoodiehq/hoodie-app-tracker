@@ -77,6 +77,11 @@ $itemsList.addEventListener('click', function (event) {
       row.innerHTML = '<td><input type="number" name="amount" value="' + escapeHtml(amount) + '" data-reset-value="' + escapeHtml(amount) + '"></td>' +
                       '<td><input type="text" name="note" value="' + escapeHtml(note) + '" data-reset-value="' + escapeHtml(note) + '"></td>' +
                       '<td><a href="#" data-action="update">Save</a></td><td><a href="#" data-action="cancel">Cancel</a></td>'
+      // Only allow one item on list to be edited.   Remove edit option on other items in list while editing
+      var elements = document.getElementsByClassName('edit')
+      while (elements.length > 0) {
+        elements[0].remove('edit')
+      }
       break
     case 'cancel':
       loadAndRenderItems()
@@ -109,7 +114,7 @@ function render (items) {
       return '<tr data-id="' + item._id + '">' +
              '<td>' + escapeHtml(item.amount) + '</td>' +
              '<td>' + escapeHtml(item.note) + '</td>' +
-             '<td><a href="#" data-action="edit">Edit</a></td>' +
+             '<td><a class="edit" href="#" data-action="edit">Edit</a></td>' +
              '<td><a href="#" data-action="remove">Delete</a></td>' +
              '</tr>'
     }).join('')
