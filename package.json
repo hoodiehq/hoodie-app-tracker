@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "cypress": "^1.0.2",
-    "semantic-release": "^12.2.2",
+    "semantic-release": "^15.4.3",
     "standard": "^11.0.0"
   }
 }
