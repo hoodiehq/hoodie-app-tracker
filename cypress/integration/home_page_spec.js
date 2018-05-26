@@ -63,15 +63,15 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-amount').type('1')
       cy.get("button[type='submit']").click()
       // make sure the 1st label contains the 1st item text
-      cy.get('table td').eq(1).should('contain', '1')
-      cy.get('table td').eq(2).should('contain', ITEM_ONE)
+      cy.get('table td').eq(2).should('contain', '1')
+      cy.get('table td').eq(1).should('contain', ITEM_ONE)
       // create 2nd item
       cy.get('#input-note').type(ITEM_TWO)
       cy.get('#input-amount').type('2')
       cy.get("button[type='submit']").click()
       // make sure the 2nd label contains the 2nd item text
-      cy.get('table td').eq(5).should('contain', '2')
-      cy.get('table td').eq(6).should('contain', ITEM_TWO)
+      cy.get('table td').eq(6).should('contain', '1')
+      cy.get('table td').eq(5).should('contain', ITEM_ONE)
     })
 
     it('should clear text input field when an item is added', function () {
@@ -94,7 +94,7 @@ describe('Hoodie Tracker Home Page', function () {
       // we use as explicit assertion here about the text instead of
       // using 'contain' so we can specify the exact text of the element
       // does not have any whitespace around it
-      cy.get('table td').eq(14).should('have.text', ITEM_ONE)
+      cy.get('table td').eq(13).should('have.text', ITEM_ONE)
     })
 
     it('should show remove all button', function () {
@@ -111,10 +111,10 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-amount').type('237')
       cy.get("button[type='submit']").click()
       cy.get('table td').eq(3).click()
-      cy.get('table td input').eq(1).type(ITEM_THREE)
+      cy.get('table td input').eq(0).type(ITEM_THREE)
       cy.get('table td').eq(3).click()
       // explicitly assert about the text value
-      cy.get('table td').eq(2).should('contain', ITEM_THREE)
+      cy.get('table td').eq(1).should('contain', ITEM_THREE)
     })
 
     it('should allow me to delete an item', function () {
@@ -123,7 +123,7 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get("button[type='submit']").click()
       cy.get('table td').eq(4).click()
       // explicitly assert about the text value
-      cy.get('table td').eq(2).should('contain', ITEM_TWO)
+      cy.get('table td').eq(1).should('contain', ITEM_ONE)
     })
   })
 })

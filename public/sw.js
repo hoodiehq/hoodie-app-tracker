@@ -6,7 +6,7 @@
 // cache, then increment the CACHE_VERSION value. It will kick off the ServiceWorker update
 // flow and the old cache will be purged as part of the activate event handler when the
 // updated ServiceWorker is activated
-var CACHE_VERSION = 1
+var CACHE_VERSION = 2
 
 var CURRENT_CACHE = 'dependencies-cache-v' + CACHE_VERSION
 
@@ -28,7 +28,6 @@ var REQUIRED_FILES = [
   'assets/js/start-service-worker.js',
   'assets/js/common.js',
   'assets/js/index.js',
-  'assets/js/lie.js',
   '/hoodie/client.js'
 ]
 
