@@ -13,7 +13,7 @@ Find the repository on [GitHub](https://github.com/hoodiehq/hoodie-app-tracker).
 
 ## Offline
 
-In most situations this app will run when your device is offline. The app does this by using the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) standard. Most [web browsers support](https://caniuse.com/#feat=serviceworkers) Service Worker but Safari and iOS devices currently do not. Where Service Worker is not supported, the app won't work offline. Please see the start-service-worker.js and sw.j for details of how this is configured.
+In most situations this app will run when your device is offline. The app does this by using the [Service Worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) standard. All mainstream [web browsers support](https://caniuse.com/#feat=serviceworkers) Service Worker. Where Service Worker is not supported, the app won't work offline. Please see the start-service-worker.js and sw.j for details of how this is configured.
 
 ## Install app
 
