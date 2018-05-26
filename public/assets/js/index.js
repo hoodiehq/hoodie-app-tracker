@@ -69,13 +69,13 @@ $itemsList.addEventListener('click', function (event) {
 
   var row = event.target.parentNode.parentNode
   var id = row.dataset.id
-  var amount = row.firstChild.textContent
-  var note = row.firstChild.nextSibling.textContent
+  var amount = row.firstChild.nextSibling.textContent
+  var note = row.firstChild.textContent
 
   switch (action) {
     case 'edit':
-      row.innerHTML = '<td><input type="number" name="amount" value="' + escapeHtml(amount) + '" data-reset-value="' + escapeHtml(amount) + '"></td>' +
-                      '<td><input type="text" name="note" value="' + escapeHtml(note) + '" data-reset-value="' + escapeHtml(note) + '"></td>' +
+      row.innerHTML = '<td><input type="text" name="note" value="' + escapeHtml(note) + '" data-reset-value="' + escapeHtml(note) + '"></td>' +
+                      '<td><input type="number" name="amount" value="' + escapeHtml(amount) + '" data-reset-value="' + escapeHtml(amount) + '"></td>' +
                       '<td><a href="#" data-action="update">Save</a></td><td><a href="#" data-action="cancel">Cancel</a></td>'
       // Only allow one item on list to be edited.   Remove edit option on other items in list while editing
       var elements = document.getElementsByClassName('edit')
@@ -112,8 +112,8 @@ function render (items) {
     .sort(orderByCreatedAt)
     .map(function (item) {
       return '<tr data-id="' + item._id + '">' +
-             '<td>' + escapeHtml(item.amount) + '</td>' +
              '<td>' + escapeHtml(item.note) + '</td>' +
+             '<td>' + escapeHtml(item.amount) + '</td>' +
              '<td><a class="edit" href="#" data-action="edit">Edit</a></td>' +
              '<td><a href="#" data-action="remove">Delete</a></td>' +
              '</tr>'
@@ -124,7 +124,7 @@ function render (items) {
 function orderByCreatedAt (item1, item2) {
   var timeA = +new Date(item1.hoodie.createdAt)
   var timeB = +new Date(item2.hoodie.createdAt)
-  return timeA > timeB ? 1 : -1
+  return timeA < timeB ? 1 : -1
 }
 
 function escapeHtml (unsafeHtml) {
@@ -133,4 +133,8 @@ function escapeHtml (unsafeHtml) {
   div.appendChild(text)
   return div.innerHTML
 }
-/* global hoodie */
+
+//ocument.addEventListener('DOMContentLoaded', function (event) {
+  //location.reload()
+//})
+/* global hoodie location */
