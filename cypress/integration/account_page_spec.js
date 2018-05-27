@@ -15,7 +15,7 @@ describe('Hoodie Tracker Account Page', function () {
     })
 
     it('should sign me in when account is created', function () {
-      cy.get("span[data-value='username']").should('have.text', 'example@example')
+      cy.get("span[data-value='username']").should('have.text', 'example')
     })
 
     it('should allow me to delete account', function () {
