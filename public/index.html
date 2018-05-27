@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="Description" content="Author: Hoodie contributors">
     <meta charset="utf-8">
     <meta name="theme-color" content="#317EFB"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,12 +17,13 @@
       <nav>
         <ul>
           <li>
-            <a href="account.html">
-              <span data-hide-if="signed-in">login/sign up</span>
-              <span data-hide-if="signed-out" data-value="username"></span>
-            </a>
+            <a href="account.html"><h3>
+              <span data-hide-if="signed-in">Login/Sign up</span>
+              <span data-hide-if="signed-out" aria-hidden="true">📁</span>
+              <span data-hide-if="signed-out" data-value="username"></span></h3>
+            </h3></a>
           </li>
-          <li><a href="about.html">about</a></li>
+          <li><h3><a href="about.html">About</a></h3></li>
         </ul>
       </nav>
     </header>
@@ -50,7 +52,7 @@
           </tbody>
           <tbody class="list" data-hide-if="store-empty"></tbody>
         </table>
-        <button class="primary" data-action="clear" data-hide-if="store-empty">
+        <button id="clear-items" class="warning" data-action="clear" data-hide-if="store-empty">
           Clear tracked items
         </button>
          <p class="item-count"></p>

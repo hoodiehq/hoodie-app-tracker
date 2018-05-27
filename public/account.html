@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="Description" content="Author: Hoodie contributors">
     <meta charset="utf-8">
     <meta name="theme-color" content="#317EFB"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,19 +18,19 @@
         <ul>
           <li>
             <a href="account.html" class="active">
-              <span data-hide-if="signed-in">login/sign up</span>
-              <span data-hide-if="signed-out" data-value="username"></span>
+              <h3><span data-hide-if="signed-in">Login/Sign up</span>
+              <span data-hide-if="signed-out" aria-hidden="true">📁</span>
+              <span data-hide-if="signed-out" data-value="username"></span></h3>
             </a>
           </li>
-          <li><a href="about.html">about</a></li>
+          <li><h3><a href="about.html">About</a></h3></li>
         </ul>
       </nav>
     </header>
 
     <main>
       <a href="/">
-        <span aria-hidden="true">←</span>
-        Return to the tracker
+        <h3><span aria-hidden="true">←  </span>Return to the tracker</h3>
       </a>
 
       <div data-show="signin" data-hide-if="signed-in">
@@ -99,12 +100,12 @@
       </div>
 
       <div data-hide-if="signed-out">
-        <h2>Account settings</h2>
+        <h3>Account settings</h3>
         <div data-show="options">
           <div class="options">
-            <button data-action="show-change-email">Change email</button>
-            <button data-action="show-change-password">Change password</button>
-            <button data-action="show-delete-account">Delete Account</button>
+            <button class="default" data-action="show-change-email">Change email</button>
+            <button class="default" data-action="show-change-password">Change password</button>
+            <button class="danger" data-action="show-delete-account">Delete account</button>
           </div><!-- /.options -->
 
           <form class="change-email">
@@ -137,7 +138,7 @@
 
           <div class="delete-account">
             <p>Are you sure you want to delete your account?</p>
-            <button data-action="delete-account" class="primary">Delete account</button>
+            <button data-action="delete-account" class="danger">Delete account</button>
             <small>
               <a href="#" class="btn-link" data-action="show-options">Cancel</a>
             </small>

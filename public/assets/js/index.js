@@ -134,7 +134,4 @@ function escapeHtml (unsafeHtml) {
   return div.innerHTML
 }
 
-//ocument.addEventListener('DOMContentLoaded', function (event) {
-  //location.reload()
-//})
-/* global hoodie location */
+/* global hoodie */

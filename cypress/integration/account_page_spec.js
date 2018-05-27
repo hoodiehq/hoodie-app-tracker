@@ -8,7 +8,6 @@ describe('Hoodie Tracker Account Page', function () {
     })
 
     it('should allow me to create an account', function () {
-      cy.get("a[href='account.html']").click()
       cy.get('.btn').click()
       cy.get('#input-signup-email').type('example@example')
       cy.get('#input-signup-password').type('password')

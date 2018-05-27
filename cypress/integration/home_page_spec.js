@@ -57,7 +57,7 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-amount').type('1')
       cy.get("button[type='submit']").click()
       // clear items if items in cache
-      cy.get('.primary').click()
+      cy.get('#clear-items').click()
       // create 1st item again
       cy.get('#input-note').type(ITEM_ONE)
       cy.get('#input-amount').type('1')
@@ -101,7 +101,7 @@ describe('Hoodie Tracker Home Page', function () {
       cy.get('#input-note').type(ITEM_ONE)
       cy.get('#input-amount').type('7')
       cy.get("button[type='submit']").click()
-      cy.get('.primary').should('be.visible')
+      cy.get('#clear-items').should('be.visible')
     })
   })
 
