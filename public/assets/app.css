@@ -3,6 +3,7 @@
 }
 html {
   color: #222;
+  background-color: #fcfcfc;
   font: 18px/1.5 Verdana, Helvetica;
 }
 body {
@@ -29,6 +30,11 @@ p {
   margin-top: 0;
 }
 
+h3 {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
 label {
   font-weight: bold;
   margin-bottom: 8px;
@@ -44,8 +50,8 @@ button {
   cursor: pointer;
 }
 button.small {
-  padding: .5rem;
-  font-size: .8rem;
+  padding: .9rem;
+  font: 18px/1.5 Verdana, Helvetica;
 }
 input {
   display: block;
@@ -229,8 +235,8 @@ form.add-item button {
 .signup-link {
   margin-top: 25px;
   text-align: center;
-  border: 1px solid blue;
-  border-radius: 5px;
+  border: 2px solid #4CAF50;
+  border-radius: 0px;
   padding: 15px;
 }
 .signup-link h3 {
@@ -241,30 +247,20 @@ form.add-item button {
 
 .options button {
   display: block;
-  border: 2px solid #333;
-  color: #333;
+  border: 1px solid #333;
+  color: #5c5a5a;
   background: transparent;
   text-align: left;
-  width: 300px;
+  font: 18px/1.5 Verdana, Helvetica;
+  width: 100%;
+  max-width: 300px;
   position: relative;
-}
-
-.options button:after {
-  content: '►';
-  position: absolute;
-  right: 15px;
-}
-.options button:hover {
-  border: 2px solid blue;
-  color: blue;
 }
 
 .options button:not(:last-child) {
   margin-bottom: 8px;
 }
 /* Layout */
-
-
 
 table td input {
   width: 100%;
@@ -306,23 +302,34 @@ table td input {
 button,
 .btn {
   display: inline-block;
-  border-radius: 5px;
-  background: #4CAF50;
+  border-radius: 2px;
+  background: #348435;
   color: #FFF;
   padding: 1rem;
-  border: 1px solid #4CAF50;
+  border: 1px solid #348435;
 }
 
 button:hover,
 .btn:hover {
   text-decoration: none;
-  background: #388E3C;
+  background: #2C722D;
   color: #FFF;
-
 }
 
 .btn-link {
   padding: 1rem;
+}
+
+button.default  {
+  border: 1px solid #222;
+  color: #222;
+  background: transparent;
+}
+
+button.default:hover {
+  background-color: #e8e8e8;
+  color: #222;
+  border: 1px solid #222;
 }
 
 button.primary {
@@ -334,7 +341,28 @@ button.primary {
 button.primary:hover {
   background-color: #0069D9;
   color: #FFF;
-  border: 1px solid #0069D9;
+}
+
+button.warning {
+  background-color: #f7b23b;
+  color: #FFF;
+  border: 1px solid #f7b23b;
+}
+
+button.warning:hover {
+  background-color: #d9941c;
+  color: #FFF;
+}
+
+button.danger {
+  background-color: #ed4444;
+  color: #FFF;
+  border: 1px solid #ed4444;
+}
+
+button.danger:hover {
+  background-color: #db2b2b;
+  color: #FFF;
 }
 
 input,

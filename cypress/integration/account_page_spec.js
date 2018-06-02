@@ -8,7 +8,6 @@ describe('Hoodie Tracker Account Page', function () {
     })
 
     it('should allow me to create an account', function () {
-      cy.get("a[href='account.html']").click()
       cy.get('.btn').click()
       cy.get('#input-signup-email').type('example@example')
       cy.get('#input-signup-password').type('password')
@@ -16,7 +15,7 @@ describe('Hoodie Tracker Account Page', function () {
     })
 
     it('should sign me in when account is created', function () {
-      cy.get("span[data-value='username']").should('have.text', 'example@example')
+      cy.get("span[data-value='username']").should('have.text', 'example')
     })
 
     it('should allow me to delete account', function () {

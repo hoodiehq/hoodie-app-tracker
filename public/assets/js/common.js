@@ -1,5 +1,7 @@
 /* global hoodie */
 function showSignedIn (username) {
+  username = username.split('@')[0]
+  username = username.split('.')[0]
   document.querySelector('[data-value=username]').textContent = username
   document.body.setAttribute('data-account-state', 'signed-in')
 }
